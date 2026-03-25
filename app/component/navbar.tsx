@@ -25,10 +25,12 @@ const Navbar = () => {
     // Navbar md-lg
     <div>
       <div
-        className="hidden md:flex justify-between items-center w-full h-[64px] md:px-12 lg:px-[120px] 
+        className="hidden md:flex fixed justify-between items-center w-full h-[64px] md:px-12 lg:px-[120px] 
                 bg-white/75 backdrop-blur-2xl font-roboto-mono"
       >
-        <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
+        <Link href="/">
+          <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
+        </Link>
         <div className="flex md:gap-18 lg:gap-24">
           {menuDesktop.map((item) => {
             const isActive = pathname === item.path;
@@ -104,8 +106,10 @@ const Navbar = () => {
       </div>
 
       {/* Navbar sm */}
-      <div className="md:hidden flex justify-between items-center w-full h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl">
-        <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
+      <div className="md:hidden flex fixed justify-between items-center w-full h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl">
+        <Link href="/">
+          <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
+        </Link>
         <div className="flex items-center gap-6 ">
           <Link href="/about">
             <button className="text-[16px] text-black font-roboto-mono cursor-pointer">

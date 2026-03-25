@@ -53,21 +53,27 @@ const card = () => {
         name: "cellcard",
         year: "2026",
       },
-      title: "Increase Design Team Productivity by 3X",
-      subtitle: "Using libraries, guidelines, and modular journey blocks.",
+      title: "Increase Design Team Productivity by 3X ",
+      subtitle: "Using libraries, guidelines, and modular journey blocks. ",
     },
   ];
 
   return (
     <div>
       <main>
+        {/* CARD MD-LG */}
         {card.map((item) => (
-          <div key={item.id}>
+          <div
+            key={item.id}
+            className="hidden md:flex flex-col gap-4 max-w-[282px] cursor-pointer group "
+          >
             {/* Image */}
-            <div>{item.img}</div>
+            <div className="w-[282px] h-[188px] rounded-[8px] bg-[#F1F1F2] text-red-400">
+              {item.img}
+            </div>
 
             {/* Desc */}
-            <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[14px] group-hover:hidden">
+            <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[12px] px-[4px]">
               <div className="flex items-center gap-1.5">
                 {/* Icon */}
                 <>{item.desc.icon}</>
@@ -91,7 +97,107 @@ const card = () => {
             </div>
 
             {/* Title */}
-            <div></div>
+            <div className="text-black font-jakarta px-[4px] group-hover:underline ">
+              <h1 className="font-semibold text-[26px] line-clamp-2">
+                {item.title}
+              </h1>
+            </div>
+
+            {/* Subtitle */}
+            <div className="text-[#5B5E61] font-jakarta px-[4px] group-hover:hidden">
+              <h1 className="text-[16px] line-clamp-2">{item.subtitle}</h1>
+            </div>
+
+            {/* Read More */}
+            <div
+              className="hidden underline group-hover:flex items-center text-black 
+                    px-[4px] font-roboto-mono font-semibold gap-2 pt-6"
+            >
+              <h1>Read More</h1>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 11 11"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
+                  fill="black"
+                />
+              </svg>
+            </div>
+          </div>
+        ))}
+
+        {/* CARD SM (MOBILE) */}
+        {card.map((item) => (
+          <div
+            key={item.id}
+            className="md:hidden flex gap-4 max-w-[358px] cursor-pointer group"
+          >
+            <div className="flex flex-col gap-2 max-w-[234px]">
+              {/* Desc */}
+              <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[12px] px-[4px]">
+                <div className="flex items-center gap-1.5">
+                  {/* Icon */}
+                  <>{item.desc.icon}</>
+                  {/* Icon Name */}
+                  <p>{item.desc.name}</p>
+                </div>
+                {/* Bullet */}
+                <span>
+                  <svg
+                    width="4"
+                    height="4"
+                    viewBox="0 0 4 4"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="2" cy="2" r="2" fill="#9C9EA1" />
+                  </svg>
+                </span>
+                {/* Year */}
+                <p>{item.desc.year}</p>
+              </div>
+
+              {/* Title */}
+              <div className="text-black font-jakarta px-[4px] group-hover:underline ">
+                <h1 className="font-semibold text-[20px] line-clamp-2">
+                  {item.title}
+                </h1>
+              </div>
+
+              {/* Subtitle */}
+              <div className="text-[#5B5E61] font-jakarta px-[4px] group-hover:hidden">
+                <h1 className="text-[16px] line-clamp-2">{item.subtitle}</h1>
+              </div>
+
+              {/* Read More */}
+              <div
+                className="hidden underline group-hover:flex items-center text-black 
+                    px-[4px] font-roboto-mono font-semibold gap-2 pt-6"
+              >
+                <h1>Read More</h1>
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 11 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
+                    fill="black"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            {/* Image */}
+            <div className="w-[108px] h-[72px] rounded-[6px] bg-[#F1F1F2] text-red-400">
+              {item.img}
+            </div>
           </div>
         ))}
       </main>
