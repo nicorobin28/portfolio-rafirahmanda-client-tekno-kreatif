@@ -203,7 +203,7 @@ const navbarProductDetail = () => {
         {/* ButtonSideBar */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-3 cursor-pointer"
+          className="flex items-center gap-3 cursor-pointer h-[40px]"
         >
           <svg
             width="20"
@@ -305,11 +305,11 @@ const navbarProductDetail = () => {
 
       {/* MenuSideBar */}
       <div
-        className="fixed z-10 md:z-0 md:top-0 overflow-y-scroll no-scrollbar bg-white/75 backdrop-blur-2xl flex border-r 
-      border-[#C7C8C9] px-4 w-full"
+        className="fixed z-10 md:z-0 md:top-0 overflow-y-scroll no-scrollbar bg-white/75 
+        backdrop-blur-2xl flex px-4 w-auto border-r border-[#C7C8C9]"
       >
         {isOpen && (
-          <div className="h-screen md:w-109 w-full">
+          <div className="h-screen md:w-109 w-full relative ">
             <button
               onClick={() => setIsOpen(false)}
               className="flex items-center md:justify-center gap-3 cursor-pointer h-16 w-full px-4 md:px-0"
@@ -330,7 +330,7 @@ const navbarProductDetail = () => {
                 Close Sidebar
               </h1>
             </button>
-            <div className="text-black md:pt-10 w-full">
+            <div className="absolute top-[120px] text-black  w-full">
               {dummyCard.map((item) => (
                 <div key={item.id} className="p-4 w-full">
                   <div className="flex justify-between cursor-pointer group">

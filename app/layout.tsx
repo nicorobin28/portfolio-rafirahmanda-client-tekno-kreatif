@@ -8,6 +8,7 @@ import {
 import "./globals.css";
 import Navbar from "./component/navbar";
 import NavbarProductDetail from "./component/navbarProductDetail";
+import Card from "./component/card";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -44,8 +45,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${jakartaSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* <Navbar /> */}
-        <NavbarProductDetail />
+        <Navbar />
+        {/* <NavbarProductDetail /> */}
+        {/* <Card /> */}
 
         {children}
       </body>
