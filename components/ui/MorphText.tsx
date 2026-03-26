@@ -95,15 +95,9 @@ export default function MorphText({
 
   return (
     <div className="flex flex-col items-start gap-4">
-      <h1 className="text-3xl font-bold font-mono tracking-wide text-black">
+      <h1 className="text-[72px] font-bold font-mono tracking-wide text-black">
         {displayText}
       </h1>
-      <button
-        onClick={startFull}
-        className="text-sm text-muted-foreground hover:text-foreground underline"
-      >
-        Restart
-      </button>
     </div>
   );
 }
