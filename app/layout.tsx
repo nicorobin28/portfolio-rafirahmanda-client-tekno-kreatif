@@ -48,6 +48,10 @@ export default function RootLayout({
         {/* <Navbar /> */}
         <NavbarProductDetail />
         <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
 
         {children}
       </body>
