@@ -176,7 +176,7 @@ const Page = () => {
           </div>
 
           {/* related topics */}
-          <div className="flex flex-col gap-4">
+          <div className="hidden md:flex flex-col gap-4">
             <h3 className="text-[18px] font-semibold text-black">
               Related Topics
             </h3>
@@ -282,7 +282,15 @@ const Page = () => {
               unified without copying the future app too early.
             </p>
           </div>
-          {/* Guideline */}
+          <div className="flex flex-col gap-4 md:hidden">
+            <h3 className="text-[18px] font-semibold text-black">
+              Related Topics
+            </h3>
+            <ul className="flex flex-col gap-3 text-gray-500 text-[14px]">
+              <li>Add Gamification to Telco UI</li>
+              <li>Strategize a Housing Area Website</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
