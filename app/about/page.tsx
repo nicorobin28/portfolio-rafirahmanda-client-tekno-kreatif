@@ -63,7 +63,7 @@ const about = () => {
 
       <main className="bg-[#ffffff] w-full flex justify-center items-center py-15 ">
         <div className="bg-[#fffff] w-[358px] md:w-[588px] h-auto flex flex-col gap-[64px]">
-          <div className=" w-[358px] h-auto flex mg:hidden flex-col gap-[24px]">
+          <div className=" w-[358px] h-auto flex md:hidden flex-col gap-[24px]">
             <h1 className="text-[40px] text-[#171718] font-semibold font-jakarta">
               Rafi Rahmanda
             </h1>

@@ -9,6 +9,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-jakarta: var(--plus-jakarta);
+  --font-roboto: var(--roboto-mono)
 }
 
 @media (prefers-color-scheme: dark) {
