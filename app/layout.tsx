@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./component/navbar";
 import NavbarProductDetail from "./component/navbarProductDetail";
 import Card from "./component/card";
+import Footer from "./component/footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,6 +36,8 @@ export default function RootLayout({
         {/* <Card /> */}
 
         {children}
+
+        <Footer />
       </body>
     </html>
   );
