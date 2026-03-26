@@ -47,11 +47,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {/* <Navbar /> */}
-        {/* <NavbarProductDetail /> */}
+        <NavbarProductDetail />
         {/* <Card /> */}
-        <Footer />
 
         {children}
+        <Footer />
       </body>
     </html>
   );
