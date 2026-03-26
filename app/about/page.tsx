@@ -4,6 +4,8 @@ import Image from "next/image";
 import { navigate } from "../data/navigate";
 import { focus } from "../data/focus";
 import { experience } from "../data/experience";
+import AofButton from "../component/AofButton";
+import Experiences from "../component/Experiences";
 
 const about = () => {
   const [show, setShow] = useState(false);
@@ -122,46 +124,16 @@ const about = () => {
             <h1 className="text-[#171718] text-[24px] md:text-[32px] font-semibold font-jakarta">
               Area of Focus
             </h1>
-            <div className="flex gap-[12px]">
-              {focus.map((item) => (
-                <div
-                  key={item.id}
-                  className="pt-[2px] px-[12px] pb-[4px] border-1 border-[#C7C8C9] rounded-[999px]"
-                >
-                  <p className="text-[#171718] text-center text-[12px] md:text-[16px] font-jakarta">
-                    {item.text}
-                  </p>
-                </div>
-              ))}
+            <div>
+              <AofButton />
             </div>
           </div>
           <div className="flex flex-col gap-[24px]">
             <h1 className="text-[#171718] text-[24px] md:text-[32px] font-semibold font-jakarta">
               Experience
             </h1>
-            <div className="flex flex-col">
-              {experience.map((item) => (
-                <div key={item.id} className="flex gap-5">
-                  <div className="w-auto flex flex-col items-center pt-2 gap-2">
-                    <div className="w-[10px] md:w-[12px] h-[10px] md:h-[12px] bg-[#E3E3E4] rounded-[999px]"></div>
-                    <div className="w-[2px] md:w-[3px] h-[50px] bg-[#E3E3E4]"></div>
-                  </div>
-                  <div className="flex flex-col gap-[4px]">
-                    <h1 className="text-[#171718] text-[18px] md:text-[20px] font-semibold font-jakarta">
-                      {item.title}
-                    </h1>
-                    <div className="flex items-center gap-[6px]">
-                      <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
-                        {item.time}
-                      </p>
-                      <div className="h-[4px] w-[4px] bg-[#9C9EA1] rounded-[999px]"></div>
-                      <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
-                        {item.job}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div>
+              <Experiences />
             </div>
           </div>
         </div>
