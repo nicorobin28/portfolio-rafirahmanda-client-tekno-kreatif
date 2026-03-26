@@ -5,9 +5,32 @@ import img2 from "../assets/gambar2.png";
 import img3 from "../assets/gambar3.png";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const Page = () => {
   const [openIndex, setOpenIndex] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const sentinelRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (sentinelRef.current) {
+        const top = sentinelRef.current.getBoundingClientRect().top;
+        setIsSticky(top <= 0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section className="w-full bg-white px-6 md:px-12 lg:px-20 py-20">
@@ -50,53 +73,106 @@ const Page = () => {
           </div>
 
           {/* index */}
-          <div className="flex flex-col gap-4 border-[#C7C8C9] rounded-2xl p-4 md:p-0 border-[1] md:border-0 top-0 sticky md:block">
-            <div
-              className="flex items-center justify-between md:block cursor-pointer md:cursor-default"
-              onClick={() => {
-                if (window.innerWidth < 768) {
-                  setOpenIndex(!openIndex);
-                }
-              }}
+          <div className="relative z-50">
+            {/* Sentinel element to track scroll position */}
+            <div ref={sentinelRef} className="absolute -top-[1px] w-full h-[1px]" />
+            
+            {/* INVISIBLE PLACEHOLDER to prevent layout shift when fixed on mobile */}
+            {isSticky && isMobile && (
+              <div className="flex flex-col gap-4 border border-transparent rounded-2xl p-4 opacity-0 pointer-events-none">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-[20px] font-semibold">Index</h3>
+                  <ChevronDown className="w-5 h-5" />
+                </div>
+                <div className={`overflow-hidden ${openIndex ? "max-h-[200px]" : "max-h-[28px]"}`}>
+                  <ul className="flex flex-col gap-4 text-[14px] ml-2">
+                    <li>1. Overview</li>
+                    <li className={openIndex ? "block" : "hidden"}>2. Design System</li>
+                    <li className={openIndex ? "block" : "hidden"}>3. Modular - Journey Maker</li>
+                    <li className={openIndex ? "block" : "hidden"}>4. Guideline</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            <motion.div
+              layout
+              className={`flex flex-col gap-4 overflow-hidden border-[#C7C8C9] md:p-0 md:bg-transparent md:border-0 md:top-0 md:sticky md:block z-[100] ${
+                isSticky && isMobile ? "fixed top-0 left-0 right-0" : "relative border"
+              }`}
+              initial={false}
+              animate={
+                isSticky && isMobile
+                  ? {
+                      borderRadius: "0px",
+                      borderWidth: "0px",
+                      borderBottomWidth: "1px",
+                      borderColor: "#E5E7EB",
+                      padding: "16px 24px",
+                      boxShadow: "0px 10px 40px rgba(0,0,0,0.08)",
+                      backgroundColor: "rgba(255, 255, 255, 0.95)",
+                      backdropFilter: "blur(12px)",
+                    }
+                  : {
+                      borderRadius: "16px",
+                      borderWidth: "1px",
+                      borderColor: "#C7C8C9",
+                      padding: "16px",
+                      boxShadow: "0px 0px 0px rgba(0,0,0,0)",
+                      backgroundColor: "rgba(255, 255, 255, 1)",
+                      backdropFilter: "blur(0px)",
+                    }
+              }
+              transition={{ duration: 0.35, ease: "easeInOut" }}
             >
-              <h3 className="text-[20px] font-semibold text-black">Index</h3>
+              <div
+                className="flex items-center justify-between md:block cursor-pointer md:cursor-default"
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    setOpenIndex(!openIndex);
+                  }
+                }}
+              >
+                <motion.h3 layout="position" className="text-[20px] font-semibold text-black">Index</motion.h3>
 
-              <ChevronDown
-                className={`w-5 h-5 text-black transition-transform duration-300 md:hidden ${
-                  openIndex ? "rotate-180" : ""
-                }`}
-              />
-            </div>
+                <ChevronDown
+                  className={`w-5 h-5 text-black transition-transform duration-300 md:hidden ${
+                    openIndex ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
 
-            <div
-              className={`
-      md:hidden overflow-hidden transition-all duration-300 ease-in-out 
-      ${openIndex ? "max-h-[200px]" : "max-h-[28px]"}
-    `}
-            >
-              <ul className="flex flex-col gap-4 text-gray-500 text-[14px] ml-2 top-0">
-                <li>1. Overview</li>
+              <motion.div
+                layout="position"
+                className={`
+        md:hidden overflow-hidden transition-all duration-300 ease-in-out 
+        ${openIndex ? "max-h-[200px]" : "max-h-[28px]"}
+      `}
+              >
+                <ul className="flex flex-col gap-4 text-gray-500 text-[14px] ml-2 top-0">
+                  <li>1. Overview</li>
 
-                <li className={`${openIndex ? "block" : "hidden"}`}>
-                  2. Design System
-                </li>
-                <li className={`${openIndex ? "block" : "hidden"}`}>
-                  3. Modular - Journey Maker
-                </li>
-                <li className={`${openIndex ? "block" : "hidden"}`}>
-                  4. Guideline
-                </li>
-              </ul>
-            </div>
+                  <li className={`${openIndex ? "block" : "hidden"}`}>
+                    2. Design System
+                  </li>
+                  <li className={`${openIndex ? "block" : "hidden"}`}>
+                    3. Modular - Journey Maker
+                  </li>
+                  <li className={`${openIndex ? "block" : "hidden"}`}>
+                    4. Guideline
+                  </li>
+                </ul>
+              </motion.div>
 
-            <div className="hidden md:block">
-              <ul className="flex flex-col gap-4 text-gray-500 text-[14px]">
-                <li>1. Overview</li>
-                <li>2. Design System</li>
-                <li>3. Modular - Journey Maker</li>
-                <li>4. Guideline</li>
-              </ul>
-            </div>
+              <div className="hidden md:block">
+                <ul className="flex flex-col gap-4 text-gray-500 text-[14px]">
+                  <li>1. Overview</li>
+                  <li>2. Design System</li>
+                  <li>3. Modular - Journey Maker</li>
+                  <li>4. Guideline</li>
+                </ul>
+              </div>
+            </motion.div>
           </div>
 
           {/* related topics */}
