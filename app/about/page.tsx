@@ -14,7 +14,7 @@ const about = () => {
   };
   return (
     <div className="flex">
-      <aside className="sticky top-0 z-0 bg-[#ffffff] w-full h-screen hidden lg:flex flex-col justify-center items-center ">
+      <aside className="sticky top-0 z-0 bg-[#ffffff] w-full h-screen hidden md:flex flex-col justify-center items-center ">
         <div className="bg-[#ffffff] w-[588px] h-auto flex flex-col gap-[48px]">
           <h1 className="text-[72px] text-[#171718] font-semibold font-jakarta">
             Rafi Rahmanda
@@ -62,8 +62,8 @@ const about = () => {
       </aside>
 
       <main className="bg-[#ffffff] w-full flex justify-center items-center py-15 ">
-        <div className="bg-[#fffff] w-[358px] lg:w-[588px] h-auto flex flex-col gap-[64px]">
-          <div className=" w-[358px] h-auto flex lg:hidden flex-col gap-[24px]">
+        <div className="bg-[#fffff] w-[358px] md:w-[588px] h-auto flex flex-col gap-[64px]">
+          <div className=" w-[358px] h-auto flex mg:hidden flex-col gap-[24px]">
             <h1 className="text-[40px] text-[#171718] font-semibold font-jakarta">
               Rafi Rahmanda
             </h1>
@@ -108,7 +108,7 @@ const about = () => {
             </div>
           </div>
 
-          <div className="text-[16px] lg:text-[20px] text-[#171718] font-jakarta">
+          <div className="text-[16px] md:text-[20px] text-[#171718] font-jakarta">
             <p className="font-bold">
               UI/UX Designer based in Phnom Penh, Cambodia.
             </p>
@@ -119,7 +119,7 @@ const about = () => {
             </p>
           </div>
           <div className="flex flex-col gap-[24px]">
-            <h1 className="text-[#171718] text-[24px] lg:text-[32px] font-semibold font-jakarta">
+            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-semibold font-jakarta">
               Area of Focus
             </h1>
             <div className="flex gap-[12px]">
@@ -128,7 +128,7 @@ const about = () => {
                   key={item.id}
                   className="pt-[2px] px-[12px] pb-[4px] border-1 border-[#C7C8C9] rounded-[999px]"
                 >
-                  <p className="text-[#171718] text-center text-[12px] lg:text-[16px] font-jakarta">
+                  <p className="text-[#171718] text-center text-[12px] md:text-[16px] font-jakarta">
                     {item.text}
                   </p>
                 </div>
@@ -136,26 +136,26 @@ const about = () => {
             </div>
           </div>
           <div className="flex flex-col gap-[24px]">
-            <h1 className="text-[#171718] text-[24px] lg:text-[32px] font-semibold font-jakarta">
+            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-semibold font-jakarta">
               Experience
             </h1>
             <div className="flex flex-col">
               {experience.map((item) => (
                 <div key={item.id} className="flex gap-5">
                   <div className="w-auto flex flex-col items-center pt-2 gap-2">
-                    <div className="w-[10px] lg:w-[12px] h-[10px] lg:h-[12px] bg-[#E3E3E4] rounded-[999px]"></div>
-                    <div className="w-[2px] lg:w-[3px] h-[50px] bg-[#E3E3E4]"></div>
+                    <div className="w-[10px] md:w-[12px] h-[10px] md:h-[12px] bg-[#E3E3E4] rounded-[999px]"></div>
+                    <div className="w-[2px] md:w-[3px] h-[50px] bg-[#E3E3E4]"></div>
                   </div>
                   <div className="flex flex-col gap-[4px]">
-                    <h1 className="text-[#171718] text-[18px] lg:text-[20px] font-semibold font-jakarta">
+                    <h1 className="text-[#171718] text-[18px] md:text-[20px] font-semibold font-jakarta">
                       {item.title}
                     </h1>
                     <div className="flex items-center gap-[6px]">
-                      <p className="text-[#171718] text-[12px] lg:text-[16px] font-roboto">
+                      <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
                         {item.time}
                       </p>
                       <div className="h-[4px] w-[4px] bg-[#9C9EA1] rounded-[999px]"></div>
-                      <p className="text-[#171718] text-[12px] lg:text-[16px] font-roboto">
+                      <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
                         {item.job}
                       </p>
                     </div>
