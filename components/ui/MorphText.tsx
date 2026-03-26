@@ -15,9 +15,9 @@ interface MorphTextProps {
 export default function MorphText({
   from = "Welcome",
   to = "Rafi Rahmanda",
-  tickMs = 20,
-  stagger = 100,
-  spinCount = 8,
+  tickMs = 15,
+  stagger = 80,
+  spinCount = 5,
 }: MorphTextProps) {
   const [displayText, setDisplayText] = useState("");
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
