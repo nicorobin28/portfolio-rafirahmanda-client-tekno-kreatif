@@ -124,8 +124,7 @@ const Page = () => {
                     }
                   : {
                       borderRadius: "16px",
-                      borderWidth: "1px",
-                      borderColor: "#C7C8C9",
+                      border: "1px solid #C7C8C9",
                       padding: "16px",
                       boxShadow: "0px 0px 0px rgba(0,0,0,0)",
                       backgroundColor: "rgba(255, 255, 255, 1)",
