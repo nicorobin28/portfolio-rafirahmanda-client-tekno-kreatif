@@ -113,6 +113,15 @@ const Page = () => {
                       backgroundColor: "rgba(255, 255, 255, 0.95)",
                       backdropFilter: "blur(12px)",
                     }
+                  : !isMobile 
+                  ? {
+                      borderRadius: "0px",
+                      borderWidth: "0px",
+                      padding: "0px",
+                      boxShadow: "0px 0px 0px rgba(0,0,0,0)",
+                      backgroundColor: "transparent",
+                      backdropFilter: "blur(0px)",
+                    }
                   : {
                       borderRadius: "16px",
                       borderWidth: "1px",
