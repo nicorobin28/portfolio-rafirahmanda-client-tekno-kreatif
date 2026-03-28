@@ -1,26 +1,35 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import img1 from "../assets/gambar1.png";
 import img2 from "../assets/gambar2.png";
 import img3 from "../assets/gambar3.png";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import MorphText from "../components/MorphText";
+
+const INDEX_DATA = [
+  { id: "overview", title: "Overview" },
+  { id: "design-system", title: "Design System" },
+  { id: "modular", title: "Modular - Journey Maker" },
+  { id: "guideline", title: "Guideline" },
+];
 
 const Page = () => {
   const [openIndex, setOpenIndex] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const sentinelRef = React.useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState(INDEX_DATA[0].id);
+  const [hoveredDesktopItem, setHoveredDesktopItem] = useState<string | null>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleScroll = () => {
       if (sentinelRef.current) {
         const top = sentinelRef.current.getBoundingClientRect().top;
@@ -31,6 +40,48 @@ const Page = () => {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-20% 0px -60% 0px", threshold: 0 }
+    );
+
+    INDEX_DATA.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const scrollToSection = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const offsetCount = isMobile ? window.innerHeight * 0.2 : 60;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offsetCount;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      if (isMobile) {
+        setOpenIndex(false);
+      }
+    }
+  };
 
   return (
     <section className="w-full bg-white px-6 md:px-12 lg:px-20 py-20">
@@ -75,8 +126,11 @@ const Page = () => {
           {/* index */}
           <div className="relative z-50">
             {/* Sentinel element to track scroll position */}
-            <div ref={sentinelRef} className="absolute -top-[1px] w-full h-[1px]" />
-            
+            <div
+              ref={sentinelRef}
+              className="absolute -top-[1px] w-full h-[1px]"
+            />
+
             {/* INVISIBLE PLACEHOLDER to prevent layout shift when fixed on mobile */}
             {isSticky && isMobile && (
               <div className="flex flex-col gap-4 border border-transparent rounded-2xl p-4 opacity-0 pointer-events-none">
@@ -84,12 +138,20 @@ const Page = () => {
                   <h3 className="text-[20px] font-semibold">Index</h3>
                   <ChevronDown className="w-5 h-5" />
                 </div>
-                <div className={`overflow-hidden ${openIndex ? "max-h-[200px]" : "max-h-[28px]"}`}>
+                <div
+                  className={`overflow-hidden ${
+                    openIndex ? "max-h-[200px]" : "max-h-[28px]"
+                  }`}
+                >
                   <ul className="flex flex-col gap-4 text-[14px] ml-2">
-                    <li>1. Overview</li>
-                    <li className={openIndex ? "block" : "hidden"}>2. Design System</li>
-                    <li className={openIndex ? "block" : "hidden"}>3. Modular - Journey Maker</li>
-                    <li className={openIndex ? "block" : "hidden"}>4. Guideline</li>
+                    {INDEX_DATA.map((item) => (
+                      <li
+                        key={`placeholder-${item.id}`}
+                        className={activeSection === item.id || openIndex ? "block" : "hidden"}
+                      >
+                        {item.title}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -97,8 +159,10 @@ const Page = () => {
 
             <motion.div
               layout
-              className={`flex flex-col gap-4 overflow-hidden border-[#C7C8C9] md:p-0 md:bg-transparent md:border-0 md:top-0 md:sticky md:block z-[100] ${
-                isSticky && isMobile ? "fixed top-0 left-0 right-0" : "relative border"
+              className={`flex flex-col gap-4 border-[#C7C8C9] md:p-0 md:bg-transparent md:border-0 md:top-0 md:sticky md:block z-[100] ${
+                isSticky && isMobile
+                  ? "fixed top-0 left-0 right-0 overflow-y-auto max-h-[100vh]"
+                  : "relative border overflow-hidden"
               }`}
               initial={false}
               animate={
@@ -113,7 +177,7 @@ const Page = () => {
                       backgroundColor: "rgba(255, 255, 255, 0.95)",
                       backdropFilter: "blur(12px)",
                     }
-                  : !isMobile 
+                  : !isMobile
                   ? {
                       borderRadius: "0px",
                       borderWidth: "0px",
@@ -136,12 +200,17 @@ const Page = () => {
               <div
                 className="flex items-center justify-between md:block cursor-pointer md:cursor-default"
                 onClick={() => {
-                  if (window.innerWidth < 768) {
+                  if (isMobile) {
                     setOpenIndex(!openIndex);
                   }
                 }}
               >
-                <motion.h3 layout="position" className="text-[20px] font-semibold text-black">Index</motion.h3>
+                <motion.h3
+                  layout="position"
+                  className="text-[20px] font-semibold text-black"
+                >
+                  Index
+                </motion.h3>
 
                 <ChevronDown
                   className={`w-5 h-5 text-black transition-transform duration-300 md:hidden ${
@@ -154,30 +223,55 @@ const Page = () => {
                 layout="position"
                 className={`
         md:hidden overflow-hidden transition-all duration-300 ease-in-out 
-        ${openIndex ? "max-h-[200px]" : "max-h-[28px]"}
+        ${openIndex ? "max-h-[300px]" : "max-h-[28px]"}
       `}
               >
-                <ul className="flex flex-col gap-4 text-gray-500 text-[14px] ml-2 top-0">
-                  <li>1. Overview</li>
-
-                  <li className={`${openIndex ? "block" : "hidden"}`}>
-                    2. Design System
-                  </li>
-                  <li className={`${openIndex ? "block" : "hidden"}`}>
-                    3. Modular - Journey Maker
-                  </li>
-                  <li className={`${openIndex ? "block" : "hidden"}`}>
-                    4. Guideline
-                  </li>
+                <ul className="flex flex-col gap-4 text-[14px] ml-2 top-0 pb-2">
+                  {INDEX_DATA.map((item) => {
+                    const isActive = activeSection === item.id;
+                    const isVisible = isActive || openIndex;
+                    return (
+                      <li
+                        key={`mobile-${item.id}`}
+                        className={`${
+                          isVisible ? "block" : "hidden"
+                        } cursor-pointer transition-colors duration-200 ${
+                          isActive
+                            ? "text-black font-semibold"
+                            : "text-gray-500 hover:text-gray-800"
+                        }`}
+                        onClick={(e) => scrollToSection(item.id, e)}
+                      >
+                        {item.title}
+                      </li>
+                    );
+                  })}
                 </ul>
               </motion.div>
 
               <div className="hidden md:block">
-                <ul className="flex flex-col gap-4 text-gray-500 text-[14px]">
-                  <li>1. Overview</li>
-                  <li>2. Design System</li>
-                  <li>3. Modular - Journey Maker</li>
-                  <li>4. Guideline</li>
+                <ul className="flex flex-col gap-4 text-[14px]">
+                  {INDEX_DATA.map((item) => {
+                    const isHovered = hoveredDesktopItem === item.id;
+                    return (
+                      <li
+                        key={`desktop-${item.id}`}
+                        className="cursor-pointer text-gray-500 hover:text-gray-900 transition-colors duration-200"
+                        onClick={(e) => scrollToSection(item.id, e)}
+                        onMouseEnter={() => setHoveredDesktopItem(item.id)}
+                        onMouseLeave={() => setHoveredDesktopItem(null)}
+                      >
+                        <MorphText
+                          from={item.title}
+                          to="Jump to section ->"
+                          trigger={isHovered}
+                          tickMs={28}
+                          stagger={35}
+                          spinCount={5}
+                        />
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </motion.div>
@@ -189,8 +283,12 @@ const Page = () => {
               Related Topics
             </h3>
             <ul className="flex flex-col gap-3 text-gray-500 text-[14px]">
-              <li>Add Gamification to Telco UI</li>
-              <li>Strategize a Housing Area Website</li>
+              <li className="cursor-pointer hover:text-black transition-colors">
+                Add Gamification to Telco UI
+              </li>
+              <li className="cursor-pointer hover:text-black transition-colors">
+                Strategize a Housing Area Website
+              </li>
             </ul>
           </div>
         </div>
@@ -231,72 +329,105 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Overview */}
-          <div className="max-w-[640px] flex flex-col gap-6">
-            <h2 className="text-[32px] font-semibold text-black">Overview</h2>
+          <div className="max-w-[640px] flex flex-col gap-12">
+            {/* 1. Overview */}
+            <div id="overview" className="flex flex-col gap-6 scroll-mt-32">
+              <h2 className="text-[32px] font-semibold text-black">
+                1. Overview
+              </h2>
 
-            <p className="text-gray-600 leading-relaxed">
-              A temporary design approach used across all cellcard projects
-              until cellcard App v1.0 officially launches.
-            </p>
+              <p className="text-gray-600 leading-relaxed">
+                A temporary design approach used across all cellcard projects
+                until cellcard App v1.0 officially launches.
+              </p>
 
-            <p className="text-gray-600 leading-relaxed">
-              As of 7 November 2025, we currently have 3 different design
-              styles:
-              <br />
-              1. CC Web (just launched)
-              <br />
-              2. CC App v10 (upcoming)
-              <br />
-              3. CC App v9 (old)
-            </p>
+              <p className="text-gray-600 leading-relaxed">
+                As of 7 November 2025, we currently have 3 different design
+                styles:
+                <br />
+                1. CC Web (just launched)
+                <br />
+                2. CC App v10 (upcoming)
+                <br />
+                3. CC App v9 (old)
+              </p>
 
-            <p className="text-gray-600 leading-relaxed">
-              These different styles create visual inconsistencies.
-            </p>
+              <p className="text-gray-600 leading-relaxed">
+                These different styles create visual inconsistencies.
+              </p>
 
-            <p className="text-gray-600 leading-relaxed">
-              Transition UI fixes this by providing one middle style, a balance
-              between the CC web and CC App v10, so all ongoing projects look
-              unified without copying the future app too early.
-            </p>
+              <p className="text-gray-600 leading-relaxed">
+                Transition UI fixes this by providing one middle style, a balance
+                between the CC web and CC App v10, so all ongoing projects look
+                unified without copying the future app too early.
+              </p>
+            </div>
 
-            {/* guideline */}
-            <h2 className="text-[32px] font-semibold text-black">Guideline</h2>
+            {/* 2. Design System */}
+            <div id="design-system" className="flex flex-col gap-6 scroll-mt-32">
+              <h2 className="text-[32px] font-semibold text-black">
+                2. Design System
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                Building a unified design language that bridges the gap between current web implementations and the upcoming v10 application.
+              </p>
+            </div>
 
-            <p className="text-gray-600 leading-relaxed">
-              A temporary design approach used across all cellcard projects
-              until cellcard App v1.0 officially launches.
-            </p>
+            {/* 3. Modular - Journey Maker */}
+            <div id="modular" className="flex flex-col gap-6 scroll-mt-32">
+              <h2 className="text-[32px] font-semibold text-black">
+                3. Modular - Journey Maker
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                Implementing a modular approach to allow flexible assembly of user journeys without hardcoding every possible path.
+              </p>
+            </div>
 
-            <p className="text-gray-600 leading-relaxed">
-              As of 7 November 2025, we currently have 3 different design
-              styles:
-              <br />
-              1. CC Web (just launched)
-              <br />
-              2. CC App v10 (upcoming)
-              <br />
-              3. CC App v9 (old)
-            </p>
+            {/* 4. Guideline */}
+            <div id="guideline" className="flex flex-col gap-6 scroll-mt-32">
+              <h2 className="text-[32px] font-semibold text-black">
+                4. Guideline
+              </h2>
 
-            <p className="text-gray-600 leading-relaxed">
-              These different styles create visual inconsistencies.
-            </p>
+              <p className="text-gray-600 leading-relaxed">
+                A temporary design approach used across all cellcard projects
+                until cellcard App v1.0 officially launches.
+              </p>
 
-            <p className="text-gray-600 leading-relaxed">
-              Transition UI fixes this by providing one middle style, a balance
-              between the CC web and CC App v10, so all ongoing projects look
-              unified without copying the future app too early.
-            </p>
+              <p className="text-gray-600 leading-relaxed">
+                As of 7 November 2025, we currently have 3 different design
+                styles:
+                <br />
+                1. CC Web (just launched)
+                <br />
+                2. CC App v10 (upcoming)
+                <br />
+                3. CC App v9 (old)
+              </p>
+
+              <p className="text-gray-600 leading-relaxed">
+                These different styles create visual inconsistencies.
+              </p>
+
+              <p className="text-gray-600 leading-relaxed">
+                Transition UI fixes this by providing one middle style, a balance
+                between the CC web and CC App v10, so all ongoing projects look
+                unified without copying the future app too early.
+              </p>
+            </div>
           </div>
+
           <div className="flex flex-col gap-4 md:hidden">
             <h3 className="text-[18px] font-semibold text-black">
               Related Topics
             </h3>
             <ul className="flex flex-col gap-3 text-gray-500 text-[14px]">
-              <li>Add Gamification to Telco UI</li>
-              <li>Strategize a Housing Area Website</li>
+              <li className="cursor-pointer hover:text-black transition-colors">
+                Add Gamification to Telco UI
+              </li>
+              <li className="cursor-pointer hover:text-black transition-colors">
+                Strategize a Housing Area Website
+              </li>
             </ul>
           </div>
         </div>
