@@ -2,7 +2,7 @@ import React from "react";
 
 const headmeta = () => {
   return (
-    <div>
+    <div className="z-0">
       <h1 className="text-[48px] md:text-[56px] font-semibold leading-[56px] md:leading-[64px] tracking-[-0.005em] text-black">
         Increase 3X <br />
         Design Team <br />
