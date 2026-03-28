@@ -24,6 +24,13 @@ export const navigate = [
     ),
     desc: "rafirahmanda19@gmail.com",
     isHovered: "Copy Email Address",
+    action: async () => {
+      try {
+        await navigator.clipboard.writeText("dwikudwimu@gmail.com");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   {
     id: 1,
@@ -42,6 +49,9 @@ export const navigate = [
     ),
     desc: "/in/rafi-rahmanda",
     isHovered: "Visit Profile",
+    action: () => {
+      window.open("https://www.linkedin.com/", "_blank");
+    },
   },
   {
     id: 2,
@@ -60,6 +70,12 @@ export const navigate = [
     ),
     desc: "Case studies and selected projects",
     isHovered: "Download PDF",
+    action: () => {
+      const link = document.createElement("a");
+      link.href = "/spd.pdf";
+      link.download = "Portofolio.pdf";
+      link.click();
+    },
   },
   {
     id: 3,
@@ -78,5 +94,11 @@ export const navigate = [
     ),
     desc: "Experience & qualifications",
     isHovered: "Download PDF",
+    action: () => {
+      const link = document.createElement("a");
+      link.href = "/spd.pdf";
+      link.download = "Resume.pdf";
+      link.click();
+    },
   },
 ];
