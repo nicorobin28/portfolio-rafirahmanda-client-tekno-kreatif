@@ -12,11 +12,27 @@ import MorphText from "@/components/MorphText";
 const about = () => {
   const [show, setShow] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
+  const [handleCopy, setHandleCopy] = useState<string | null>("");
 
   const handleShow = () => {
     setShow(true);
     setTimeout(() => setShow(false), 3000);
   };
+
+  const handleNavClick = (nav: any) => {
+    nav.action?.();
+
+    if (nav.title === "Email") {
+      setHandleCopy("Email");
+      setShow(true);
+
+      setTimeout(() => {
+        setShow(false);
+        setHandleCopy("");
+      }, 3000);
+    }
+  };
+
   return (
     <div className="flex gap-[20px]">
       <aside className="sticky top-0 z-0 bg-[#ffffff]  w-full h-screen hidden md:flex flex-col justify-start items-end pt-8">
@@ -40,39 +56,43 @@ const about = () => {
               return (
                 <div
                   key={nav.id}
-                  onClick={handleShow}
-                  className="group h-[40px] flex items-center gap-[24px] cursor-pointer"
+                  onClick={() => handleNavClick(nav)}
+                  className="group h-[40px] flex items-center gap-[24px] cursor-pointer "
                   onMouseEnter={() => setHovered(nav.id)}
                   onMouseLeave={() => setHovered(null)}
                 >
-                  <div className="w-[110px] flex items-center gap-[4px]">
-                    <p className="text-[14px] text-[#171718] font-roboto">
-                      {nav.title}
-                    </p>
-                    {nav.icon}
-                  </div>
-                  <div className="relative text-[14px] text-[#5B5E61] font-jakarta">
-                    <MorphText
-                      from={nav.desc}
-                      to={nav.isHovered}
-                      trigger={isHovered}
-                      tickMs={35}
-                      stagger={35}
-                      spinCount={5}
-                    />
+                  <div className="flex gap-[24px]" onClick={nav.action}>
+                    <div className="w-[110px] flex items-center gap-[4px]">
+                      <p className="text-[14px] text-[#171718] font-roboto">
+                        {nav.title}
+                      </p>
+                      {nav.icon}
+                    </div>
+                    <div className="relative text-[14px] text-[#5B5E61] font-jakarta">
+                      <MorphText
+                        from={nav.desc}
+                        to={nav.isHovered}
+                        trigger={isHovered}
+                        tickMs={35}
+                        stagger={35}
+                        spinCount={5}
+                      />
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
         </div>
-        <div
-          className={`bg-[#5B5E61] drop-shadow-xl drop-shadow-[#171718]/32 absolute z-10 bottom-[80px] right-5/8 translate-x-5/8 w-[343px] px-[16px] py-[13px] rounded-[8px] ${show ? "flex opacity-100" : "hidden opacity-0"}`}
-        >
-          <p className="text-[#ffffff] text-[16px] font-jakarta">
-            Copied to clipboard
-          </p>
-        </div>
+        {show && handleCopy === "Email" && (
+          <div
+            className={`bg-[#5B5E61] drop-shadow-xl drop-shadow-[#171718]/32 absolute z-10 bottom-[80px] right-5/8 translate-x-5/8 w-[343px] px-[16px] py-[13px] rounded-[8px] ${show ? "flex opacity-100" : "hidden opacity-0"}`}
+          >
+            <p className="text-[#ffffff] text-[16px] font-jakarta">
+              Copied to clipboard
+            </p>
+          </div>
+        )}
       </aside>
 
       <main className="bg-[#ffffff] w-full flex justify-center md:justify-start items-center py-20 md:py-15 ">
@@ -93,7 +113,7 @@ const about = () => {
               {navigate.map((nav) => (
                 <div
                   key={nav.id}
-                  onClick={handleShow}
+                  onClick={() => handleNavClick(nav)}
                   className="group h-[40px] flex items-center gap-[24px] cursor-pointer"
                 >
                   <div className="w-[110px] flex items-center gap-[4px]">
