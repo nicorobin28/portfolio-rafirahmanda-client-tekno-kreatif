@@ -305,11 +305,11 @@ const navbarProductDetail = () => {
 
       {/* MenuSideBar */}
       <div
-        className="fixed z-10 md:z-0 md:top-0 overflow-y-scroll no-scrollbar bg-white/75 
-        backdrop-blur-2xl flex px-4 w-auto border-r border-[#C7C8C9]"
+        className="fixed z-50 top-0  overflow-y-scroll no-scrollbar bg-white/24
+        backdrop-blur-[24px] flex px-4 w-full md:w-auto border-r border-[#C7C8C9]"
       >
         {isOpen && (
-          <div className="h-screen md:w-109 w-full relative ">
+          <div className="relative z-50 h-screen md:w-109 top-0 w-full">
             <button
               onClick={() => setIsOpen(false)}
               className="flex items-center md:justify-center gap-3 cursor-pointer h-16 w-full px-4 md:px-0"
@@ -383,7 +383,7 @@ const navbarProductDetail = () => {
       </div>
 
       {/* Navbar sm */}
-      <div className="md:hidden flex justify-between items-center w-full h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl">
+      <div className="md:hidden flex justify-between items-center w-full h-[56px] px-[16px]">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-[12px] cursor-pointer"

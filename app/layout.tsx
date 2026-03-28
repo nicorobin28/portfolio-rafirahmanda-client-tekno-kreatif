@@ -50,9 +50,7 @@ export default function RootLayout({
         <Navbar />
         {/* <NavbarProductDetail /> */}
         {/* <Card /> */}
-
         {children}
-
         <Footer />
       </body>
     </html>
