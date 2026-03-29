@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { navigate } from "../data/navigate";
-import { focus } from "../data/focus";
-import { experience } from "../data/experience";
-import AofButton from "../component/AofButton";
-import Experiences from "../component/Experiences";
+import { navigate } from "@/app/data/navigate";
+import { focus } from "@/app/data/focus";
+import { experience } from "@/app/data/experience";
+import AofButton from "@/app/component/AofButton";
+import Experiences from "@/app/component/Experiences";
 import { string } from "zod";
 import MorphText from "@/components/MorphText";
 

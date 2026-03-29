@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import img1 from "../assets/gambar1.png";
-import img2 from "../assets/gambar2.png";
-import img3 from "../assets/gambar3.png";
+import img1 from "@/app/assets/gambar1.png";
+import img2 from "@/app/assets/gambar2.png";
+import img3 from "@/app/assets/gambar3.png";
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
-import MorphText from "../components/MorphText";
-import Descwork from "../component/descwork";
-import Headmeta from "../component/headmeta";
-import Topic from "../component/topic";
+import MorphText from "@/components/MorphText";
+import Descwork from "@/app/component/descwork";
+import Headmeta from "@/app/component/headmeta";
+import Topic from "@/app/component/topic";
 
 const INDEX_DATA = [
   { id: "overview", title: "Overview" },
