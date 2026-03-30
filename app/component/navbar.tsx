@@ -26,7 +26,7 @@ const Navbar = () => {
     <div>
       <div
         className="hidden md:flex sticky z-10 justify-between items-center w-full h-[64px] md:px-12 lg:px-[120px] 
-                bg-white/75 backdrop-blur-2xl font-roboto-mono"
+                bg-white/75 backdrop-blur-2xl font-roboto-mono text-[#171718]"
       >
         <Link href="/">
           <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
@@ -38,7 +38,7 @@ const Navbar = () => {
             return (
               <Link href={item.path} key={item.id}>
                 <button
-                  className={`flex justify-end w-[172px] text-[16px] font-medium text-black`}
+                  className={`flex justify-end w-[172px] text-[16px] font-medium `}
                 >
                   {isActive ? (
                     <span className="flex gap-[8px]">
@@ -106,7 +106,10 @@ const Navbar = () => {
       </div>
 
       {/* Navbar sm */}
-      <div className="md:hidden flex fixed justify-between items-center w-full h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl">
+      <div
+        className="md:hidden flex fixed justify-between items-center w-full 
+      h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl text-[#171718]"
+      >
         <Link href="/">
           <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
         </Link>
