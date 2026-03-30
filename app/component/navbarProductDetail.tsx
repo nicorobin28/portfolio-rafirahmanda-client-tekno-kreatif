@@ -225,7 +225,7 @@ const navbarProductDetail = () => {
               fill="black"
             />
           </svg>
-          <h1 className="text-[16px] text-black font-roboto-mono font-medium">
+          <h1 className="text-[16px] text-[#171718] font-roboto-mono font-medium">
             Other Works
           </h1>
         </button>
@@ -236,7 +236,7 @@ const navbarProductDetail = () => {
             return (
               <Link href={item.path} key={item.id}>
                 <button
-                  className={`flex justify-end w-[172px] text-[16px] font-medium text-black`}
+                  className={`flex justify-end w-[172px] text-[16px] font-medium text-[#171718]`}
                 >
                   {isActive ? (
                     <span className="flex gap-[8px]">
@@ -326,11 +326,11 @@ const navbarProductDetail = () => {
                   fill="black"
                 />
               </svg>
-              <h1 className="text-[16px] text-black font-roboto-mono font-medium">
+              <h1 className="text-[16px] text-[#171718] font-roboto-mono font-medium">
                 Close Sidebar
               </h1>
             </button>
-            <div className="absolute top-[120px] text-black  w-full">
+            <div className="absolute top-[120px] text-[#171718]  w-full">
               {dummyCard.map((item) => (
                 <div key={item.id} className="p-4 w-full">
                   <div className="flex justify-between cursor-pointer group">
@@ -383,7 +383,10 @@ const navbarProductDetail = () => {
       </div>
 
       {/* Navbar sm */}
-      <div className="md:hidden flex justify-between items-center w-full h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl">
+      <div
+        className="md:hidden flex justify-between items-center w-full h-[56px] px-[16px]
+       bg-white/75 backdrop-blur-2xl "
+      >
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-[12px] cursor-pointer"
@@ -408,13 +411,13 @@ const navbarProductDetail = () => {
               fill="black"
             />
           </svg>
-          <h1 className="text-[16px] text-black font-roboto-mono font-medium">
+          <h1 className="text-[16px] font-roboto-mono font-medium text-[#171718]">
             Other Works
           </h1>
         </button>
         <div className="flex items-center gap-6 ">
           <Link href="/">
-            <button className="text-[16px] text-black font-roboto-mono cursor-pointer">
+            <button className="text-[16px] font-roboto-mono cursor-pointer text-[#171718]">
               Home
             </button>
           </Link>
