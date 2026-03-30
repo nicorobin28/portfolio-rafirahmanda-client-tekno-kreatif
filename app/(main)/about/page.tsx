@@ -96,7 +96,7 @@ const about = () => {
       </aside>
 
       <main className="bg-[#ffffff] w-full flex justify-center items-center py-20 md:py-15 ">
-        <div className="bg-[#ffffff]  w-[358px] md:w-[550px] h-auto flex flex-col gap-[64px]">
+        <div className="bg-[#ffffff] w-[358px] md:w-[550px] h-auto flex flex-col gap-[64px]">
           <div className=" w-[358px] h-auto flex md:hidden flex-col gap-[24px]">
             <h1 className="text-[40px] text-[#171718] font-medium font-jakarta">
               Rafi Rahmanda
@@ -152,7 +152,7 @@ const about = () => {
               better products.
             </p>
           </div>
-          <div className="flex flex-col gap-[24px]">
+          <div className=" w-[358px] md:w-[550px] bg-red-200 flex flex-col gap-[24px]">
             <h1 className="text-[#171718] text-[24px] md:text-[32px] font-medium font-jakarta">
               Area of Focus
             </h1>
