@@ -53,7 +53,7 @@ const Navbar = () => {
               </Link>
             );
           })}
-          <button className="flex justify-end w-[172px] text-[16px]">
+          {/* <button className="flex justify-end w-[172px] text-[16px]">
             <svg
               width="20"
               height="20"
@@ -101,7 +101,7 @@ const Navbar = () => {
                 fill="black"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -116,7 +116,7 @@ const Navbar = () => {
               About
             </button>
           </Link>
-          <button className="flex justify-end text-[16px]">
+          {/* <button className="flex justify-end text-[16px]">
             <svg
               width="20"
               height="20"
@@ -164,7 +164,7 @@ const Navbar = () => {
                 fill="black"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
