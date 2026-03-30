@@ -143,7 +143,7 @@ const about = () => {
           </div>
 
           <div className="text-[16px] md:text-[20px] text-[#171718] font-jakarta">
-            <p className="font-bold leading-[34px]">
+            <p className="font-bold leading-[]">
               UI/UX Designer based in Phnom Penh, Cambodia.
             </p>
             <p>
