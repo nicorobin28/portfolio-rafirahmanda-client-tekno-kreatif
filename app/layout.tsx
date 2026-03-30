@@ -45,8 +45,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${jakartaSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        {/* <NavbarProductDetail /> */}
+        {/* <Navbar /> */}
+        <NavbarProductDetail />
         {/* <Card /> */}
 
         {children}
