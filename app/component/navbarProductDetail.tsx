@@ -413,22 +413,11 @@ const navbarProductDetail = () => {
           </h1>
         </button>
         <div className="flex items-center gap-6 ">
-          {menuDesktop.map((item) => {
-            const isActive = pathname === item.path;
-
-            return (
-              <Link href={item.path} key={item.id}>
-                <button
-                  className={`text-[16px] font-roboto-mono cursor-pointer ${
-                    pathname !== item.path ? "text-black" : "hidden"
-                  }`}
-                >
-                  {item.name}
-                </button>
-              </Link>
-            );
-          })}
-
+          <Link href="/about">
+            <button className="text-[16px] text-black font-roboto-mono cursor-pointer">
+              About
+            </button>
+          </Link>
           {/* <button className="flex justify-end text-[16px]">
             <svg
               width="20"
