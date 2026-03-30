@@ -29,7 +29,7 @@ const Navbar = () => {
                 bg-white/75 backdrop-blur-2xl font-roboto-mono text-[#171718]"
       >
         <Link href="/">
-          <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
+          <Image src={LOGO} alt="LOGO" className="w-8 h-8" />
         </Link>
         <div className="flex md:gap-18 lg:gap-24">
           {menuDesktop.map((item) => {
@@ -111,7 +111,7 @@ const Navbar = () => {
       h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl text-[#171718]"
       >
         <Link href="/">
-          <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
+          <Image src={LOGO} alt="LOGO" className="w-8 h-8" />
         </Link>
         <div className="flex items-center gap-6 ">
           {menuDesktop.map((item) => {
