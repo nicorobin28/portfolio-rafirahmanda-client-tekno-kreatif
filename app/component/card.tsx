@@ -226,7 +226,7 @@ const card = () => {
             </div>
 
             {/* Title */}
-            <div className="text-black font-jakarta px-[4px] group-hover:underline ">
+            <div className="text-[#171718] font-jakarta px-[4px] group-hover:underline ">
               <h1 className="font-semibold text-[26px] line-clamp-2">
                 {item.title}
               </h1>
@@ -239,7 +239,7 @@ const card = () => {
 
             {/* Read More */}
             <div
-              className="hidden underline group-hover:flex items-center text-black 
+              className="hidden underline group-hover:flex items-center text-[#171718] 
                     px-[4px] font-roboto-mono font-semibold gap-2 pt-6"
             >
               <h1>Read More</h1>
@@ -292,7 +292,7 @@ const card = () => {
               </div>
 
               {/* Title */}
-              <div className="text-black font-jakarta px-[4px] group-hover:underline ">
+              <div className="text-[#171718] font-jakarta px-[4px] group-hover:underline ">
                 <h1 className="font-semibold text-[20px] line-clamp-2">
                   {item.title}
                 </h1>
@@ -305,7 +305,7 @@ const card = () => {
 
               {/* Read More */}
               <div
-                className="hidden underline group-hover:flex items-center text-black 
+                className="hidden underline group-hover:flex items-center text-[#171718] 
                     px-[4px] font-roboto-mono font-semibold gap-2 pt-6"
               >
                 <h1>Read More</h1>
