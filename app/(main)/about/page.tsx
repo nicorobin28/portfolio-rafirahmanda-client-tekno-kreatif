@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { navigate } from "../data/navigate";
-import { focus } from "../data/focus";
-import { experience } from "../data/experience";
-import AofButton from "../component/AofButton";
-import Experiences from "../component/Experiences";
+import { navigate } from "../../data/navigate";
+import { focus } from "../../data/focus";
+import { experience } from "../../data/experience";
+import AofButton from "../../component/AofButton";
+import Experiences from "../../component/Experiences";
 import { string } from "zod";
 import MorphText from "@/components/MorphText";
 
@@ -35,10 +35,10 @@ const about = () => {
 
   return (
     <div className="flex gap-[20px]">
-      <aside className="sticky top-0 z-0 bg-[#ffffff]  w-full h-screen hidden md:flex flex-col justify-start items-end pt-8">
+      <aside className="sticky top-0 z-0 bg-[#ffffff] w-full h-screen hidden md:flex flex-col justify-start items-center pt-8">
         <div className="bg-[#ffffff]  w-[550px] h-auto flex flex-col gap-[30px]">
           {/* gap48 */}
-          <h1 className="text-[65px] text-[#171718] font-semibold font-jakarta">
+          <h1 className="text-[65px] text-[#171718] font-medium font-jakarta">
             Rafi Rahmanda
           </h1>
           {/* text72 */}
@@ -95,10 +95,10 @@ const about = () => {
         )}
       </aside>
 
-      <main className="bg-[#ffffff] w-full flex justify-center md:justify-start items-center py-20 md:py-15 ">
+      <main className="bg-[#ffffff] w-full flex justify-center items-center py-20 md:py-15 ">
         <div className="bg-[#ffffff]  w-[358px] md:w-[550px] h-auto flex flex-col gap-[64px]">
           <div className=" w-[358px] h-auto flex md:hidden flex-col gap-[24px]">
-            <h1 className="text-[40px] text-[#171718] font-semibold font-jakarta">
+            <h1 className="text-[40px] text-[#171718] font-medium font-jakarta">
               Rafi Rahmanda
             </h1>
             <Image
@@ -143,7 +143,7 @@ const about = () => {
           </div>
 
           <div className="text-[16px] md:text-[20px] text-[#171718] font-jakarta">
-            <p className="font-bold">
+            <p className="font-bold leading-[34px]">
               UI/UX Designer based in Phnom Penh, Cambodia.
             </p>
             <p>
@@ -153,7 +153,7 @@ const about = () => {
             </p>
           </div>
           <div className="flex flex-col gap-[24px]">
-            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-semibold font-jakarta">
+            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-medium font-jakarta">
               Area of Focus
             </h1>
             <div>
@@ -161,7 +161,7 @@ const about = () => {
             </div>
           </div>
           <div className="flex flex-col gap-[24px]">
-            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-semibold font-jakarta">
+            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-medium font-jakarta">
               Experience
             </h1>
             <div>
