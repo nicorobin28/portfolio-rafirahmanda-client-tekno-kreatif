@@ -25,7 +25,7 @@ const Navbar = () => {
     // Navbar md-lg
     <div>
       <div
-        className="hidden md:flex fixed justify-between items-center w-full h-[64px] md:px-12 lg:px-[120px] 
+        className="hidden md:flex sticky z-10 justify-between items-center w-full h-[64px] md:px-12 lg:px-[120px] 
                 bg-white/75 backdrop-blur-2xl font-roboto-mono"
       >
         <Link href="/">
@@ -114,18 +114,19 @@ const Navbar = () => {
           {menuDesktop.map((item) => {
             const isActive = pathname === item.path;
 
+            if (isActive) return null;
+
             return (
               <Link href={item.path} key={item.id}>
                 <button
-                  className={`text-[16px] font-roboto-mono cursor-pointer ${
-                    pathname !== item.path ? "text-black" : "hidden"
-                  }`}
+                  className={`text-[16px] font-roboto-mono cursor-pointer text-black`}
                 >
                   {item.name}
                 </button>
               </Link>
             );
           })}
+
           {/* <button className="flex justify-end text-[16px]">
             <svg
               width="20"

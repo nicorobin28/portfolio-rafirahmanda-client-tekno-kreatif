@@ -413,12 +413,11 @@ const navbarProductDetail = () => {
           </h1>
         </button>
         <div className="flex items-center gap-6 ">
-          <Link href="/about">
+          <Link href="/">
             <button className="text-[16px] text-black font-roboto-mono cursor-pointer">
-              About
+              Home
             </button>
           </Link>
-
           {/* <button className="flex justify-end text-[16px]">
             <svg
               width="20"
