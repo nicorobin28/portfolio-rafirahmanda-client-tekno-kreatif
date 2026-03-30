@@ -251,7 +251,7 @@ const navbarProductDetail = () => {
               </Link>
             );
           })}
-          <button className="flex justify-end w-[172px] text-[16px]">
+          {/* <button className="flex justify-end w-[172px] text-[16px]">
             <svg
               width="20"
               height="20"
@@ -299,7 +299,7 @@ const navbarProductDetail = () => {
                 fill="black"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -413,12 +413,23 @@ const navbarProductDetail = () => {
           </h1>
         </button>
         <div className="flex items-center gap-6 ">
-          <Link href="/">
-            <button className="text-[16px] text-black font-roboto-mono cursor-pointer">
-              Home
-            </button>
-          </Link>
-          <button className="flex justify-end text-[16px]">
+          {menuDesktop.map((item) => {
+            const isActive = pathname === item.path;
+
+            return (
+              <Link href={item.path} key={item.id}>
+                <button
+                  className={`text-[16px] font-roboto-mono cursor-pointer ${
+                    pathname !== item.path ? "text-black" : "hidden"
+                  }`}
+                >
+                  {item.name}
+                </button>
+              </Link>
+            );
+          })}
+
+          {/* <button className="flex justify-end text-[16px]">
             <svg
               width="20"
               height="20"
@@ -466,7 +477,7 @@ const navbarProductDetail = () => {
                 fill="black"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
