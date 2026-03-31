@@ -53,7 +53,7 @@ const Navbar = () => {
               </Link>
             );
           })}
-          <button className="flex justify-end w-[172px] text-[16px]">
+          {/* <button className="flex justify-end w-[172px] text-[16px]">
             <svg
               width="20"
               height="20"
@@ -101,12 +101,15 @@ const Navbar = () => {
                 fill="black"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
 
       {/* Navbar sm */}
-      <div className="md:hidden flex fixed justify-between items-center w-full h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl">
+      <div
+        className="md:hidden flex fixed justify-between items-center w-full 
+      h-[56px] px-4 bg-white/75 backdrop-blur-2xl"
+      >
         <Link href="/">
           <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
         </Link>
@@ -116,7 +119,7 @@ const Navbar = () => {
               About
             </button>
           </Link>
-          <button className="flex justify-end text-[16px]">
+          {/* <button className="flex justify-end text-[16px]">
             <svg
               width="20"
               height="20"
@@ -164,7 +167,7 @@ const Navbar = () => {
                 fill="black"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

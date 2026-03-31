@@ -16,14 +16,11 @@ const card = () => {
   };
 
   const card: data[] = [
-   
     {
       id: 1,
       img: "/home1.png",
       desc: {
-        icon: (
-          <Image src="/icon1.png" alt="Icon" width={16} height={16} />
-        ),
+        icon: <Image src="/icon1.png" alt="Icon" width={16} height={16} />,
         name: "cellcard",
         year: "2025",
       },
@@ -34,22 +31,19 @@ const card = () => {
       id: 2,
       img: "/home1.png",
       desc: {
-        icon: (
-           <Image src="/icon1.png" alt="Icon" width={16} height={16} />
-        ),
+        icon: <Image src="/icon1.png" alt="Icon" width={16} height={16} />,
         name: "cellcard",
         year: "2026",
       },
       title: "Add Gamification to Telco UI ",
-      subtitle: "Using motion to attract attention without breaking overall harmony. ",
+      subtitle:
+        "Using motion to attract attention without breaking overall harmony. ",
     },
     {
       id: 3,
       img: "/home1.png",
       desc: {
-        icon: (
-           <Image src="/icon1.png" alt="Icon" width={16} height={16} />
-        ),
+        icon: <Image src="/icon1.png" alt="Icon" width={16} height={16} />,
         name: "cellcard",
         year: "2026",
       },
@@ -102,9 +96,7 @@ const card = () => {
       id: 5,
       img: "/home1.png",
       desc: {
-        icon: (
-          <Image src="/icon2.png" alt="Icon" width={16} height={16} />
-        ),
+        icon: <Image src="/icon2.png" alt="Icon" width={16} height={16} />,
         name: "Quickbill",
         year: "2025",
       },
@@ -115,9 +107,7 @@ const card = () => {
       id: 6,
       img: "/home1.png",
       desc: {
-        icon: (
-          <Image src="/icon3.png" alt="Icon" width={16} height={16} />
-        ),
+        icon: <Image src="/icon3.png" alt="Icon" width={16} height={16} />,
         name: "1Engage",
         year: "2024",
       },
@@ -128,9 +118,7 @@ const card = () => {
       id: 7,
       img: "/home1.png",
       desc: {
-        icon: (
-         <Image src="/icon3.png" alt="Icon" width={16} height={16} />
-        ),
+        icon: <Image src="/icon3.png" alt="Icon" width={16} height={16} />,
         name: "1Engage",
         year: "2024",
       },
@@ -183,8 +171,7 @@ const card = () => {
 
   return (
     <div className="flex px-4 md:px-[120px] pb-5 ">
-     
-      <main className="grid grid-cols-1 md:grid-cols-4 grid-rows-auto gap-6 justify-center">
+      <main className="grid grid-cols-1 md:grid-cols-4 grid-rows-auto md:gap-6 justify-center">
         {/* CARD MD-LG */}
         {card.map((item) => (
           <div
@@ -193,12 +180,7 @@ const card = () => {
           >
             {/* Image */}
             <div className="w-[236px] h-[162px] rounded-[8px] bg-[#F1F1F2] text-red-400">
-              <Image 
-                src={item.img}
-                alt={item.title}
-                width={236}
-                height={162}
-              />
+              <Image src={item.img} alt={item.title} width={236} height={162} />
             </div>
 
             {/* Desc */}
@@ -226,8 +208,8 @@ const card = () => {
             </div>
 
             {/* Title */}
-            <div className="text-black font-jakarta px-[4px] group-hover:underline ">
-              <h1 className="font-semibold text-[26px] line-clamp-2">
+            <div className="text-[#171718] font-jakarta px-[4px] group-hover:underline ">
+              <h1 className="font-medium text-[26px] line-clamp-2">
                 {item.title}
               </h1>
             </div>
@@ -239,8 +221,8 @@ const card = () => {
 
             {/* Read More */}
             <div
-              className="hidden underline group-hover:flex items-center text-black 
-                    px-[4px] font-roboto-mono font-semibold gap-2 pt-6"
+              className="hidden underline group-hover:flex items-center text-[#171718] 
+                    px-[4px] font-roboto-mono font-medium gap-2 pt-6"
             >
               <h1>Read More</h1>
               <svg
@@ -256,90 +238,91 @@ const card = () => {
                 />
               </svg>
             </div>
-
           </div>
         ))}
 
         {/* CARD SM (MOBILE) */}
-        {card.map((item) => (
-          <div
-            key={item.id}
-            className="md:hidden flex gap-4 w-full cursor-pointer group"
-          >
-            <div className="flex flex-col gap-2 w-full">
-              {/* Desc */}
-              <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[12px] px-[4px]">
-                <div className="flex items-center gap-1.5">
-                  {/* Icon */}
-                  <>{item.desc.icon}</>
-                  {/* Icon Name */}
-                  <p>{item.desc.name}</p>
+        <div className="flex md:hidden flex-col gap-[48px] justify-center">
+          {card.map((item) => (
+            <div
+              key={item.id}
+              className="md:hidden flex gap-8  w-full cursor-pointer group"
+            >
+              <div className="flex flex-col gap-2 w-full">
+                {/* Desc */}
+                <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[12px] px-[4px]">
+                  <div className="flex items-center gap-1.5">
+                    {/* Icon */}
+                    <>{item.desc.icon}</>
+                    {/* Icon Name */}
+                    <p>{item.desc.name}</p>
+                  </div>
+                  {/* Bullet */}
+                  <span>
+                    <svg
+                      width="4"
+                      height="4"
+                      viewBox="0 0 4 4"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="2" cy="2" r="2" fill="#9C9EA1" />
+                    </svg>
+                  </span>
+                  {/* Year */}
+                  <p>{item.desc.year}</p>
                 </div>
-                {/* Bullet */}
-                <span>
+
+                {/* Title */}
+                <div className="text-[#171718] font-jakarta px-[4px] group-hover:underline ">
+                  <h1 className="font-medium text-[20px] line-clamp-2">
+                    {item.title}
+                  </h1>
+                </div>
+
+                {/* Subtitle */}
+                <div className="text-[#5B5E61] font-jakarta px-[4px] group-hover:hidden">
+                  <h1 className="text-[16px] line-clamp-2">{item.subtitle}</h1>
+                </div>
+
+                {/* Read More */}
+                <div
+                  className="hidden underline group-hover:flex items-center text-[#171718] 
+                    px-[4px] font-roboto-mono font-medium gap-2 pt-6"
+                >
+                  <h1>Read More</h1>
                   <svg
-                    width="4"
-                    height="4"
-                    viewBox="0 0 4 4"
+                    width="11"
+                    height="11"
+                    viewBox="0 0 11 11"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <circle cx="2" cy="2" r="2" fill="#9C9EA1" />
+                    <path
+                      d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
+                      fill="black"
+                    />
                   </svg>
-                </span>
-                {/* Year */}
-                <p>{item.desc.year}</p>
+                </div>
               </div>
 
-              {/* Title */}
-              <div className="text-black font-jakarta px-[4px] group-hover:underline ">
-                <h1 className="font-semibold text-[20px] line-clamp-2">
-                  {item.title}
-                </h1>
-              </div>
-
-              {/* Subtitle */}
-              <div className="text-[#5B5E61] font-jakarta px-[4px] group-hover:hidden">
-                <h1 className="text-[16px] line-clamp-2">{item.subtitle}</h1>
-              </div>
-
-              {/* Read More */}
-              <div
-                className="hidden underline group-hover:flex items-center text-black 
-                    px-[4px] font-roboto-mono font-semibold gap-2 pt-6"
-              >
-                <h1>Read More</h1>
-                <svg
-                  width="11"
-                  height="11"
-                  viewBox="0 0 11 11"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
-                    fill="black"
-                  />
-                </svg>
+              {/* Image */}
+              <div className="w-[108px] h-[72px] rounded-[6px] bg-[#F1F1F2] overflow-hidden">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className=" w-full h-full object-cover"
+                />
               </div>
             </div>
-
-            {/* Image */}
-           <div className="w-[108px] h-[72px] rounded-[6px] bg-[#F1F1F2] overflow-hidden">
-              <img
-                src={item.img}
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
         <div className=" md:hidden justify-between text-center items-center ">
-          <p className ="md:hidden text-[#5B5E61] font-jakarta  pb-5">That’s all for now!</p>
+          <p className="md:hidden text-[#5B5E61] font-jakarta  pb-5">
+            That’s all for now!
+          </p>
         </div>
       </main>
-    
-      
     </div>
   );
 };
