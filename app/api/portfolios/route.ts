@@ -11,7 +11,9 @@ export async function GET() {
     const portfolios = await prisma.portfolio.findMany({
       include: {
         images: true,
-        contents: true
+        contents: {
+          orderBy: { order: "asc" }
+        }
       },
       orderBy: { createdAt: "desc" }
     })

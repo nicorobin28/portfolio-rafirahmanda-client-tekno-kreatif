@@ -69,6 +69,7 @@ model Portfolio {
   user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   images   PortfolioImage[]
   contents PortfolioContent[]
+  tags     PortfolioTag[]
 
   @@map("portfolios")
 }
@@ -79,11 +80,20 @@ model PortfolioImage {
   url         String   // URL gambar di storage (R2/S3)
   altText     String?  // alt text untuk aksesibilitas
   order       Int      @default(0)  // urutan tampil gambar
+  anchorContentId String?
+  anchorPosition  ImageAnchorPosition?
   createdAt   DateTime @default(now())
 
   portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  anchorContent PortfolioContent? @relation("ImageAnchor", fields: [anchorContentId], references: [id], onDelete: SetNull)
+
 
   @@map("portfolio_images")
+}
+
+enum ImageAnchorPosition {
+  BEFORE
+  AFTER
 }
 
 model PortfolioContent {
@@ -96,6 +106,7 @@ model PortfolioContent {
   updatedAt   DateTime @updatedAt
 
   portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  anchoredImages PortfolioImage[] @relation("ImageAnchor")
 
   @@map("portfolio_contents")
 }
@@ -115,6 +126,30 @@ model AreaOfFocus {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("area_of_focus")
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  label     String   @unique  // unik secara global, contoh: "Mobile App", "Branding"
+  color     String?           // opsional: hex color untuk badge, misal "#FF5733"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  portfolios PortfolioTag[]   // join table
+
+  @@map("tags")
+}
+
+// Join table — Portfolio ↔ Tag (many-to-many)
+model PortfolioTag {
+  portfolioId String
+  tagId       String
+
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  tag       Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([portfolioId, tagId])
+  @@map("portfolio_tags")
 }
 
 // ─────────────────────────────────────────────

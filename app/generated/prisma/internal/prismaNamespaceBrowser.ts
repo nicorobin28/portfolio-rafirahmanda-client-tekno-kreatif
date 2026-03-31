@@ -57,6 +57,8 @@ export const ModelName = {
   PortfolioImage: 'PortfolioImage',
   PortfolioContent: 'PortfolioContent',
   AreaOfFocus: 'AreaOfFocus',
+  Tag: 'Tag',
+  PortfolioTag: 'PortfolioTag',
   Experience: 'Experience'
 } as const
 
@@ -125,6 +127,8 @@ export const PortfolioImageScalarFieldEnum = {
   url: 'url',
   altText: 'altText',
   order: 'order',
+  anchorContentId: 'anchorContentId',
+  anchorPosition: 'anchorPosition',
   createdAt: 'createdAt'
 } as const
 
@@ -154,6 +158,25 @@ export const AreaOfFocusScalarFieldEnum = {
 } as const
 
 export type AreaOfFocusScalarFieldEnum = (typeof AreaOfFocusScalarFieldEnum)[keyof typeof AreaOfFocusScalarFieldEnum]
+
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const PortfolioTagScalarFieldEnum = {
+  portfolioId: 'portfolioId',
+  tagId: 'tagId'
+} as const
+
+export type PortfolioTagScalarFieldEnum = (typeof PortfolioTagScalarFieldEnum)[keyof typeof PortfolioTagScalarFieldEnum]
 
 
 export const ExperienceScalarFieldEnum = {

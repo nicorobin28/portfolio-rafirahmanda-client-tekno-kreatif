@@ -137,6 +137,23 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumImageAnchorPositionNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ImageAnchorPosition | Prisma.EnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel> | $Enums.ImageAnchorPosition | null
+}
+
+export type EnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ImageAnchorPosition | Prisma.EnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaModel> | $Enums.ImageAnchorPosition | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
+}
+
 export type BoolFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
@@ -284,6 +301,23 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type NestedEnumImageAnchorPositionNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ImageAnchorPosition | Prisma.EnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel> | $Enums.ImageAnchorPosition | null
+}
+
+export type NestedEnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ImageAnchorPosition | Prisma.EnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaModel> | $Enums.ImageAnchorPosition | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
 }
 
 export type NestedBoolFilter<$PrismaModel = never> = {

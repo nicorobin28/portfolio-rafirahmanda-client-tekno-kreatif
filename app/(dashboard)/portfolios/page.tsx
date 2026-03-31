@@ -2,9 +2,24 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Plus, Edit2, FileText, Trash2, Image as ImageIcon, Loader2, UploadCloud } from "lucide-react"
+import { Plus, Edit2, FileText, Trash2, Image as ImageIcon, Loader2, UploadCloud, GripVertical } from "lucide-react"
 import Modal from "@/components/ui/Modal"
 import RichTextEditor from "@/components/ui/RichTextEditor"
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core"
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
+} from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 
 const optimizeImage = async (file: File, maxWidth = 1920, quality = 0.8): Promise<File> => {
   return new Promise((resolve, reject) => {
@@ -170,6 +185,36 @@ export default function PortfoliosPage() {
     } catch(err) { alert("Failed to delete content section") }
   }
 
+  const handleReorderContent = async (newContents: any[]) => {
+    // Optimistic update
+    setActivePortfolio((prev: any) => ({ ...prev, contents: newContents }))
+    try {
+      await axios.patch(
+        `/api/portfolios/${activePortfolio.id}/content`,
+        { orderedIds: newContents.map((c: any) => c.id) }
+      )
+    } catch {
+      alert("Failed to save new order — please refresh.")
+    }
+  }
+
+  const handleUpdateImageAnchors = async (newImages: any[]) => {
+    // Optimistic update
+    setActivePortfolio((prev: any) => ({ ...prev, images: newImages }))
+    try {
+       await axios.patch(`/api/portfolios/${activePortfolio.id}/images`, {
+          images: newImages.map(img => ({
+             id: img.id,
+             anchorContentId: img.anchorContentId,
+             anchorPosition: img.anchorPosition
+          }))
+       })
+    } catch {
+       alert("Failed to save image anchors.")
+       fetchPortfolios() // Rollback
+    }
+  }
+
   const openNewPortfolio = () => {
     setActivePortfolio(null)
     setFormData({ title: "", role: "", company: "", year: new Date().getFullYear().toString() })
@@ -189,8 +234,10 @@ export default function PortfoliosPage() {
   }
 
   const openManageContent = (p: any) => {
-    setActivePortfolio(p)
-    if (p.contents?.length > 0) {
+    // Sort by order field so list reflects saved order
+    const sorted = { ...p, contents: [...(p.contents || [])].sort((a, b) => a.order - b.order) }
+    setActivePortfolio(sorted)
+    if (sorted.contents?.length > 0) {
       setContentView("list")
     } else {
       setActiveContent(null)
@@ -344,24 +391,18 @@ export default function PortfoliosPage() {
         {contentView === "list" ? (
           <div className="space-y-4">
             {activePortfolio?.contents?.length > 0 ? (
-               <div className="divide-y divide-slate-100 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                 {activePortfolio.contents.map((c: any) => (
-                    <div key={c.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-50 hover:bg-slate-100/50 transition-colors gap-4">
-                       <div>
-                         <h4 className="font-semibold text-slate-800 text-sm line-clamp-1">{c.title}</h4>
-                         <p className="text-xs text-slate-500 mt-1 max-w-[280px] line-clamp-1">{c.body.replace(/<[^>]+>/g, '')}</p>
-                       </div>
-                       <div className="flex items-center gap-2 shrink-0">
-                         <button onClick={() => { setActiveContent(c); setContentFormData({ title: c.title, body: c.body }); setContentView("form"); }} className="px-3 py-1.5 bg-white border border-slate-200 hover:border-slate-300 text-slate-700 text-xs font-semibold rounded-lg shadow-sm transition-all">Edit</button>
-                         <button onClick={() => handleDeleteContent(c.id)} className="px-3 py-1.5 bg-white border border-slate-200 hover:bg-red-50 hover:border-red-200 hover:text-red-700 text-slate-500 text-xs font-semibold rounded-lg shadow-sm transition-all"><Trash2 className="w-3.5 h-3.5" /></button>
-                       </div>
-                    </div>
-                 ))}
-               </div>
+              <SortableContentList
+                contents={activePortfolio.contents}
+                portfolioImages={activePortfolio.images || []}
+                onReorder={handleReorderContent}
+                onEdit={(c) => { setActiveContent(c); setContentFormData({ title: c.title, body: c.body }); setContentView("form") }}
+                onDelete={handleDeleteContent}
+                onUpdateImageAnchors={handleUpdateImageAnchors}
+              />
             ) : (
                <div className="text-center py-8 text-sm text-slate-500">No content sections exist yet.</div>
             )}
-            
+
             <button onClick={() => { setActiveContent(null); setContentFormData({ title: "", body: "" }); setContentView("form"); }} className="w-full py-3 flex items-center justify-center gap-2 border-2 border-dashed border-slate-200 text-slate-600 font-semibold text-sm rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all">
                <Plus className="w-4 h-4" /> Add New Section
             </button>
@@ -398,5 +439,244 @@ export default function PortfoliosPage() {
       </Modal>
 
     </div>
+  )
+}
+
+// ─── Sortable sub-components ────────────────────────────────────────────────
+
+interface SortableContentItemProps {
+  content: any
+  anchoredImages: any[]
+  onEdit: (c: any) => void
+  onDelete: (id: string) => void
+  onManageLayout: (c: any) => void
+}
+
+function SortableContentItem({ 
+  content: c, 
+  anchoredImages, 
+  onEdit, 
+  onDelete, 
+  onManageLayout 
+}: SortableContentItemProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: c.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 50 : undefined,
+    opacity: isDragging ? 0.85 : 1,
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={`relative group bg-slate-50 border-b border-slate-100 last:border-b-0 transition-colors ${
+        isDragging
+          ? "shadow-lg ring-2 ring-slate-900/10 rounded-xl bg-white z-50 transition-none"
+          : "hover:bg-slate-100/60"
+      }`}
+    >
+      <div className="flex items-center gap-2 p-3 sm:p-4">
+        {/* Drag handle */}
+        <button
+          type="button"
+          {...attributes}
+          {...listeners}
+          className="p-1 text-slate-300 hover:text-slate-500 cursor-grab active:cursor-grabbing rounded-md hover:bg-slate-200/60 transition-colors shrink-0 touch-none"
+          aria-label="Drag to reorder"
+        >
+          <GripVertical className="w-4 h-4" />
+        </button>
+
+        {/* Content info */}
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-slate-800 text-sm line-clamp-1">{c.title}</h4>
+          <p className="text-xs text-slate-500 mt-0.5 max-w-[240px] line-clamp-1">
+            {c.body.replace(/<[^>]+>/g, "") || "No content body..."}
+          </p>
+
+          {/* Anchored Images Count/Thumbnails */}
+          {anchoredImages.length > 0 && (
+            <div className="flex items-center gap-1.5 mt-2 overflow-x-auto pb-1 no-scrollbar">
+              {anchoredImages.map((img: any) => (
+                <div key={img.id} className="relative w-8 h-8 rounded-md overflow-hidden border border-white ring-1 ring-slate-200 shadow-sm shrink-0">
+                  <img src={img.url} className="w-full h-full object-cover" />
+                  <div className={`absolute bottom-0 right-0 w-2 h-2 rounded-full border border-white shadow-xs ${img.anchorPosition === 'BEFORE' ? 'bg-amber-400' : 'bg-emerald-400'}`} />
+                </div>
+              ))}
+              <span className="text-[10px] font-bold text-slate-400 ml-1 whitespace-nowrap">{anchoredImages.length} anchored</span>
+            </div>
+          )}
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => onManageLayout(c)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-[11px] font-bold rounded-lg transition-all border border-indigo-100/50"
+          >
+            <ImageIcon className="w-3.5 h-3.5" /> Layout
+          </button>
+          <button
+            type="button"
+            onClick={() => onEdit(c)}
+            className="px-3 py-1.5 bg-white border border-slate-200 hover:border-slate-300 text-slate-700 text-xs font-semibold rounded-lg shadow-sm transition-all"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            onClick={() => onDelete(c.id)}
+            className="px-3 py-1.5 bg-white border border-slate-200 hover:bg-red-50 hover:border-red-200 hover:text-red-700 text-slate-500 text-xs font-semibold rounded-lg shadow-sm transition-all"
+          >
+            <Trash2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+interface SortableContentListProps {
+  contents: any[]
+  portfolioImages: any[]
+  onReorder: (newContents: any[]) => void
+  onEdit: (c: any) => void
+  onDelete: (id: string) => void
+  onUpdateImageAnchors: (images: any[]) => void
+}
+
+function SortableContentList({ 
+  contents, 
+  portfolioImages, 
+  onReorder, 
+  onEdit, 
+  onDelete,
+  onUpdateImageAnchors
+}: SortableContentListProps) {
+  const [layoutModalOpen, setLayoutModalOpen] = useState(false)
+  const [targetContent, setTargetContent] = useState<any>(null)
+  const [isUpdatingLayout, setIsUpdatingLayout] = useState(false)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+  )
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (!over || active.id === over.id) return
+
+    const oldIndex = contents.findIndex((c) => c.id === active.id)
+    const newIndex = contents.findIndex((c) => c.id === over.id)
+    const reordered = arrayMove(contents, oldIndex, newIndex)
+    onReorder(reordered)
+  }
+
+  const handleToggleAnchor = (img: any, position: "BEFORE" | "AFTER" | null) => {
+    const updatedImages = portfolioImages.map(i => {
+      if (i.id === img.id) {
+        // If clicking the current position again, nullify it. Else, set it.
+        const isCurrentlyThere = i.anchorContentId === targetContent.id && i.anchorPosition === position
+        return {
+          ...i,
+          anchorContentId: isCurrentlyThere ? null : targetContent.id,
+          anchorPosition: isCurrentlyThere ? null : position
+        }
+      }
+      return i
+    })
+    onUpdateImageAnchors(updatedImages)
+  }
+
+  return (
+    <>
+      <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white">
+        {/* Header hint */}
+        <div className="flex items-center gap-2 px-4 py-2 bg-slate-100/70 border-b border-slate-200">
+          <GripVertical className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            Drag to reorder sections
+          </span>
+        </div>
+
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext
+            items={contents.map((c) => c.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {contents.map((c) => (
+              <SortableContentItem
+                key={c.id}
+                content={c}
+                anchoredImages={portfolioImages.filter(img => img.anchorContentId === c.id)}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onManageLayout={(item) => { setTargetContent(item); setLayoutModalOpen(true); }}
+              />
+            ))}
+          </SortableContext>
+        </DndContext>
+      </div>
+
+      <Modal isOpen={layoutModalOpen} onClose={() => setLayoutModalOpen(false)} title={`Manage Layout: ${targetContent?.title}`}>
+         <div className="space-y-6">
+            <div className="text-sm text-slate-500">Pick images and their position relative to <span className="font-bold text-slate-900">"{targetContent?.title}"</span></div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto p-1">
+               {portfolioImages.map((img) => {
+                  const isBefore = img.anchorContentId === targetContent?.id && img.anchorPosition === "BEFORE"
+                  const isAfter = img.anchorContentId === targetContent?.id && img.anchorPosition === "AFTER"
+                  const isOther = img.anchorContentId && img.anchorContentId !== targetContent?.id
+
+                  return (
+                    <div key={img.id} className={`group flex flex-col p-3 rounded-2xl border transition-all ${isBefore || isAfter ? 'bg-indigo-50/50 border-indigo-200 shadow-sm' : 'bg-white border-slate-100'} ${isOther ? 'opacity-40 grayscale-50' : ''}`}>
+                       <div className="relative aspect-video rounded-xl overflow-hidden mb-3 shadow-xs">
+                          <img src={img.url} className="w-full h-full object-cover" />
+                          {isOther && (
+                            <div className="absolute inset-0 bg-white/60 backdrop-blur-xs flex items-center justify-center p-4">
+                               <p className="text-[10px] font-bold text-slate-600 text-center leading-tight">Anchored to another section</p>
+                            </div>
+                          )}
+                       </div>
+                       
+                       <div className="flex items-center gap-1.5">
+                          <button 
+                            onClick={() => handleToggleAnchor(img, "BEFORE")}
+                            className={`flex-1 py-2 rounded-xl text-[10px] font-bold transition-all border ${isBefore ? 'bg-amber-400 text-white border-amber-500 shadow-md scale-105' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'}`}
+                          >
+                             {isBefore ? "✓ BEFORE" : "BEFORE"}
+                          </button>
+                          <button 
+                            onClick={() => handleToggleAnchor(img, "AFTER")}
+                            className={`flex-1 py-2 rounded-xl text-[10px] font-bold transition-all border ${isAfter ? 'bg-emerald-500 text-white border-emerald-600 shadow-md scale-105' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'}`}
+                          >
+                             {isAfter ? "✓ AFTER" : "AFTER"}
+                          </button>
+                       </div>
+                    </div>
+                  )
+               })}
+            </div>
+            
+            <div className="flex justify-end pt-4 border-t border-slate-100">
+               <button onClick={() => setLayoutModalOpen(false)} className="px-6 py-2.5 bg-slate-950 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-950/20 active:scale-95">Done</button>
+            </div>
+         </div>
+      </Modal>
+    </>
   )
 }

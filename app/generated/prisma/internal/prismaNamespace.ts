@@ -390,6 +390,8 @@ export const ModelName = {
   PortfolioImage: 'PortfolioImage',
   PortfolioContent: 'PortfolioContent',
   AreaOfFocus: 'AreaOfFocus',
+  Tag: 'Tag',
+  PortfolioTag: 'PortfolioTag',
   Experience: 'Experience'
 } as const
 
@@ -406,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "profile" | "portfolio" | "portfolioImage" | "portfolioContent" | "areaOfFocus" | "experience"
+    modelProps: "user" | "profile" | "portfolio" | "portfolioImage" | "portfolioContent" | "areaOfFocus" | "tag" | "portfolioTag" | "experience"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -854,6 +856,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Tag: {
+      payload: Prisma.$TagPayload<ExtArgs>
+      fields: Prisma.TagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        findFirst: {
+          args: Prisma.TagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        findMany: {
+          args: Prisma.TagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>[]
+        }
+        create: {
+          args: Prisma.TagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        createMany: {
+          args: Prisma.TagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>[]
+        }
+        delete: {
+          args: Prisma.TagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        update: {
+          args: Prisma.TagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        deleteMany: {
+          args: Prisma.TagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>[]
+        }
+        upsert: {
+          args: Prisma.TagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>
+        }
+        aggregate: {
+          args: Prisma.TagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTag>
+        }
+        groupBy: {
+          args: Prisma.TagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TagCountAggregateOutputType> | number
+        }
+      }
+    }
+    PortfolioTag: {
+      payload: Prisma.$PortfolioTagPayload<ExtArgs>
+      fields: Prisma.PortfolioTagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PortfolioTagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PortfolioTagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>
+        }
+        findFirst: {
+          args: Prisma.PortfolioTagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PortfolioTagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>
+        }
+        findMany: {
+          args: Prisma.PortfolioTagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>[]
+        }
+        create: {
+          args: Prisma.PortfolioTagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>
+        }
+        createMany: {
+          args: Prisma.PortfolioTagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PortfolioTagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>[]
+        }
+        delete: {
+          args: Prisma.PortfolioTagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>
+        }
+        update: {
+          args: Prisma.PortfolioTagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>
+        }
+        deleteMany: {
+          args: Prisma.PortfolioTagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PortfolioTagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PortfolioTagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>[]
+        }
+        upsert: {
+          args: Prisma.PortfolioTagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioTagPayload>
+        }
+        aggregate: {
+          args: Prisma.PortfolioTagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePortfolioTag>
+        }
+        groupBy: {
+          args: Prisma.PortfolioTagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioTagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PortfolioTagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioTagCountAggregateOutputType> | number
+        }
+      }
+    }
     Experience: {
       payload: Prisma.$ExperiencePayload<ExtArgs>
       fields: Prisma.ExperienceFieldRefs
@@ -1016,6 +1166,8 @@ export const PortfolioImageScalarFieldEnum = {
   url: 'url',
   altText: 'altText',
   order: 'order',
+  anchorContentId: 'anchorContentId',
+  anchorPosition: 'anchorPosition',
   createdAt: 'createdAt'
 } as const
 
@@ -1045,6 +1197,25 @@ export const AreaOfFocusScalarFieldEnum = {
 } as const
 
 export type AreaOfFocusScalarFieldEnum = (typeof AreaOfFocusScalarFieldEnum)[keyof typeof AreaOfFocusScalarFieldEnum]
+
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const PortfolioTagScalarFieldEnum = {
+  portfolioId: 'portfolioId',
+  tagId: 'tagId'
+} as const
+
+export type PortfolioTagScalarFieldEnum = (typeof PortfolioTagScalarFieldEnum)[keyof typeof PortfolioTagScalarFieldEnum]
 
 
 export const ExperienceScalarFieldEnum = {
@@ -1132,6 +1303,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ImageAnchorPosition'
+ */
+export type EnumImageAnchorPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImageAnchorPosition'>
+    
+
+
+/**
+ * Reference to a field of type 'ImageAnchorPosition[]'
+ */
+export type ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImageAnchorPosition[]'>
     
 
 
@@ -1256,6 +1441,8 @@ export type GlobalOmitConfig = {
   portfolioImage?: Prisma.PortfolioImageOmit
   portfolioContent?: Prisma.PortfolioContentOmit
   areaOfFocus?: Prisma.AreaOfFocusOmit
+  tag?: Prisma.TagOmit
+  portfolioTag?: Prisma.PortfolioTagOmit
   experience?: Prisma.ExperienceOmit
 }
 
