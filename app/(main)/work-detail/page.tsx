@@ -97,7 +97,6 @@ const Page = () => {
 
           {/* index */}
           <div className="relative z-50">
-            {/* Sentinel element to track scroll position */}
             <div
               ref={sentinelRef}
               className="absolute -top-[1px] w-full h-[1px]"
@@ -107,7 +106,7 @@ const Page = () => {
             {isSticky && isMobile && (
               <div className="flex flex-col gap-4 border border-transparent rounded-2xl p-4 opacity-0 pointer-events-none">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-[20px] font-semibold">Index</h3>
+                  <h3 className="text-[20px] font-medium">Index</h3>
                   <ChevronDown className="w-5 h-5" />
                 </div>
                 <div
@@ -115,7 +114,7 @@ const Page = () => {
                     openIndex ? "max-h-[200px]" : "max-h-[28px]"
                   }`}
                 >
-                  <ul className="flex flex-col gap-4 text-[14px] ml-2">
+                  <ul className="flex flex-col gap-4 text-[14px]  ml-2">
                     {INDEX_DATA.map((item) => (
                       <li
                         key={`placeholder-${item.id}`}
@@ -149,7 +148,6 @@ const Page = () => {
                       borderBottomWidth: "1px",
                       borderColor: "#E5E7EB",
                       padding: "16px 24px",
-                      boxShadow: "0px 10px 40px rgba(0,0,0,0.08)",
                       backgroundColor: "rgba(255, 255, 255, 0.95)",
                       backdropFilter: "blur(12px)",
                     }
@@ -158,7 +156,6 @@ const Page = () => {
                         borderRadius: "0px",
                         borderWidth: "0px",
                         padding: "0px",
-                        boxShadow: "0px 0px 0px rgba(0,0,0,0)",
                         backgroundColor: "transparent",
                         backdropFilter: "blur(0px)",
                       }
@@ -166,7 +163,6 @@ const Page = () => {
                         borderRadius: "16px",
                         border: "1px solid #C7C8C9",
                         padding: "16px",
-                        boxShadow: "0px 0px 0px rgba(0,0,0,0)",
                         backgroundColor: "rgba(255, 255, 255, 1)",
                         backdropFilter: "blur(0px)",
                       }
@@ -183,7 +179,7 @@ const Page = () => {
               >
                 <motion.h3
                   layout="position"
-                  className="text-[20px] font-semibold text-black mb-2"
+                  className="text-[20px] font-medium text-[#171718] mb-2"
                 >
                   Index
                 </motion.h3>
@@ -213,8 +209,8 @@ const Page = () => {
                           isVisible ? "block" : "hidden"
                         } cursor-pointer transition-colors duration-200 ${
                           isActive
-                            ? "text-black font-semibold"
-                            : "text-gray-500 hover:text-gray-800"
+                            ? "text-black font-medium"
+                            : "text-[#5B5E61] hover:text-gray-800"
                         }`}
                         onClick={(e) => scrollToSection(item.id, e)}
                       >
@@ -225,8 +221,8 @@ const Page = () => {
                 </ul>
               </motion.div>
 
-              <div className="hidden md:block">
-                <ul className="flex flex-col gap-4 text-[14px]">
+              <div className="hidden md:block ">
+                <ul className="flex flex-col text-[14px] leading-[40px]">
                   {INDEX_DATA.map((item, index) => {
                     const isHovered = hoveredDesktopItem === item.id;
                     return (
@@ -325,8 +321,13 @@ const Page = () => {
 
           <div className="max-w-[640px] flex flex-col gap-12">
             {/* 1. Overview */}
-            <div id="overview" className="flex flex-col gap-6 scroll-mt-32">
-              <h2 className="text-[32px] font-semibold text-black">Overview</h2>
+            <div
+              id="overview"
+              className="flex flex-col gap-6 scroll-mt-32 mb-[40px]"
+            >
+              <h2 className="text-[32px] font-medium text-black mb-[16px]">
+                Overview
+              </h2>
 
               <p className="text-gray-600 leading-relaxed">
                 A temporary design approach used across all cellcard projects
@@ -382,9 +383,7 @@ const Page = () => {
 
             {/* 4. Guideline */}
             <div id="guideline" className="flex flex-col gap-6 scroll-mt-32">
-              <h2 className="text-[32px] font-semibold text-black">
-                Guideline
-              </h2>
+              <h2 className="text-[32px] font-medium text-black">Guideline</h2>
 
               <p className="text-gray-600 leading-relaxed">
                 A temporary design approach used across all cellcard projects
