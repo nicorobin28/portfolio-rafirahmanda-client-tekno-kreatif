@@ -306,14 +306,14 @@ const navbarProductDetail = () => {
       {/* MenuSideBar */}
       <div
         className="fixed z-10 md:z-0 md:top-0 overflow-y-scroll no-scrollbar bg-white/24 
-        backdrop-blur-[24px] flex px-4 w-full md:w-auto border-r border-[#C7C8C9]"
+        backdrop-blur-[24px] flex w-full md:w-auto border-r border-[#C7C8C9]"
       >
         {isOpen && (
           <div className="h-screen md:w-109 w-full relative ">
             <button
               onClick={() => setIsOpen(false)}
               className="flex items-center  md:justify-center gap-3 cursor-pointer h-16 w-full 
-              px-4 md:px-0 md:-translate-x-9 -translate-x-3 md:translate-y-0 -translate-y-1"
+              px-4 md:px-0 md:-translate-x-5 translate-x-1 md:translate-y-0 -translate-y-1"
             >
               <svg
                 width="14"
@@ -331,15 +331,15 @@ const navbarProductDetail = () => {
                 Close Sidebar
               </h1>
             </button>
-            <div className="absolute top-[120px] text-[#171718]  w-full">
+            <div className="absolute md:top-[120px] text-[#171718]  w-full">
               {dummyCard.map((item) => (
                 <div key={item.id} className="px-4 py-5 w-full">
-                  <div className="flex justify-between gap-[16px] cursor-pointer group bg-red-400">
-                    <div className="flex flex-col gap-[4px] group-hover:underline group-hover:gap-[4px] bg-teal-600">
-                      <h1 className="font-jakarta font-medium text-[20px] w-60 text-left truncate ">
+                  <div className="flex justify-center items-center w-full gap-[16px] cursor-pointer group bg-red-400">
+                    <div className="flex flex-col md:w-[299px] w-full h-full gap-[4px] group-hover:underline group-hover:gap-[4px] bg-teal-600">
+                      <h1 className="font-jakarta font-medium text-[16px] w-full text-left truncate ">
                         {item.title}
                       </h1>
-                      <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[14px] group-hover:hidden">
+                      <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61]  text-[12px] group-hover:hidden">
                         <div className="flex items-center gap-1.5">
                           <>{item.desc.icon}</>
                           <p>{item.desc.subtitle}</p>
@@ -358,10 +358,8 @@ const navbarProductDetail = () => {
                         <p>{item.desc.year}</p>
                       </div>
 
-                      <div className="hidden group-hover:flex hover:underline items-center gap-[2px] md:translate-y-[2px] translate-y-[3px]">
-                        <p className="md:text-[14px] text-xs font-medium">
-                          Read More
-                        </p>
+                      <div className="hidden group-hover:flex hover:underline items-center gap-[2px]">
+                        <p className="text-[12px] font-medium">Read More</p>
                         <svg
                           width="11"
                           height="11"
