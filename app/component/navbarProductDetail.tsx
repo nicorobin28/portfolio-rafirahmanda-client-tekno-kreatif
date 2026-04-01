@@ -334,8 +334,8 @@ const navbarProductDetail = () => {
             <div className="absolute md:top-[120px] text-[#171718]  w-full">
               {dummyCard.map((item) => (
                 <div key={item.id} className="px-4 py-5 w-full">
-                  <div className="flex justify-center items-center w-full gap-[16px] cursor-pointer group bg-red-400">
-                    <div className="flex flex-col md:w-[299px] w-full h-full gap-[4px] group-hover:underline group-hover:gap-[4px] bg-teal-600">
+                  <div className="flex justify-between items-center w-full gap-[16px] cursor-pointer group ">
+                    <div className="flex flex-col md:w-[299px] w-[285px] h-full gap-[4px] group-hover:underline group-hover:gap-[4px] ">
                       <h1 className="font-jakarta font-medium text-[16px] w-full text-left truncate ">
                         {item.title}
                       </h1>
@@ -359,7 +359,7 @@ const navbarProductDetail = () => {
                       </div>
 
                       <div className="hidden group-hover:flex hover:underline items-center gap-[2px]">
-                        <p className="text-[12px] font-medium">Read More</p>
+                        <p className="text-xs font-medium">Read More</p>
                         <svg
                           width="11"
                           height="11"
@@ -374,7 +374,7 @@ const navbarProductDetail = () => {
                         </svg>
                       </div>
                     </div>
-                    <div className="w-22.5 h-15 rounded-[6px] bg-[#EFEFF0]"></div>
+                    <div className="w-[90px] h-[60px] rounded-[6px] bg-[#EFEFF0]"></div>
                   </div>
                 </div>
               ))}
