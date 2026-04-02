@@ -1,12 +1,16 @@
 import React from "react";
 
-const headmeta = () => {
+interface HeadmetaProps {
+  title: string;
+  role: string;
+  company: string;
+  year: string;
+}
+
+const Headmeta: React.FC<HeadmetaProps> = ({ title, role, company, year }) => {
   return (
     <div className="z-0">
-      <h1 className="text-[48px] md:text-[56px] font-semibold leading-[56px] md:leading-[64px] tracking-[-0.005em] text-black">
-        Increase 3X <br />
-        Design Team <br />
-        Productivity
+      <h1 className="text-[48px] md:text-[56px] font-semibold leading-[56px] md:leading-[64px] tracking-[-0.005em] text-black" dangerouslySetInnerHTML={{ __html: title.replace(/\\n/g, "<br />")}}>
       </h1>
 
       <div className="flex flex-col gap-5 text-[14px] mt-10 ">
@@ -15,7 +19,7 @@ const headmeta = () => {
             Role
           </span>
           <span className="font-jakarta font-medium text-[14px] leading-[24px] text-black">
-            Design System Specialist
+            {role}
           </span>
         </div>
 
@@ -24,7 +28,7 @@ const headmeta = () => {
             Company
           </span>
           <span className="font-jakarta font-medium text-[14px] leading-[24px] text-black">
-            cellcard
+            {company}
           </span>
         </div>
 
@@ -33,7 +37,7 @@ const headmeta = () => {
             Year
           </span>
           <span className="font-jakarta font-medium text-[14px] leading-[24px] text-black">
-            2025
+            {year}
           </span>
         </div>
       </div>
@@ -41,4 +45,4 @@ const headmeta = () => {
   );
 };
 
-export default headmeta;
+export default Headmeta;

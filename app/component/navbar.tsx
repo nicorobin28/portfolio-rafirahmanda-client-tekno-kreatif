@@ -26,7 +26,7 @@ const Navbar = () => {
     <div>
       <div
         className="hidden md:flex sticky z-10 justify-between items-center w-full h-[64px] md:px-12 lg:px-[120px] 
-                bg-white/75 backdrop-blur-2xl font-roboto-mono"
+                bg-white/75 backdrop-blur-2xl font-roboto-mono text-[#171718]"
       >
         <Link href="/">
           <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />

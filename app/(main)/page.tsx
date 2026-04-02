@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "@/app/component/card";
+import Link from "next/link";
 import prisma from "@/lib/prisma";
 
 const page = async () => {
@@ -34,28 +35,29 @@ const page = async () => {
       <div className="px-4 md:px-[120px]">
         <main className="grid grid-cols-1 md:grid-cols-4 gap-[48px] md:gap-x-6 md:gap-y-12 justify-center">
           {portfolios.map((portfolio: any) => (
-            <Card
-              key={portfolio.id}
-              img={portfolio.images?.[0]?.url || "/home1.png"}
-              desc={{
-                icon: (
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect width="16" height="16" rx="2" fill="#E5E7EB" />
-                    <path d="M4 4h8v8H4V4z" fill="#9CA3AF" />
-                  </svg>
-                ),
-                name: portfolio.company,
-                year: portfolio.year.toString(),
-              }}
-              title={portfolio.title}
-              subtitle={portfolio.role}
-            />
+            <Link key={portfolio.id} href={`/work-detail/${portfolio.id}`}>
+              <Card
+                img={portfolio.images?.[0]?.url || "/home1.png"}
+                desc={{
+                  icon: (
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect width="16" height="16" rx="2" fill="#E5E7EB" />
+                      <path d="M4 4h8v8H4V4z" fill="#9CA3AF" />
+                    </svg>
+                  ),
+                  name: portfolio.company,
+                  year: portfolio.year.toString(),
+                }}
+                title={portfolio.title}
+                subtitle={portfolio.role}
+              />
+            </Link>
           ))}
         </main>
 

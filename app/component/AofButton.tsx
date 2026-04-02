@@ -19,13 +19,13 @@ const AofButton = () => {
   }, []);
 
   return (
-    <div className="flex gap-[12px]">
+    <div className="flex flex-wrap gap-[12px]">
       {aof.map((item) => (
         <div
           key={item.id}
-          className="pt-[2px] px-[12px] pb-[4px] border-1 border-[#C7C8C9] rounded-[999px]"
+          className="w-auto pt-[2px] px-[12px] pb-[4px] border-1 border-[#C7C8C9] rounded-[999px]"
         >
-          <p className="text-[#171718] text-center text-[12px] md:text-[16px] font-jakarta">
+          <p className="text-[#171718] text-center text-[16px] font-jakarta">
             {item.label}
           </p>
         </div>
