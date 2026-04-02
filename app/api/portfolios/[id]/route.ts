@@ -73,3 +73,28 @@ export async function DELETE(req: Request, routeParams: { params: Promise<{ id: 
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
+
+export async function GET(req: Request, routeParams: { params: Promise<{ id: string }> }) {
+  const params = await routeParams.params;
+  try {
+    const portfolio = await prisma.portfolio.findUnique({
+      where: { id: params.id },
+      include: {
+        contents: {
+          orderBy: { order: "asc" },
+        },
+        images: {
+          orderBy: { order: "asc" },
+        },
+      },
+    });
+
+    if (!portfolio) {
+      return NextResponse.json({ error: "Portfolio not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(portfolio);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

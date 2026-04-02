@@ -6,7 +6,7 @@ import NavbarProductDetail from "./navbarProductDetail";
 
 const DynamicNavbar = () => {
   const pathname = usePathname();
-  
+
   // Check if we are on the work-detail page or any of its sub-pages
   const isWorkDetailPage = pathname?.startsWith("/work-detail");
 

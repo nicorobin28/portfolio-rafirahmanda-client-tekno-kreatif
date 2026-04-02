@@ -49,7 +49,7 @@ const Experiences = () => {
               <div className="w-[2px] md:w-[3px] h-[50px] bg-[#E3E3E4]"></div>
             </div>
             <div className="flex flex-col gap-[4px]">
-              <h1 className="text-[#171718] text-[18px] md:text-[20px] font-semibold font-jakarta">
+              <h1 className="text-[#171718] text-[18px] md:text-[20px] font-medium font-jakarta">
                 {item.company}
               </h1>
               <div className="flex items-center gap-[6px]">

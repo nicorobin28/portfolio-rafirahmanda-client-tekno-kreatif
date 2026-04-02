@@ -6,6 +6,7 @@ import {
   Roboto_Mono,
 } from "next/font/google";
 import "./globals.css";
+import Navbar from "./component/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${PlustJakarta.variable} ${RobotoMono.variable} h-full antialiased`}
     >
-      <body className="h-full bg-white">
+      <body className="min-h-full flex flex-col">
+        {/* <NavbarProductDetail /> */}
+        {/* <Card /> */}
         {children}
       </body>
     </html>

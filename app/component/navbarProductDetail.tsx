@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navbarProductDetail = () => {
   const menuDesktop: { id: number; name: string; path: string }[] = [
@@ -205,29 +206,75 @@ const navbarProductDetail = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-3 cursor-pointer h-[40px]"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M17.7087 15.4166C18.0538 15.4166 18.3337 15.6965 18.3337 16.0416C18.3337 16.3868 18.0538 16.6666 17.7087 16.6666H2.29199C1.94681 16.6666 1.66699 16.3868 1.66699 16.0416C1.66699 15.6965 1.94681 15.4166 2.29199 15.4166H17.7087Z"
-              fill="black"
-            />
-            <path
-              d="M17.7087 9.37498C18.0538 9.37498 18.3337 9.6548 18.3337 9.99998C18.3337 10.3452 18.0538 10.625 17.7087 10.625H2.29199C1.94681 10.625 1.66699 10.3452 1.66699 9.99998C1.66699 9.6548 1.94681 9.37498 2.29199 9.37498H17.7087Z"
-              fill="black"
-            />
-            <path
-              d="M17.7087 3.33331C18.0538 3.33331 18.3337 3.61314 18.3337 3.95831C18.3337 4.30349 18.0538 4.58331 17.7087 4.58331H2.29199C1.94681 4.58331 1.66699 4.30349 1.66699 3.95831C1.66699 3.61314 1.94681 3.33331 2.29199 3.33331H17.7087Z"
-              fill="black"
-            />
-          </svg>
-          <h1 className="text-[16px] text-black font-roboto-mono font-medium">
-            Other Works
-          </h1>
+  <div className="relative w-[20px] h-[20px] flex flex-col justify-center items-center">
+    {/* Top line — geser ke tengah dulu, baru rotate 45 */}
+    <motion.span
+      className="absolute block h-[1.5px] bg-black rounded-full"
+      animate={
+        isOpen
+          ? { translateY: 0, rotate: 45 }
+          : { translateY: -6, rotate: 0 }
+      }
+      transition={
+        isOpen
+          ? {
+              translateY: { duration: 0.2, ease: "easeInOut" },
+              rotate: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
+            }
+          : {
+              rotate: { duration: 0.2, ease: "easeInOut" },
+              translateY: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
+            }
+      }
+      style={{ width: 20 }}
+    />
+
+    {/* Middle line — geser ke tengah (sudah di tengah), lalu rotate -45 */}
+    <motion.span
+      className="absolute block h-[1.5px] bg-black rounded-full"
+      animate={
+        isOpen
+          ? { translateY: 0, rotate: -45, opacity: 1 }
+          : { translateY: 0, rotate: 0, opacity: 1 }
+      }
+      transition={
+        isOpen
+          ? {
+              rotate: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
+            }
+          : {
+              rotate: { duration: 0.2, ease: "easeInOut" },
+            }
+      }
+      style={{ width: 20 }}
+    />
+
+    {/* Bottom line — geser ke tengah dulu, lalu hilang */}
+    <motion.span
+      className="absolute block h-[1.5px] bg-black rounded-full"
+      animate={
+        isOpen
+          ? { translateY: 0, opacity: 0 }
+          : { translateY: 6, opacity: 1 }
+      }
+      transition={
+        isOpen
+          ? {
+              translateY: { duration: 0.2, ease: "easeInOut" },
+              opacity: { duration: 0.1, delay: 0.2 },
+            }
+          : {
+              opacity: { duration: 0.1 },
+              translateY: { duration: 0.2, ease: "easeInOut", delay: 0.1 },
+            }
+      }
+      style={{ width: 20 }}
+    />
+  </div>
+
+  <h1 className="text-[16px] text-black font-roboto-mono font-medium">
+    Other Works
+  </h1>
         </button>
         <div className="flex md:gap-18 lg:gap-24">
           {menuDesktop.map((item) => {
@@ -303,84 +350,127 @@ const navbarProductDetail = () => {
         </div>
       </div>
 
-      {/* MenuSideBar */}
-      <div
-        className="fixed z-50 top-0  overflow-y-scroll no-scrollbar bg-white/24
-        backdrop-blur-[24px] flex px-4 w-full md:w-auto border-r border-[#C7C8C9]"
-      >
-        {isOpen && (
-          <div className="relative z-50 h-screen md:w-109 top-0 w-full">
-            <button
-              onClick={() => setIsOpen(false)}
-              className="flex items-center md:justify-center gap-3 cursor-pointer h-16 w-full px-4 md:px-0"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.2664 0.183058C12.5105 -0.0610194 12.9061 -0.0610194 13.1502 0.183058C13.3943 0.427136 13.3943 0.82277 13.1502 1.06685L7.55041 6.66662L13.1502 12.2664C13.3943 12.5105 13.3943 12.9061 13.1502 13.1502C12.9061 13.3943 12.5105 13.3943 12.2664 13.1502L6.66662 7.55041L1.06685 13.1502C0.82277 13.3943 0.427136 13.3943 0.183058 13.1502C-0.0610194 12.9061 -0.0610194 12.5105 0.183058 12.2664L5.78283 6.66662L0.183058 1.06685C-0.0610194 0.82277 -0.0610194 0.427136 0.183058 0.183058C0.427136 -0.0610194 0.82277 -0.0610194 1.06685 0.183058L6.66662 5.78283L12.2664 0.183058Z"
-                  fill="black"
-                />
-              </svg>
-              <h1 className="text-[16px] text-black font-roboto-mono font-medium">
-                Close Sidebar
-              </h1>
-            </button>
-            <div className="absolute top-[120px] text-black  w-full">
-              {dummyCard.map((item) => (
-                <div key={item.id} className="p-4 w-full">
-                  <div className="flex justify-between cursor-pointer group">
-                    <div className="flex flex-col gap-[4px] group-hover:underline group-hover:gap-[4px]">
-                      <h1 className="font-jakarta font-semibold text-[20px] w-60 text-left truncate ">
-                        {item.title}
-                      </h1>
-                      <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[14px] group-hover:hidden">
-                        <div className="flex items-center gap-1.5">
-                          <>{item.desc.icon}</>
-                          <p>{item.desc.subtitle}</p>
-                        </div>
-                        <span>
-                          <svg
-                            width="4"
-                            height="4"
-                            viewBox="0 0 4 4"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <circle cx="2" cy="2" r="2" fill="#9C9EA1" />
-                          </svg>
-                        </span>
-                        <p>{item.desc.year}</p>
-                      </div>
+     {/* Sidebar — Animasi Hordeng Horizontal */}
+    <AnimatePresence mode="wait">
+      {isOpen && (
+        <>
+          {/* Overlay backdrop */}
+          <motion.div
+            key="overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[2px]"
+          />
 
-                      <div className="hidden group-hover:flex hover:underline items-center gap-[2px]">
-                        <p className="text-[14px] font-semibold">Read More</p>
-                        <svg
-                          width="11"
-                          height="11"
-                          viewBox="0 0 11 11"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
-                            fill="black"
-                          />
-                        </svg>
+          {/* Sidebar — geser kiri ke kanan */}
+          <motion.div
+            key="sidebar"
+            initial={{ x: "-100%" }}
+            animate={{ x: "0%" }}
+            exit={{ x: "-100%" }}
+            transition={{
+              duration: 0.55,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="fixed z-50 top-0 left-0 h-screen w-full md:w-auto
+                      bg-white/90 backdrop-blur-[24px]
+                      border-r border-[#C7C8C9] overflow-hidden"
+          >
+            {/* Inner scroll container */}
+            <div className="h-full overflow-y-auto no-scrollbar md:w-109 w-full">
+
+              {/* Close button */}
+              <motion.button
+                initial={{ opacity: 0, x: -16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center md:justify-center gap-3 cursor-pointer h-16 w-full px-4 md:px-0 sticky top-0 bg-white/80 backdrop-blur-md border-b border-[#EFEFF0] z-10"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M12.2664 0.183058C12.5105 -0.0610194 12.9061 -0.0610194 13.1502 0.183058C13.3943 0.427136 13.3943 0.82277 13.1502 1.06685L7.55041 6.66662L13.1502 12.2664C13.3943 12.5105 13.3943 12.9061 13.1502 13.1502C12.9061 13.3943 12.5105 13.3943 12.2664 13.1502L6.66662 7.55041L1.06685 13.1502C0.82277 13.3943 0.427136 13.3943 0.183058 13.1502C-0.0610194 12.9061 -0.0610194 12.5105 0.183058 12.2664L5.78283 6.66662L0.183058 1.06685C-0.0610194 0.82277 -0.0610194 0.427136 0.183058 0.183058C0.427136 -0.0610194 0.82277 -0.0610194 1.06685 0.183058L6.66662 5.78283L12.2664 0.183058Z"
+                    fill="black"
+                  />
+                </svg>
+                <h1 className="text-[16px] text-black font-roboto-mono font-medium">
+                  Close Sidebar
+                </h1>
+              </motion.button>
+
+              {/* Card list — stagger dari kiri */}
+              <motion.div
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.07,
+                      delayChildren: 0.35,
+                    },
+                  },
+                }}
+                className="text-black w-full pt-4"
+              >
+                {dummyCard.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    variants={{
+                      hidden: { opacity: 0, x: -20, filter: "blur(4px)" },
+                      show: {
+                        opacity: 1,
+                        x: 0,
+                        filter: "blur(0px)",
+                        transition: { duration: 0.35, ease: "easeOut" },
+                      },
+                    }}
+                    className="p-4 w-full"
+                  >
+                    <div className="flex justify-between cursor-pointer group">
+                      <div className="flex flex-col gap-[4px]">
+                        <h1 className="font-jakarta font-semibold text-[20px] w-60 text-left truncate group-hover:underline">
+                          {item.title}
+                        </h1>
+                        <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[14px] group-hover:hidden">
+                          <div className="flex items-center gap-1.5">
+                            <>{item.desc.icon}</>
+                            <p>{item.desc.subtitle}</p>
+                          </div>
+                          <span>
+                            <svg width="4" height="4" viewBox="0 0 4 4" fill="none">
+                              <circle cx="2" cy="2" r="2" fill="#9C9EA1" />
+                            </svg>
+                          </span>
+                          <p>{item.desc.year}</p>
+                        </div>
+                        <div className="hidden group-hover:flex items-center gap-[2px]">
+                          <p className="text-[14px] font-semibold">Read More</p>
+                          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                            <path
+                              d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
+                              fill="black"
+                            />
+                          </svg>
+                        </div>
                       </div>
+                      <div className="w-22.5 h-15 rounded-[6px] bg-[#EFEFF0]" />
                     </div>
-                    <div className="w-22.5 h-15 rounded-[6px] bg-[#EFEFF0]"></div>
-                  </div>
-                </div>
-              ))}
+                  </motion.div>
+                ))}
+              </motion.div>
+
             </div>
-          </div>
-        )}
-      </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
 
       {/* Navbar sm */}
       <div className="md:hidden flex justify-between items-center w-full h-[56px] px-[16px]">
@@ -388,26 +478,30 @@ const navbarProductDetail = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-[12px] cursor-pointer"
         >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M17.7087 15.4166C18.0538 15.4166 18.3337 15.6965 18.3337 16.0416C18.3337 16.3868 18.0538 16.6666 17.7087 16.6666H2.29199C1.94681 16.6666 1.66699 16.3868 1.66699 16.0416C1.66699 15.6965 1.94681 15.4166 2.29199 15.4166H17.7087Z"
-              fill="black"
+          <div className="relative w-[20px] h-[20px] flex flex-col justify-center items-center">
+            {/* Top line */}
+            <span
+              className={`absolute block h-[1.5px] bg-black rounded-full transition-all duration-300 ease-in-out ${
+                isOpen
+                  ? "w-[20px] rotate-45 translate-y-0"
+                  : "w-[20px] -translate-y-[6px]"
+              }`}
             />
-            <path
-              d="M17.7087 9.37498C18.0538 9.37498 18.3337 9.6548 18.3337 9.99998C18.3337 10.3452 18.0538 10.625 17.7087 10.625H2.29199C1.94681 10.625 1.66699 10.3452 1.66699 9.99998C1.66699 9.6548 1.94681 9.37498 2.29199 9.37498H17.7087Z"
-              fill="black"
+            {/* Middle line */}
+            <span
+              className={`absolute block h-[1.5px] bg-black rounded-full transition-all duration-300 ease-in-out ${
+                isOpen ? "w-0 opacity-0" : "w-[20px] opacity-100"
+              }`}
             />
-            <path
-              d="M17.7087 3.33331C18.0538 3.33331 18.3337 3.61314 18.3337 3.95831C18.3337 4.30349 18.0538 4.58331 17.7087 4.58331H2.29199C1.94681 4.58331 1.66699 4.30349 1.66699 3.95831C1.66699 3.61314 1.94681 3.33331 2.29199 3.33331H17.7087Z"
-              fill="black"
+            {/* Bottom line */}
+            <span
+              className={`absolute block h-[1.5px] bg-black rounded-full transition-all duration-300 ease-in-out ${
+                isOpen
+                  ? "w-[20px] -rotate-45 translate-y-0"
+                  : "w-[20px] translate-y-[6px]"
+              }`}
             />
-          </svg>
+          </div>
           <h1 className="text-[16px] text-black font-roboto-mono font-medium">
             Other Works
           </h1>

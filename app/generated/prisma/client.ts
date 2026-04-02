@@ -72,6 +72,16 @@ export type PortfolioContent = Prisma.PortfolioContentModel
  */
 export type AreaOfFocus = Prisma.AreaOfFocusModel
 /**
+ * Model Tag
+ * 
+ */
+export type Tag = Prisma.TagModel
+/**
+ * Model PortfolioTag
+ * 
+ */
+export type PortfolioTag = Prisma.PortfolioTagModel
+/**
  * Model Experience
  * 
  */

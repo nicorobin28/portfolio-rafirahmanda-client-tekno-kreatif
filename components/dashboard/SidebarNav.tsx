@@ -2,13 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Home, FolderGit2, Briefcase, Target, LogOut, Menu, X, TerminalSquare } from "lucide-react"
+import { Home, FolderGit2, Briefcase, Target, LogOut, Menu, X, TerminalSquare, Tag as TagIcon } from "lucide-react"
 import { useState, useEffect } from "react"
 import { signOut } from "next-auth/react"
 
 const navigation = [
   { name: "Overview", href: "/dashboard", icon: Home },
   { name: "Portfolios", href: "/portfolios", icon: FolderGit2 },
+  { name: "Tags", href: "/tags", icon: TagIcon },
   { name: "Area of Focus", href: "/area-of-focus", icon: Target },
   { name: "Experience", href: "/experiences", icon: Briefcase },
 ]
