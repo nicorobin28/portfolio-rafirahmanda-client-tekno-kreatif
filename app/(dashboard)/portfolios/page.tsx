@@ -77,12 +77,16 @@ export default function PortfoliosPage() {
 
   // Form states
   const [formData, setFormData] = useState({
-    title: "", role: "", company: "", year: new Date().getFullYear().toString()
+    title: "", subTitle: "", role: "", company: "", year: new Date().getFullYear().toString()
   })
   
   // Image handling
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [existingImages, setExistingImages] = useState<any[]>([])
+
+  // Tags handling
+  const [availableTags, setAvailableTags] = useState<any[]>([])
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
 
   const [contentFormData, setContentFormData] = useState({
     title: "", body: ""
@@ -90,7 +94,17 @@ export default function PortfoliosPage() {
 
   useEffect(() => {
     fetchPortfolios()
+    fetchTags()
   }, [])
+
+  const fetchTags = async () => {
+    try {
+      const { data } = await axios.get("/api/tags")
+      setAvailableTags(data)
+    } catch {
+      console.error("Failed to fetch tags")
+    }
+  }
 
   const fetchPortfolios = async () => {
     try {
@@ -118,9 +132,11 @@ export default function PortfoliosPage() {
     try {
       const payload = new FormData()
       payload.append("title", formData.title)
+      payload.append("subTitle", formData.subTitle)
       payload.append("role", formData.role)
       payload.append("company", formData.company)
       payload.append("year", formData.year)
+      payload.append("tags", JSON.stringify(selectedTagIds))
 
       // Optimize & append multi images
       for (const file of selectedFiles) {
@@ -217,19 +233,21 @@ export default function PortfoliosPage() {
 
   const openNewPortfolio = () => {
     setActivePortfolio(null)
-    setFormData({ title: "", role: "", company: "", year: new Date().getFullYear().toString() })
+    setFormData({ title: "", subTitle: "", role: "", company: "", year: new Date().getFullYear().toString() })
     setSelectedFiles([])
     setExistingImages([])
+    setSelectedTagIds([])
     setIsPortfolioModalOpen(true)
   }
 
   const openEditPortfolio = (p: any) => {
     setActivePortfolio(p)
     setFormData({
-      title: p.title, role: p.role, company: p.company, year: p.year?.toString() || ""
+      title: p.title, subTitle: p.subTitle || "", role: p.role, company: p.company, year: p.year?.toString() || ""
     })
     setSelectedFiles([])
     setExistingImages(p.images || [])
+    setSelectedTagIds(p.tags?.map((t: any) => t.tag.id) || [])
     setIsPortfolioModalOpen(true)
   }
 
@@ -298,6 +316,15 @@ export default function PortfoliosPage() {
                     <span className="px-2.5 py-1 rounded-md bg-slate-100 text-[11px] font-semibold text-slate-600 uppercase tracking-wider">{p.year}</span>
                     <span className="text-xs font-medium text-slate-500 line-clamp-1">{p.company}</span>
                   </div>
+                  {p.tags?.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {p.tags.map((t: any) => (
+                        <span key={t.tag.id} className="text-[10px] font-semibold px-2 py-0.5 rounded-full border" style={{ backgroundColor: t.tag.color ? `${t.tag.color}20` : '#f1f5f9', color: t.tag.color || '#475569', borderColor: t.tag.color ? `${t.tag.color}40` : '#e2e8f0' }}>
+                           {t.tag.label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <h3 className="text-lg font-semibold text-slate-900 leading-tight mb-1">{p.title}</h3>
                   <p className="text-sm text-slate-500 mb-6">{p.role}</p>
 
@@ -325,6 +352,10 @@ export default function PortfoliosPage() {
               <input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all text-sm text-slate-800 outline-none placeholder-slate-400" placeholder="e.g. Fintech Mobile App" />
             </div>
             <div className="space-y-1.5">
+               <label className="text-sm font-medium text-slate-800">Subtitle</label>
+               <input required value={formData.subTitle} onChange={e => setFormData({...formData, subTitle: e.target.value})} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all text-sm text-slate-800 outline-none placeholder-slate-400" placeholder="e.g. A digital banking revolution" />
+            </div>
+            <div className="space-y-1.5">
               <label className="text-sm font-medium text-slate-800">Role</label>
               <input required value={formData.role} onChange={e => setFormData({...formData, role: e.target.value})} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all text-sm text-slate-800 outline-none placeholder-slate-400" placeholder="e.g. Product Designer" />
             </div>
@@ -336,6 +367,29 @@ export default function PortfoliosPage() {
               <label className="text-sm font-medium text-slate-800">Year</label>
               <input required type="number" value={formData.year} onChange={e => setFormData({...formData, year: e.target.value})} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all text-sm text-slate-800 outline-none placeholder-slate-400" placeholder="e.g. 2024" />
             </div>
+          </div>
+
+          <div className="space-y-2 pt-2">
+             <label className="text-sm font-medium text-slate-800">Tags</label>
+             <div className="flex flex-wrap gap-2">
+                {availableTags.map(tag => {
+                   const isSelected = selectedTagIds.includes(tag.id);
+                   return (
+                      <button 
+                         key={tag.id}
+                         type="button" 
+                         onClick={() => {
+                            if(isSelected) setSelectedTagIds(prev => prev.filter(id => id !== tag.id))
+                            else setSelectedTagIds(prev => [...prev, tag.id])
+                         }}
+                         className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${isSelected ? "bg-slate-900 text-white border-slate-900 shadow-sm" : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"}`}
+                      >
+                         {tag.label}
+                      </button>
+                   )
+                })}
+                {availableTags.length === 0 && <span className="text-xs text-slate-400">No tags available. Create some in the Tags section first.</span>}
+             </div>
           </div>
           
           <div className="pt-4 border-t border-slate-100">

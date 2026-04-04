@@ -38,6 +38,7 @@ export type PortfolioMinAggregateOutputType = {
   id: string | null
   userId: string | null
   title: string | null
+  subTitle: string | null
   role: string | null
   company: string | null
   year: number | null
@@ -49,6 +50,7 @@ export type PortfolioMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   title: string | null
+  subTitle: string | null
   role: string | null
   company: string | null
   year: number | null
@@ -60,6 +62,7 @@ export type PortfolioCountAggregateOutputType = {
   id: number
   userId: number
   title: number
+  subTitle: number
   role: number
   company: number
   year: number
@@ -81,6 +84,7 @@ export type PortfolioMinAggregateInputType = {
   id?: true
   userId?: true
   title?: true
+  subTitle?: true
   role?: true
   company?: true
   year?: true
@@ -92,6 +96,7 @@ export type PortfolioMaxAggregateInputType = {
   id?: true
   userId?: true
   title?: true
+  subTitle?: true
   role?: true
   company?: true
   year?: true
@@ -103,6 +108,7 @@ export type PortfolioCountAggregateInputType = {
   id?: true
   userId?: true
   title?: true
+  subTitle?: true
   role?: true
   company?: true
   year?: true
@@ -201,6 +207,7 @@ export type PortfolioGroupByOutputType = {
   id: string
   userId: string
   title: string
+  subTitle: string
   role: string
   company: string
   year: number
@@ -235,6 +242,7 @@ export type PortfolioWhereInput = {
   id?: Prisma.StringFilter<"Portfolio"> | string
   userId?: Prisma.StringFilter<"Portfolio"> | string
   title?: Prisma.StringFilter<"Portfolio"> | string
+  subTitle?: Prisma.StringFilter<"Portfolio"> | string
   role?: Prisma.StringFilter<"Portfolio"> | string
   company?: Prisma.StringFilter<"Portfolio"> | string
   year?: Prisma.IntFilter<"Portfolio"> | number
@@ -250,6 +258,7 @@ export type PortfolioOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -268,6 +277,7 @@ export type PortfolioWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PortfolioWhereInput | Prisma.PortfolioWhereInput[]
   userId?: Prisma.StringFilter<"Portfolio"> | string
   title?: Prisma.StringFilter<"Portfolio"> | string
+  subTitle?: Prisma.StringFilter<"Portfolio"> | string
   role?: Prisma.StringFilter<"Portfolio"> | string
   company?: Prisma.StringFilter<"Portfolio"> | string
   year?: Prisma.IntFilter<"Portfolio"> | number
@@ -283,6 +293,7 @@ export type PortfolioOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -302,6 +313,7 @@ export type PortfolioScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   title?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
+  subTitle?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   role?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   company?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   year?: Prisma.IntWithAggregatesFilter<"Portfolio"> | number
@@ -312,6 +324,7 @@ export type PortfolioScalarWhereWithAggregatesInput = {
 export type PortfolioCreateInput = {
   id?: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -327,6 +340,7 @@ export type PortfolioUncheckedCreateInput = {
   id?: string
   userId: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -340,6 +354,7 @@ export type PortfolioUncheckedCreateInput = {
 export type PortfolioUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -355,6 +370,7 @@ export type PortfolioUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -369,6 +385,7 @@ export type PortfolioCreateManyInput = {
   id?: string
   userId: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -379,6 +396,7 @@ export type PortfolioCreateManyInput = {
 export type PortfolioUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -390,6 +408,7 @@ export type PortfolioUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -411,6 +430,7 @@ export type PortfolioCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -426,6 +446,7 @@ export type PortfolioMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -437,6 +458,7 @@ export type PortfolioMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
   year?: Prisma.SortOrder
@@ -548,6 +570,7 @@ export type PortfolioUpdateOneRequiredWithoutTagsNestedInput = {
 export type PortfolioCreateWithoutUserInput = {
   id?: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -561,6 +584,7 @@ export type PortfolioCreateWithoutUserInput = {
 export type PortfolioUncheckedCreateWithoutUserInput = {
   id?: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -604,6 +628,7 @@ export type PortfolioScalarWhereInput = {
   id?: Prisma.StringFilter<"Portfolio"> | string
   userId?: Prisma.StringFilter<"Portfolio"> | string
   title?: Prisma.StringFilter<"Portfolio"> | string
+  subTitle?: Prisma.StringFilter<"Portfolio"> | string
   role?: Prisma.StringFilter<"Portfolio"> | string
   company?: Prisma.StringFilter<"Portfolio"> | string
   year?: Prisma.IntFilter<"Portfolio"> | number
@@ -614,6 +639,7 @@ export type PortfolioScalarWhereInput = {
 export type PortfolioCreateWithoutImagesInput = {
   id?: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -628,6 +654,7 @@ export type PortfolioUncheckedCreateWithoutImagesInput = {
   id?: string
   userId: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -656,6 +683,7 @@ export type PortfolioUpdateToOneWithWhereWithoutImagesInput = {
 export type PortfolioUpdateWithoutImagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -670,6 +698,7 @@ export type PortfolioUncheckedUpdateWithoutImagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -682,6 +711,7 @@ export type PortfolioUncheckedUpdateWithoutImagesInput = {
 export type PortfolioCreateWithoutContentsInput = {
   id?: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -696,6 +726,7 @@ export type PortfolioUncheckedCreateWithoutContentsInput = {
   id?: string
   userId: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -724,6 +755,7 @@ export type PortfolioUpdateToOneWithWhereWithoutContentsInput = {
 export type PortfolioUpdateWithoutContentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -738,6 +770,7 @@ export type PortfolioUncheckedUpdateWithoutContentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -750,6 +783,7 @@ export type PortfolioUncheckedUpdateWithoutContentsInput = {
 export type PortfolioCreateWithoutTagsInput = {
   id?: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -764,6 +798,7 @@ export type PortfolioUncheckedCreateWithoutTagsInput = {
   id?: string
   userId: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -792,6 +827,7 @@ export type PortfolioUpdateToOneWithWhereWithoutTagsInput = {
 export type PortfolioUpdateWithoutTagsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -806,6 +842,7 @@ export type PortfolioUncheckedUpdateWithoutTagsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -818,6 +855,7 @@ export type PortfolioUncheckedUpdateWithoutTagsInput = {
 export type PortfolioCreateManyUserInput = {
   id?: string
   title: string
+  subTitle?: string
   role: string
   company: string
   year: number
@@ -828,6 +866,7 @@ export type PortfolioCreateManyUserInput = {
 export type PortfolioUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -841,6 +880,7 @@ export type PortfolioUpdateWithoutUserInput = {
 export type PortfolioUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -854,6 +894,7 @@ export type PortfolioUncheckedUpdateWithoutUserInput = {
 export type PortfolioUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
   year?: Prisma.IntFieldUpdateOperationsInput | number
@@ -914,6 +955,7 @@ export type PortfolioSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   userId?: boolean
   title?: boolean
+  subTitle?: boolean
   role?: boolean
   company?: boolean
   year?: boolean
@@ -930,6 +972,7 @@ export type PortfolioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   userId?: boolean
   title?: boolean
+  subTitle?: boolean
   role?: boolean
   company?: boolean
   year?: boolean
@@ -942,6 +985,7 @@ export type PortfolioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   userId?: boolean
   title?: boolean
+  subTitle?: boolean
   role?: boolean
   company?: boolean
   year?: boolean
@@ -954,6 +998,7 @@ export type PortfolioSelectScalar = {
   id?: boolean
   userId?: boolean
   title?: boolean
+  subTitle?: boolean
   role?: boolean
   company?: boolean
   year?: boolean
@@ -961,7 +1006,7 @@ export type PortfolioSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PortfolioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "role" | "company" | "year" | "createdAt" | "updatedAt", ExtArgs["result"]["portfolio"]>
+export type PortfolioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "subTitle" | "role" | "company" | "year" | "createdAt" | "updatedAt", ExtArgs["result"]["portfolio"]>
 export type PortfolioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Portfolio$imagesArgs<ExtArgs>
@@ -988,6 +1033,7 @@ export type $PortfolioPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: string
     userId: string
     title: string
+    subTitle: string
     role: string
     company: string
     year: number
@@ -1423,6 +1469,7 @@ export interface PortfolioFieldRefs {
   readonly id: Prisma.FieldRef<"Portfolio", 'String'>
   readonly userId: Prisma.FieldRef<"Portfolio", 'String'>
   readonly title: Prisma.FieldRef<"Portfolio", 'String'>
+  readonly subTitle: Prisma.FieldRef<"Portfolio", 'String'>
   readonly role: Prisma.FieldRef<"Portfolio", 'String'>
   readonly company: Prisma.FieldRef<"Portfolio", 'String'>
   readonly year: Prisma.FieldRef<"Portfolio", 'Int'>

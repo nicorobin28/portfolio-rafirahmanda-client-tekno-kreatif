@@ -7,18 +7,21 @@ const randChar = () => CHARS[Math.floor(Math.random() * CHARS.length)];
 interface MorphTextProps {
   from: string;
   to: string;
-  trigger: boolean; // ketika true maka animasi morph from → to dijalankan
+  trigger: boolean;
   tickMs?: number;
   stagger?: number;
   spinCount?: number;
   className?: string;
   onStart?: (el: HTMLSpanElement | null) => void;
+  onComplete?: () => void;
+  animateInitial?: boolean;
+  /**
+   * When true: the animation continuously scrambles (doesn't settle).
+   * When it flips to false: the animation immediately settles to the target text.
+   */
+  isLooping?: boolean;
 }
 
-/**
- * MorphText — menganimasikan teks dari `from` → `to` ketika `trigger` berubah menjadi true,
- * dan animasi terbalik (`to` → `from`) ketika `trigger` berubah menjadi false.
- */
 export default function MorphText({
   from,
   to,
@@ -27,9 +30,14 @@ export default function MorphText({
   stagger = 50,
   spinCount = 6,
   className = "",
+  animateInitial = true,
+  isLooping = false,
+  onComplete,
 }: MorphTextProps) {
   const spanRef = useRef<HTMLSpanElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prevTrigger = useRef<boolean | null>(null);
+  const isLoopingRef = useRef(isLooping);
 
   const clear = () => {
     if (timerRef.current) {
@@ -41,6 +49,8 @@ export default function MorphText({
   const decodeTo = useCallback(
     (currentStr: string, targetStr: string, onDone?: () => void) => {
       if (!spanRef.current) return;
+      clear();
+
       const len = Math.max(currentStr.length, targetStr.length);
       const display = Array.from({ length: len }, (_, i) => currentStr[i] ?? " ");
       const ticksPerStagger = Math.max(1, Math.round(stagger / tickMs));
@@ -67,7 +77,12 @@ export default function MorphText({
             continue;
           }
 
-          if (state[i].spinsLeft > 0) {
+          if (isLoopingRef.current) {
+            // In looping mode: always spin, never settle
+            display[i] = randChar();
+            allDone = false;
+          } else if (state[i].spinsLeft > 0) {
+            // Normal mode: spin then settle
             display[i] = targetChar === " " || targetChar === "" ? " " : randChar();
             state[i].spinsLeft--;
             allDone = false;
@@ -89,16 +104,50 @@ export default function MorphText({
 
       step();
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [tickMs, stagger, spinCount]
   );
 
+  // Sync isLoopingRef — but also restart the animation when looping transitions to false
+  // so it can now settle to the target text.
+  useEffect(() => {
+    const wasLooping = isLoopingRef.current;
+    isLoopingRef.current = isLooping;
+
+    if (wasLooping && !isLooping) {
+      // Looping just stopped — re-run decodeTo so animation can settle
+      const targetStr = trigger ? to : from;
+      const currentDisplay = spanRef.current?.textContent ?? targetStr;
+      decodeTo(currentDisplay, targetStr, onComplete);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLooping]);
+
+  // Main trigger effect
   useEffect(() => {
     clear();
-    if (trigger) {
-      decodeTo(from, to);
-    } else {
-      decodeTo(to, from);
+
+    const isFirstTime = prevTrigger.current === null;
+    const isStrictModeDoubleMount =
+      prevTrigger.current === trigger && !isFirstTime;
+
+    prevTrigger.current = trigger;
+
+    if (isFirstTime || isStrictModeDoubleMount) {
+      if (!animateInitial) {
+        if (spanRef.current) {
+          spanRef.current.textContent = trigger ? to : from;
+        }
+        return clear;
+      }
     }
+
+    if (trigger) {
+      decodeTo(from, to, onComplete);
+    } else {
+      decodeTo(to, from, onComplete);
+    }
+
     return clear;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger]);

@@ -1,5 +1,5 @@
 import DynamicNavbar from "../component/DynamicNavbar";
-// import Footer from "../component/footer";
+import { GlobalProvider } from "../providers/GlobalProvider";
 
 export default function MainLayout({
   children,
@@ -7,10 +7,12 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col font-sans">
-      <DynamicNavbar />
-      <main className="flex-1">{children}</main>
-      {/* <Footer /> */}
-    </div>
+    <GlobalProvider>
+      <div className="min-h-screen flex flex-col font-sans">
+        <DynamicNavbar />
+        <main className="flex-1">{children}</main>
+        {/* <Footer /> */}
+      </div>
+    </GlobalProvider>
   );
 }
