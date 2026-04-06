@@ -5,6 +5,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
+import Link from "@tiptap/extension-link";
 import {
   Bold,
   Italic,
@@ -16,6 +17,7 @@ import {
   ListOrdered,
   Quote,
   Palette,
+  Link2,
 } from "lucide-react";
 
 const EDITOR_STYLES = `
@@ -88,10 +90,19 @@ const EDITOR_STYLES = `
     font-style: italic;
   }
 
-  /* Paragraphs */
   .ProseMirror p {
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
+  }
+
+  .ProseMirror a {
+    color: #3b82f6;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  .ProseMirror a:hover {
+    color: #2563eb;
   }
 `;
 
@@ -113,6 +124,14 @@ export default function RichTextEditor({
       Underline,
       TextStyle,
       Color,
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        HTMLAttributes: {
+          class:
+            "cursor-pointer text-blue-500 underline hover:text-blue-600 transition-colors",
+        },
+      }),
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -127,6 +146,33 @@ export default function RichTextEditor({
   });
 
   if (!editor) return null;
+
+  const setLink = () => {
+    const previousUrl = editor.getAttributes("link").href;
+    const url = window.prompt(
+      "Enter URL (i.e. https://google.com)",
+      previousUrl,
+    );
+
+    // Cancelled prompt
+    if (url === null) {
+      return;
+    }
+
+    // Empty URL (Unlink)
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      return;
+    }
+
+    // Set or Update Link
+    editor
+      .chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({ href: url, target: "_blank" })
+      .run();
+  };
 
   const ToolbarButton = ({ onClick, isActive, children }: any) => (
     <button
@@ -188,9 +234,12 @@ export default function RichTextEditor({
                   .run()
               }
               value={editor.getAttributes("textStyle").color || "#303030"}
-              className="absolute opacity-0 w-0 h-0"
             />
           </label>
+          <div className="w-px h-6 bg-slate-200 mx-1 border-r border-slate-200" />
+          <ToolbarButton onClick={setLink} isActive={editor.isActive("link")}>
+            <Link2 className="w-4 h-4" />
+          </ToolbarButton>
           <div className="w-px h-6 bg-slate-200 mx-1 border-r border-slate-200" />
           <ToolbarButton
             onClick={() =>

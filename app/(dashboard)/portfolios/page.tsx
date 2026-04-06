@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Plus, Edit2, FileText, Trash2, Image as ImageIcon, Loader2, UploadCloud, GripVertical } from "lucide-react"
+import { Plus, Edit2, FileText, Trash2, Image as ImageIcon, Loader2, UploadCloud, GripVertical, Star, Crown } from "lucide-react"
 import Modal from "@/components/ui/Modal"
 import RichTextEditor from "@/components/ui/RichTextEditor"
 import {
@@ -79,10 +79,12 @@ export default function PortfoliosPage() {
   const [formData, setFormData] = useState({
     title: "", subTitle: "", role: "", company: "", year: new Date().getFullYear().toString()
   })
-  
+
   // Image handling
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [existingImages, setExistingImages] = useState<any[]>([])
+  // coverImageId: when editing, tracks which existing image is cover; when new upload, tracks new-file index (as string "new-0", "new-1", etc.)
+  const [coverImageId, setCoverImageId] = useState<string | null>(null)
 
   // Tags handling
   const [availableTags, setAvailableTags] = useState<any[]>([])
@@ -110,7 +112,6 @@ export default function PortfoliosPage() {
     try {
       const { data } = await axios.get("/api/portfolios")
       setPortfolios(data)
-      console.log(data)
     } finally {
       setIsLoading(false)
     }
@@ -121,7 +122,7 @@ export default function PortfoliosPage() {
     try {
       await axios.delete(`/api/portfolios/${id}`)
       fetchPortfolios()
-    } catch (e) {
+    } catch {
       alert("Failed to delete")
     }
   }
@@ -144,11 +145,24 @@ export default function PortfoliosPage() {
         payload.append("images", optimized)
       }
 
+      // Handle cover selection for newly uploaded files
+      if (coverImageId && coverImageId.startsWith("new-")) {
+        const idx = coverImageId.replace("new-", "")
+        payload.append("coverIndex", idx)
+      }
+
       if (activePortfolio) {
         await axios.put(`/api/portfolios/${activePortfolio.id}`, payload, { headers: { "Content-Type": "multipart/form-data" }})
+
+        // If no new files uploaded and cover changed on existing images, update cover via images route
+        const oldCoverId = activePortfolio.images?.find((i: any) => i.isCover)?.id
+        if (selectedFiles.length === 0 && coverImageId && !coverImageId.startsWith("new-") && coverImageId !== oldCoverId) {
+          await axios.put(`/api/portfolios/${activePortfolio.id}/images`, { coverId: coverImageId })
+        }
       } else {
         await axios.post("/api/portfolios", payload, { headers: { "Content-Type": "multipart/form-data" }})
       }
+
       setIsPortfolioModalOpen(false)
       fetchPortfolios()
     } catch (error) {
@@ -172,11 +186,11 @@ export default function PortfoliosPage() {
       } else {
         res = await axios.post(`/api/portfolios/${activePortfolio.id}/content`, contentFormData)
       }
-      
+
       await fetchPortfolios()
       setActivePortfolio((prev: any) => {
          if(!prev) return prev;
-         const updatedContents = activeContent 
+         const updatedContents = activeContent
            ? prev.contents.map((c: any) => c.id === activeContent.id ? res.data : c)
            : [...(prev.contents || []), res.data]
          return { ...prev, contents: updatedContents }
@@ -198,11 +212,10 @@ export default function PortfoliosPage() {
         ...prev,
         contents: prev.contents.filter((c: any) => c.id !== contentId)
       }))
-    } catch(err) { alert("Failed to delete content section") }
+    } catch { alert("Failed to delete content section") }
   }
 
   const handleReorderContent = async (newContents: any[]) => {
-    // Optimistic update
     setActivePortfolio((prev: any) => ({ ...prev, contents: newContents }))
     try {
       await axios.patch(
@@ -215,7 +228,6 @@ export default function PortfoliosPage() {
   }
 
   const handleUpdateImageAnchors = async (newImages: any[]) => {
-    // Optimistic update
     setActivePortfolio((prev: any) => ({ ...prev, images: newImages }))
     try {
        await axios.patch(`/api/portfolios/${activePortfolio.id}/images`, {
@@ -227,7 +239,17 @@ export default function PortfoliosPage() {
        })
     } catch {
        alert("Failed to save image anchors.")
-       fetchPortfolios() // Rollback
+       fetchPortfolios()
+    }
+  }
+
+  const handleSetCoverFromContent = async (imgId: string) => {
+    try {
+      const { data } = await axios.put(`/api/portfolios/${activePortfolio.id}/images`, { coverId: imgId })
+      setActivePortfolio((prev: any) => ({ ...prev, images: data.images }))
+      fetchPortfolios()
+    } catch {
+      alert("Failed to set cover image.")
     }
   }
 
@@ -236,6 +258,7 @@ export default function PortfoliosPage() {
     setFormData({ title: "", subTitle: "", role: "", company: "", year: new Date().getFullYear().toString() })
     setSelectedFiles([])
     setExistingImages([])
+    setCoverImageId(null)
     setSelectedTagIds([])
     setIsPortfolioModalOpen(true)
   }
@@ -247,12 +270,12 @@ export default function PortfoliosPage() {
     })
     setSelectedFiles([])
     setExistingImages(p.images || [])
+    setCoverImageId(p.images?.find((i: any) => i.isCover)?.id || p.images?.[0]?.id || null)
     setSelectedTagIds(p.tags?.map((t: any) => t.tag.id) || [])
     setIsPortfolioModalOpen(true)
   }
 
   const openManageContent = (p: any) => {
-    // Sort by order field so list reflects saved order
     const sorted = { ...p, contents: [...(p.contents || [])].sort((a, b) => a.order - b.order) }
     setActivePortfolio(sorted)
     if (sorted.contents?.length > 0) {
@@ -263,6 +286,12 @@ export default function PortfoliosPage() {
       setContentView("form")
     }
     setIsContentModalOpen(true)
+  }
+
+  // Determine current cover image for the portfolio card
+  const getCoverImage = (p: any) => {
+    const cover = p.images?.find((i: any) => i.isCover)
+    return cover || p.images?.[0] || null
   }
 
   if (isLoading) {
@@ -276,7 +305,7 @@ export default function PortfoliosPage() {
           <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">Portfolios</h1>
           <p className="text-sm text-slate-500 mt-1">Manage your professional work and case studies.</p>
         </div>
-        <button 
+        <button
           onClick={openNewPortfolio}
           className="flex items-center gap-2 px-4 py-2.5 bg-slate-950 text-white text-sm font-medium rounded-xl hover:bg-slate-800 transition-all focus:ring-4 focus:ring-slate-950/10 active:scale-[0.98]"
         >
@@ -295,14 +324,27 @@ export default function PortfoliosPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {portfolios.map((p) => {
-            const hasContent = p.contents?.length > 0;
+            const hasContent = p.contents?.length > 0
+            const coverImg = getCoverImage(p)
             return (
               <div key={p.id} className="group flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-slate-200/40 transition-all duration-300">
                 <div className="relative aspect-video bg-slate-100 overflow-hidden">
-                  {p.images[0]?.url ? (
-                    <img src={p.images[0].url} alt={p.images[0].altText} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  {coverImg?.url ? (
+                    <img src={coverImg.url} alt={coverImg.altText} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-slate-400"><ImageIcon className="w-8 h-8 opacity-50" /></div>
+                  )}
+                  {/* Cover badge */}
+                  {coverImg && (
+                    <div className="absolute top-2 left-2 flex items-center gap-1 bg-amber-400/90 backdrop-blur-sm text-amber-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                      <Crown className="w-3 h-3" /> Cover
+                    </div>
+                  )}
+                  {/* Image count badge */}
+                  {p.images?.length > 1 && (
+                    <div className="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
+                      {p.images.length} images
+                    </div>
                   )}
                   <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onClick={() => handleDelete(p.id)} className="p-2 bg-white/90 backdrop-blur-sm text-red-600 rounded-lg hover:bg-red-50 transition-colors shadow-sm">
@@ -310,7 +352,7 @@ export default function PortfoliosPage() {
                     </button>
                   </div>
                 </div>
-                
+
                 <div className="p-5 flex-1 flex flex-col">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="px-2.5 py-1 rounded-md bg-slate-100 text-[11px] font-semibold text-slate-600 uppercase tracking-wider">{p.year}</span>
@@ -375,9 +417,9 @@ export default function PortfoliosPage() {
                 {availableTags.map(tag => {
                    const isSelected = selectedTagIds.includes(tag.id);
                    return (
-                      <button 
+                      <button
                          key={tag.id}
-                         type="button" 
+                         type="button"
                          onClick={() => {
                             if(isSelected) setSelectedTagIds(prev => prev.filter(id => id !== tag.id))
                             else setSelectedTagIds(prev => [...prev, tag.id])
@@ -391,14 +433,17 @@ export default function PortfoliosPage() {
                 {availableTags.length === 0 && <span className="text-xs text-slate-400">No tags available. Create some in the Tags section first.</span>}
              </div>
           </div>
-          
+
+          {/* ── Images Section ── */}
           <div className="pt-4 border-t border-slate-100">
              <div className="flex items-center justify-between mb-3">
                <h4 className="text-sm font-semibold text-slate-900">Portfolio Images</h4>
                <span className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full font-medium">Auto-compressed to WebP</span>
              </div>
-             <div className="space-y-4">
-               <div className="flex items-center justify-center w-full">
+
+             {/* Upload zone — only shown if no new files selected yet */}
+             {selectedFiles.length === 0 && (
+               <div className="flex items-center justify-center w-full mb-4">
                   <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-200 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 hover:border-slate-300 transition-colors">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                           <UploadCloud className="w-6 h-6 text-slate-400 mb-2" />
@@ -406,28 +451,111 @@ export default function PortfoliosPage() {
                           <p className="text-xs text-slate-400 mt-1">PNG, JPG or WEBP (Max 1920px)</p>
                       </div>
                       <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => {
-                         if (e.target.files) setSelectedFiles(Array.from(e.target.files))
+                         if (e.target.files) {
+                           const files = Array.from(e.target.files)
+                           setSelectedFiles(files)
+                           // Auto-select first new file as cover placeholder
+                           setCoverImageId("new-0")
+                         }
                       }} />
                   </label>
                </div>
-               
-               {/* Preview Area */}
-               {(selectedFiles.length > 0 || existingImages.length > 0) && (
-                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
-                     {existingImages.length > 0 && selectedFiles.length === 0 && existingImages.map((img, idx) => (
-                        <div key={idx} className="relative aspect-video rounded-lg overflow-hidden border border-slate-200 shadow-sm">
-                           <img src={img.url} className="w-full h-full object-cover" />
-                        </div>
-                     ))}
-                     {selectedFiles.map((file, idx) => (
-                        <div key={`new-${idx}`} className="relative aspect-video rounded-lg overflow-hidden border border-slate-200 shadow-sm">
-                           <img src={URL.createObjectURL(file)} className="w-full h-full object-cover" />
-                           <div className="absolute top-1.5 right-1.5 bg-slate-900/70 rounded px-1.5 py-0.5 backdrop-blur-md text-[10px] font-semibold text-white">New</div>
-                        </div>
-                     ))}
-                   </div>
-               )}
-             </div>
+             )}
+
+             {/* ── Existing Images (edit mode, no new files selected) ── */}
+             {existingImages.length > 0 && selectedFiles.length === 0 && (
+               <div className="space-y-3">
+                 <p className="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+                   <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                   Click the star to set an image as the portfolio cover
+                 </p>
+                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                   {existingImages.map((img) => {
+                     const isThisCover = coverImageId === img.id
+                     return (
+                       <div key={img.id} className={`group/img relative aspect-video rounded-xl overflow-hidden border-2 transition-all ${isThisCover ? 'border-amber-400 shadow-md shadow-amber-100' : 'border-slate-200 hover:border-slate-300'}`}>
+                         <img src={img.url} className="w-full h-full object-cover" alt="" />
+                         {/* Cover toggle button */}
+                         <button
+                           type="button"
+                           onClick={() => setCoverImageId(img.id)}
+                           className={`absolute top-1.5 left-1.5 p-1 rounded-lg transition-all ${isThisCover ? 'bg-amber-400 text-white shadow-sm' : 'bg-white/80 text-slate-400 opacity-0 group-hover/img:opacity-100 hover:text-amber-500'}`}
+                           title="Set as cover"
+                         >
+                           <Crown className="w-3.5 h-3.5" />
+                         </button>
+                         {isThisCover && (
+                           <div className="absolute bottom-0 inset-x-0 bg-amber-400/90 text-amber-900 text-[10px] font-bold text-center py-0.5">
+                             COVER
+                           </div>
+                         )}
+                       </div>
+                     )
+                   })}
+                 </div>
+                 {/* Replace images option */}
+                 <label className="flex items-center gap-2 text-xs text-slate-500 cursor-pointer hover:text-slate-700 transition-colors mt-1">
+                   <UploadCloud className="w-3.5 h-3.5" />
+                   <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => {
+                     if (e.target.files) {
+                       const files = Array.from(e.target.files)
+                       setSelectedFiles(files)
+                       setCoverImageId("new-0")
+                     }
+                   }} />
+                   Replace all images with new upload
+                 </label>
+               </div>
+             )}
+
+             {/* ── New Files Preview (with cover selection) ── */}
+             {selectedFiles.length > 0 && (
+               <div className="space-y-3">
+                 <p className="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+                   <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                   Click the star to set an image as the portfolio cover
+                 </p>
+                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                   {selectedFiles.map((file, idx) => {
+                     const key = `new-${idx}`
+                     const isThisCover = coverImageId === key
+                     return (
+                       <div key={key} className={`group/img relative aspect-video rounded-xl overflow-hidden border-2 transition-all ${isThisCover ? 'border-amber-400 shadow-md shadow-amber-100' : 'border-slate-200 hover:border-slate-300'}`}>
+                         <img src={URL.createObjectURL(file)} className="w-full h-full object-cover" alt="" />
+                         {/* New badge */}
+                         <div className="absolute top-1.5 right-1.5 bg-slate-900/70 rounded px-1.5 py-0.5 backdrop-blur-md text-[10px] font-semibold text-white">New</div>
+                         {/* Cover toggle */}
+                         <button
+                           type="button"
+                           onClick={() => setCoverImageId(key)}
+                           className={`absolute top-1.5 left-1.5 p-1 rounded-lg transition-all ${isThisCover ? 'bg-amber-400 text-white shadow-sm' : 'bg-white/80 text-slate-400 opacity-0 group-hover/img:opacity-100 hover:text-amber-500'}`}
+                           title="Set as cover"
+                         >
+                           <Crown className="w-3.5 h-3.5" />
+                         </button>
+                         {isThisCover && (
+                           <div className="absolute bottom-0 inset-x-0 bg-amber-400/90 text-amber-900 text-[10px] font-bold text-center py-0.5">
+                             COVER
+                           </div>
+                         )}
+                       </div>
+                     )
+                   })}
+                 </div>
+                 {/* Option to re-upload */}
+                 <label className="flex items-center gap-2 text-xs text-slate-500 cursor-pointer hover:text-slate-700 transition-colors">
+                   <UploadCloud className="w-3.5 h-3.5" />
+                   <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => {
+                     if (e.target.files) {
+                       const files = Array.from(e.target.files)
+                       setSelectedFiles(files)
+                       setCoverImageId("new-0")
+                     }
+                   }} />
+                   Change selected files
+                 </label>
+               </div>
+             )}
           </div>
 
           <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
@@ -452,6 +580,7 @@ export default function PortfoliosPage() {
                 onEdit={(c) => { setActiveContent(c); setContentFormData({ title: c.title, body: c.body }); setContentView("form") }}
                 onDelete={handleDeleteContent}
                 onUpdateImageAnchors={handleUpdateImageAnchors}
+                onSetCover={handleSetCoverFromContent}
               />
             ) : (
                <div className="text-center py-8 text-sm text-slate-500">No content sections exist yet.</div>
@@ -467,7 +596,7 @@ export default function PortfoliosPage() {
                 <label className="text-sm font-medium text-slate-800">Section Title</label>
                 <input required value={contentFormData.title} onChange={e => setContentFormData({...contentFormData, title: e.target.value})} className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 transition-all text-sm text-slate-800 outline-none placeholder-slate-400 font-medium" placeholder="e.g. The Challenge" />
              </div>
-             
+
              <div className="space-y-1.5">
                 <label className="text-sm font-medium text-slate-800 flex items-center justify-between">
                   <span>Body Content</span>
@@ -506,12 +635,12 @@ interface SortableContentItemProps {
   onManageLayout: (c: any) => void
 }
 
-function SortableContentItem({ 
-  content: c, 
-  anchoredImages, 
-  onEdit, 
-  onDelete, 
-  onManageLayout 
+function SortableContentItem({
+  content: c,
+  anchoredImages,
+  onEdit,
+  onDelete,
+  onManageLayout
 }: SortableContentItemProps) {
   const {
     attributes,
@@ -558,7 +687,7 @@ function SortableContentItem({
             {c.body.replace(/<[^>]+>/g, "") || "No content body..."}
           </p>
 
-          {/* Anchored Images Count/Thumbnails */}
+          {/* Anchored Images Thumbnails */}
           {anchoredImages.length > 0 && (
             <div className="flex items-center gap-1.5 mt-2 overflow-x-auto pb-1 no-scrollbar">
               {anchoredImages.map((img: any) => (
@@ -579,7 +708,7 @@ function SortableContentItem({
             onClick={() => onManageLayout(c)}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-[11px] font-bold rounded-lg transition-all border border-indigo-100/50"
           >
-            <ImageIcon className="w-3.5 h-3.5" /> Layout
+            <ImageIcon className="w-3.5 h-3.5" /> Images
           </button>
           <button
             type="button"
@@ -608,19 +737,20 @@ interface SortableContentListProps {
   onEdit: (c: any) => void
   onDelete: (id: string) => void
   onUpdateImageAnchors: (images: any[]) => void
+  onSetCover: (imgId: string) => void
 }
 
-function SortableContentList({ 
-  contents, 
-  portfolioImages, 
-  onReorder, 
-  onEdit, 
+function SortableContentList({
+  contents,
+  portfolioImages,
+  onReorder,
+  onEdit,
   onDelete,
-  onUpdateImageAnchors
+  onUpdateImageAnchors,
+  onSetCover
 }: SortableContentListProps) {
   const [layoutModalOpen, setLayoutModalOpen] = useState(false)
   const [targetContent, setTargetContent] = useState<any>(null)
-  const [isUpdatingLayout, setIsUpdatingLayout] = useState(false)
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -636,10 +766,9 @@ function SortableContentList({
     onReorder(reordered)
   }
 
-  const handleToggleAnchor = (img: any, position: "BEFORE" | "AFTER" | null) => {
+  const handleToggleAnchor = (img: any, position: "BEFORE" | "AFTER") => {
     const updatedImages = portfolioImages.map(i => {
       if (i.id === img.id) {
-        // If clicking the current position again, nullify it. Else, set it.
         const isCurrentlyThere = i.anchorContentId === targetContent.id && i.anchorPosition === position
         return {
           ...i,
@@ -686,46 +815,78 @@ function SortableContentList({
         </DndContext>
       </div>
 
-      <Modal isOpen={layoutModalOpen} onClose={() => setLayoutModalOpen(false)} title={`Manage Layout: ${targetContent?.title}`}>
-         <div className="space-y-6">
-            <div className="text-sm text-slate-500">Pick images and their position relative to <span className="font-bold text-slate-900">"{targetContent?.title}"</span></div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto p-1">
-               {portfolioImages.map((img) => {
-                  const isBefore = img.anchorContentId === targetContent?.id && img.anchorPosition === "BEFORE"
-                  const isAfter = img.anchorContentId === targetContent?.id && img.anchorPosition === "AFTER"
-                  const isOther = img.anchorContentId && img.anchorContentId !== targetContent?.id
-
-                  return (
-                    <div key={img.id} className={`group flex flex-col p-3 rounded-2xl border transition-all ${isBefore || isAfter ? 'bg-indigo-50/50 border-indigo-200 shadow-sm' : 'bg-white border-slate-100'} ${isOther ? 'opacity-40 grayscale-50' : ''}`}>
-                       <div className="relative aspect-video rounded-xl overflow-hidden mb-3 shadow-xs">
-                          <img src={img.url} className="w-full h-full object-cover" />
-                          {isOther && (
-                            <div className="absolute inset-0 bg-white/60 backdrop-blur-xs flex items-center justify-center p-4">
-                               <p className="text-[10px] font-bold text-slate-600 text-center leading-tight">Anchored to another section</p>
-                            </div>
-                          )}
-                       </div>
-                       
-                       <div className="flex items-center gap-1.5">
-                          <button 
-                            onClick={() => handleToggleAnchor(img, "BEFORE")}
-                            className={`flex-1 py-2 rounded-xl text-[10px] font-bold transition-all border ${isBefore ? 'bg-amber-400 text-white border-amber-500 shadow-md scale-105' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'}`}
-                          >
-                             {isBefore ? "✓ BEFORE" : "BEFORE"}
-                          </button>
-                          <button 
-                            onClick={() => handleToggleAnchor(img, "AFTER")}
-                            className={`flex-1 py-2 rounded-xl text-[10px] font-bold transition-all border ${isAfter ? 'bg-emerald-500 text-white border-emerald-600 shadow-md scale-105' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'}`}
-                          >
-                             {isAfter ? "✓ AFTER" : "AFTER"}
-                          </button>
-                       </div>
-                    </div>
-                  )
-               })}
+      {/* ── Image Anchor Modal ── */}
+      <Modal isOpen={layoutModalOpen} onClose={() => setLayoutModalOpen(false)} title={`Anchor Images: "${targetContent?.title}"`}>
+         <div className="space-y-5">
+            <div className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+              <ImageIcon className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+              <div className="text-xs text-slate-500 leading-relaxed">
+                Select which images appear <span className="font-bold text-amber-600">before</span> or <span className="font-bold text-emerald-600">after</span> the <span className="font-bold text-slate-800">"{targetContent?.title}"</span> section. You can also set the <span className="font-bold text-slate-800">cover image</span> here.
+              </div>
             </div>
-            
+
+            {portfolioImages.length === 0 ? (
+              <div className="text-center py-8 text-sm text-slate-400">No images uploaded for this portfolio yet.</div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[55vh] overflow-y-auto p-1">
+                 {portfolioImages.map((img) => {
+                    const isBefore = img.anchorContentId === targetContent?.id && img.anchorPosition === "BEFORE"
+                    const isAfter = img.anchorContentId === targetContent?.id && img.anchorPosition === "AFTER"
+                    const isAnchoredElsewhere = img.anchorContentId && img.anchorContentId !== targetContent?.id
+                    const isCurrentCover = img.isCover
+
+                    return (
+                      <div key={img.id} className={`group flex flex-col p-3 rounded-2xl border transition-all ${isBefore || isAfter ? 'bg-indigo-50/50 border-indigo-200 shadow-sm' : 'bg-white border-slate-100'} ${isAnchoredElsewhere ? 'opacity-50' : ''}`}>
+                         {/* Image thumbnail */}
+                         <div className="relative aspect-video rounded-xl overflow-hidden mb-3 shadow-xs">
+                            <img src={img.url} className="w-full h-full object-cover" />
+
+                            {/* Cover crown badge */}
+                            {isCurrentCover && (
+                              <div className="absolute top-1.5 left-1.5 flex items-center gap-1 bg-amber-400/90 backdrop-blur-sm text-amber-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                                <Crown className="w-2.5 h-2.5" /> Cover
+                              </div>
+                            )}
+
+                            {/* "Anchored elsewhere" overlay */}
+                            {isAnchoredElsewhere && (
+                              <div className="absolute inset-0 bg-white/60 backdrop-blur-xs flex items-center justify-center p-4">
+                                 <p className="text-[10px] font-bold text-slate-600 text-center leading-tight">Anchored to another section</p>
+                              </div>
+                            )}
+                         </div>
+
+                         {/* Anchor position buttons */}
+                         <div className="flex items-center gap-1.5 mb-2">
+                            <button
+                              onClick={() => handleToggleAnchor(img, "BEFORE")}
+                              className={`flex-1 py-2 rounded-xl text-[10px] font-bold transition-all border ${isBefore ? 'bg-amber-400 text-white border-amber-500 shadow-md scale-105' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'}`}
+                            >
+                               {isBefore ? "✓ BEFORE" : "BEFORE"}
+                            </button>
+                            <button
+                              onClick={() => handleToggleAnchor(img, "AFTER")}
+                              className={`flex-1 py-2 rounded-xl text-[10px] font-bold transition-all border ${isAfter ? 'bg-emerald-500 text-white border-emerald-600 shadow-md scale-105' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'}`}
+                            >
+                               {isAfter ? "✓ AFTER" : "AFTER"}
+                            </button>
+                         </div>
+
+                         {/* Set cover button */}
+                         <button
+                           onClick={() => onSetCover(img.id)}
+                           className={`w-full py-1.5 rounded-xl text-[10px] font-bold transition-all border flex items-center justify-center gap-1 ${isCurrentCover ? 'bg-amber-50 text-amber-700 border-amber-200 cursor-default' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-amber-50 hover:text-amber-700 hover:border-amber-200'}`}
+                           disabled={isCurrentCover}
+                         >
+                           <Crown className="w-3 h-3" />
+                           {isCurrentCover ? "Current Cover" : "Set as Cover"}
+                         </button>
+                      </div>
+                    )
+                 })}
+              </div>
+            )}
+
             <div className="flex justify-end pt-4 border-t border-slate-100">
                <button onClick={() => setLayoutModalOpen(false)} className="px-6 py-2.5 bg-slate-950 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-950/20 active:scale-95">Done</button>
             </div>

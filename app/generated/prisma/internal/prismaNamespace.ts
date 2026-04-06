@@ -1167,6 +1167,7 @@ export const PortfolioImageScalarFieldEnum = {
   url: 'url',
   altText: 'altText',
   order: 'order',
+  isCover: 'isCover',
   anchorContentId: 'anchorContentId',
   anchorPosition: 'anchorPosition',
   createdAt: 'createdAt'
@@ -1308,6 +1309,13 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'ImageAnchorPosition'
  */
 export type EnumImageAnchorPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImageAnchorPosition'>
@@ -1318,13 +1326,6 @@ export type EnumImageAnchorPositionFieldRefInput<$PrismaModel> = FieldRefInputTy
  * Reference to a field of type 'ImageAnchorPosition[]'
  */
 export type ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImageAnchorPosition[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

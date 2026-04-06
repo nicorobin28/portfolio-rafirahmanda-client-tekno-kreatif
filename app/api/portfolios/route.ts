@@ -52,7 +52,9 @@ export async function POST(req: Request) {
     const uploadDir = path.join(process.cwd(), "public", "uploads", "portfolios")
     await fs.mkdir(uploadDir, { recursive: true })
 
-    const imageUrls = []
+    const coverIndex = parseInt(formData.get("coverIndex") as string) || 0
+
+    const imageUrls: { url: string; altText: string; order: number; isCover: boolean }[] = []
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i]
@@ -62,13 +64,14 @@ export async function POST(req: Request) {
             const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_")
             const filename = `${uniqueSuffix}-${cleanName}`
             const filepath = path.join(uploadDir, filename)
-            
+
             await fs.writeFile(filepath, buffer)
-            
-            imageUrls.push({ 
-                url: `/uploads/portfolios/${filename}`, 
-                altText: title, 
-                order: i 
+
+            imageUrls.push({
+                url: `/uploads/portfolios/${filename}`,
+                altText: title,
+                order: i,
+                isCover: i === coverIndex
             })
         }
     }
