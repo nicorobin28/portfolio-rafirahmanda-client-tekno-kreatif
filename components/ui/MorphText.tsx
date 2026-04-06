@@ -10,6 +10,7 @@ interface MorphTextProps {
   tickMs?: number;   // kecepatan spin per frame (ms)
   stagger?: number;  // jeda antar karakter mulai spin (ms)
   spinCount?: number; // berapa kali spin sebelum settle
+  animateInitial?: boolean; // opsi untuk mengaktifkan animasi decode saat initial render
 }
 
 export default function MorphText({
@@ -18,6 +19,7 @@ export default function MorphText({
   tickMs = 15,
   stagger = 80,
   spinCount = 5,
+  animateInitial = true, // default true untuk behavior sebelumnya
 }: MorphTextProps) {
   const [displayText, setDisplayText] = useState("");
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -79,14 +81,20 @@ export default function MorphText({
 
   const startFull = useCallback(() => {
     clear();
-    setDisplayText("");
 
-    // Fase 1: decode kosong → from
-    decodeTo("", from, () => {
-      // Fase 2: decode from → to
+    if (animateInitial) {
+      setDisplayText("");
+      // Fase 1: decode kosong → from
+      decodeTo("", from, () => {
+        // Fase 2: decode from → to
+        timerRef.current = setTimeout(() => decodeTo(from, to), 600);
+      });
+    } else {
+      setDisplayText(from);
+      // Langsung prepare ke target 'to' dengan jeda
       timerRef.current = setTimeout(() => decodeTo(from, to), 600);
-    });
-  }, [from, to, decodeTo]);
+    }
+  }, [from, to, decodeTo, animateInitial]);
 
   useEffect(() => {
     startFull();

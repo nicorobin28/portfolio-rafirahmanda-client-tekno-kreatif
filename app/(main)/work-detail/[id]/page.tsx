@@ -6,12 +6,14 @@ import { motion } from "framer-motion";
 import MorphText from "@/components/MorphText";
 import Headmeta from "@/app/component/headmeta";
 import Topic from "@/app/component/topic";
+import RichTextDisplay from "@/components/ui/RichTextDisplay";
 
 const Page = () => {
   const params = useParams();
   const id = params?.id as string;
 
   const [portfolio, setPortfolio] = useState<any>(null);
+  const [relatedTopics, setRelatedTopics] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [openIndex, setOpenIndex] = useState(false);
@@ -27,10 +29,18 @@ const Page = () => {
     if (!id) return;
     const fetchPortfolio = async () => {
       try {
-        const res = await fetch(`/api/portfolios/${id}`);
+        const [res, relatedRes] = await Promise.all([
+          fetch(`/api/portfolios/${id}`),
+          fetch(`/api/portfolios/${id}/related`),
+        ]);
         if (!res.ok) throw new Error("Failed to fetch portfolio");
         const data = await res.json();
         setPortfolio(data);
+
+        if (relatedRes.ok) {
+          const relatedData = await relatedRes.json();
+          setRelatedTopics(relatedData);
+        }
         if (data?.contents?.length > 0) {
           setActiveSection(data.contents[0].id);
         }
@@ -132,7 +142,7 @@ const Page = () => {
   );
 
   return (
-    <section className="w-full bg-white px-6 md:px-12 lg:px-20 py-20">
+    <section className="w-full bg-white px-6 md:px-[120px] lg:px-[120px] py-20">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-16">
         <div className="lg:sticky top-0 z-0 h-fit flex flex-col gap-12">
           {/* TITLE */}
@@ -156,7 +166,7 @@ const Page = () => {
               {isSticky && isMobile && (
                 <div className="flex flex-col gap-4 border border-transparent rounded-2xl p-4 opacity-0 pointer-events-none">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-[20px] font-semibold">Index</h3>
+                    <h3 className="text-[20px] font-medium">Index</h3>
                     <ChevronDown className="w-5 h-5" />
                   </div>
                   <div
@@ -321,7 +331,7 @@ const Page = () => {
 
           {/* related topics */}
           <div className="hidden md:flex ">
-            <Topic />
+            <Topic topics={relatedTopics} />
           </div>
         </div>
 
@@ -381,10 +391,7 @@ const Page = () => {
                     {content.title}
                   </h2>
 
-                  <div
-                    className="text-gray-600 leading-relaxed prose prose-gray max-w-none"
-                    dangerouslySetInnerHTML={{ __html: content.body }}
-                  />
+                  <RichTextDisplay content={content.body} />
 
                   {afterImages.length > 0 && (
                     <div className="flex flex-col gap-4">
@@ -404,7 +411,7 @@ const Page = () => {
           </div>
 
           <div className="md:hidden">
-            <Topic />
+            <Topic topics={relatedTopics} />
           </div>
         </div>
       </div>

@@ -1150,6 +1150,7 @@ export const PortfolioScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   title: 'title',
+  subTitle: 'subTitle',
   role: 'role',
   company: 'company',
   year: 'year',

@@ -10,12 +10,20 @@ export async function GET() {
   try {
     const portfolios = await prisma.portfolio.findMany({
       include: {
-        images: true,
+        images: {
+          orderBy: { order: "asc" }
+        },
         contents: {
           orderBy: { order: "asc" }
+        },
+        tags: {
+          include: { tag: true }
         }
       },
-      orderBy: { createdAt: "desc" }
+      orderBy: [
+        { year: "desc" },
+        { createdAt: "desc" }
+      ]
     })
     return NextResponse.json(portfolios)
   } catch (error: any) {
@@ -30,10 +38,14 @@ export async function POST(req: Request) {
 
     const formData = await req.formData()
     const title = formData.get("title") as string
+    const subTitle = formData.get("subTitle") as string || ""
     const role = formData.get("role") as string
     const company = formData.get("company") as string
     const year = parseInt(formData.get("year") as string)
     
+    const tagsData = formData.get("tags") as string
+    const tags = tagsData ? JSON.parse(tagsData) : []
+
     // Accept multiple image files
     const files = formData.getAll("images") as File[]
 
@@ -65,16 +77,23 @@ export async function POST(req: Request) {
       data: {
         userId: session.user.id,
         title,
+        subTitle,
         role,
         company,
         year,
         images: {
           create: imageUrls
+        },
+        tags: {
+          create: tags.map((tagId: string) => ({
+            tag: { connect: { id: tagId } }
+          }))
         }
       },
       include: {
         images: true,
-        contents: true
+        contents: true,
+        tags: { include: { tag: true } }
       }
     })
 

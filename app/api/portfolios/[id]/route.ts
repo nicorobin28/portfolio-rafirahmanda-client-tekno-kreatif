@@ -14,10 +14,14 @@ export async function PUT(req: Request, routeParams: { params: Promise<{ id: str
 
     const formData = await req.formData()
     const title = formData.get("title") as string
+    const subTitle = formData.get("subTitle") as string || ""
     const role = formData.get("role") as string
     const company = formData.get("company") as string
     const year = parseInt(formData.get("year") as string)
     
+    const tagsData = formData.get("tags") as string
+    const tags = tagsData ? JSON.parse(tagsData) : []
+
     // Accept multiple image files
     const files = formData.getAll("images") as File[]
 
@@ -46,13 +50,19 @@ export async function PUT(req: Request, routeParams: { params: Promise<{ id: str
     const updated = await prisma.portfolio.update({
       where: { id: params.id },
       data: {
-        title, role, company, year,
+        title, subTitle, role, company, year,
         ...(imageUrls.length > 0 ? {
             // Hapus gambar lama (bisa ditaruh logic unlink file lama jika perlu)
             images: { deleteMany: {}, create: imageUrls }
-        } : {})
+        } : {}),
+        tags: {
+            deleteMany: {},
+            create: tags.map((tagId: string) => ({
+                tag: { connect: { id: tagId } }
+            }))
+        }
       },
-      include: { images: true, contents: true }
+      include: { images: true, contents: true, tags: { include: { tag: true } } }
     })
 
     return NextResponse.json(updated)
@@ -86,6 +96,9 @@ export async function GET(req: Request, routeParams: { params: Promise<{ id: str
         images: {
           orderBy: { order: "asc" },
         },
+        tags: {
+          include: { tag: true }
+        }
       },
     });
 

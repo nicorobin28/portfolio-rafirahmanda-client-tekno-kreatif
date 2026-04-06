@@ -3,8 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import MorphText from "@/components/MorphText";
+import axios from "axios";
 
 const navbarProductDetail = () => {
   const menuDesktop: { id: number; name: string; path: string }[] = [
@@ -21,178 +23,24 @@ const navbarProductDetail = () => {
   ];
 
   const pathname = usePathname();
+  const currentId = pathname.match(/\/work-detail\/([^/]+)/)?.[1];
 
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [portfolios, setPortfolios] = useState<any[]>([]);
 
-  type data = {
-    id: number;
-    title: string;
-    desc: {
-      icon: React.ReactNode;
-      subtitle: string;
-      year: string;
-    };
+  useEffect(() => {
+    fetchPortfolios();
+  }, []);
+
+  const fetchPortfolios = async () => {
+    try {
+      const { data } = await axios.get("/api/portfolios");
+      setPortfolios(data);
+    } catch (e) {
+      console.error(e);
+    }
   };
-
-  const dummyCard: data[] = [
-    {
-      id: 1,
-      title: "Add Gamification to Telco UI",
-      desc: {
-        icon: (
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-          >
-            <rect width="16" height="16" fill="url(#pattern0_9083_1389)" />
-            <defs>
-              <pattern
-                id="pattern0_9083_1389"
-                patternContentUnits="objectBoundingBox"
-                width="1"
-                height="1"
-              >
-                <use
-                  xlinkHref="#image0_9083_1389"
-                  transform="scale(0.00444444)"
-                />
-              </pattern>
-              <image
-                id="image0_9083_1389"
-                width="225"
-                height="225"
-                preserveAspectRatio="none"
-                xlinkHref="data:image/png;base64,..."
-              />
-            </defs>
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 2,
-      title: "Build cellcard Iconography",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 3,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 4,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 5,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 6,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 7,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 8,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 9,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-    {
-      id: 10,
-      title: "Build Coupon Platform Build Coupon Platform",
-      desc: {
-        icon: (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <rect width="16" height="16" fill="url(#pattern0_9083_960)" />
-          </svg>
-        ),
-        subtitle: "cellcard",
-        year: "2026",
-      },
-    },
-  ];
 
   return (
     // Navbar md-lg
@@ -206,75 +54,83 @@ const navbarProductDetail = () => {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center gap-3 cursor-pointer h-[40px]"
         >
-  <div className="relative w-[20px] h-[20px] flex flex-col justify-center items-center">
-    {/* Top line — geser ke tengah dulu, baru rotate 45 */}
-    <motion.span
-      className="absolute block h-[1.5px] bg-black rounded-full"
-      animate={
-        isOpen
-          ? { translateY: 0, rotate: 45 }
-          : { translateY: -6, rotate: 0 }
-      }
-      transition={
-        isOpen
-          ? {
-              translateY: { duration: 0.2, ease: "easeInOut" },
-              rotate: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
-            }
-          : {
-              rotate: { duration: 0.2, ease: "easeInOut" },
-              translateY: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
-            }
-      }
-      style={{ width: 20 }}
-    />
+          <div className="relative w-[20px] h-[20px] flex flex-col justify-center items-center">
+            {/* Top line — geser ke tengah dulu, baru rotate 45 */}
+            <motion.span
+              className="absolute block h-[1.5px] bg-black rounded-full"
+              animate={
+                isOpen
+                  ? { translateY: 0, rotate: 45 }
+                  : { translateY: -6, rotate: 0 }
+              }
+              transition={
+                isOpen
+                  ? {
+                      translateY: { duration: 0.2, ease: "easeInOut" },
+                      rotate: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
+                    }
+                  : {
+                      rotate: { duration: 0.2, ease: "easeInOut" },
+                      translateY: {
+                        duration: 0.2,
+                        ease: "easeInOut",
+                        delay: 0.2,
+                      },
+                    }
+              }
+              style={{ width: 20 }}
+            />
 
-    {/* Middle line — geser ke tengah (sudah di tengah), lalu rotate -45 */}
-    <motion.span
-      className="absolute block h-[1.5px] bg-black rounded-full"
-      animate={
-        isOpen
-          ? { translateY: 0, rotate: -45, opacity: 1 }
-          : { translateY: 0, rotate: 0, opacity: 1 }
-      }
-      transition={
-        isOpen
-          ? {
-              rotate: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
-            }
-          : {
-              rotate: { duration: 0.2, ease: "easeInOut" },
-            }
-      }
-      style={{ width: 20 }}
-    />
+            {/* Middle line — geser ke tengah (sudah di tengah), lalu rotate -45 */}
+            <motion.span
+              className="absolute block h-[1.5px] bg-black rounded-full"
+              animate={
+                isOpen
+                  ? { translateY: 0, rotate: -45, opacity: 1 }
+                  : { translateY: 0, rotate: 0, opacity: 1 }
+              }
+              transition={
+                isOpen
+                  ? {
+                      rotate: { duration: 0.2, ease: "easeInOut", delay: 0.2 },
+                    }
+                  : {
+                      rotate: { duration: 0.2, ease: "easeInOut" },
+                    }
+              }
+              style={{ width: 20 }}
+            />
 
-    {/* Bottom line — geser ke tengah dulu, lalu hilang */}
-    <motion.span
-      className="absolute block h-[1.5px] bg-black rounded-full"
-      animate={
-        isOpen
-          ? { translateY: 0, opacity: 0 }
-          : { translateY: 6, opacity: 1 }
-      }
-      transition={
-        isOpen
-          ? {
-              translateY: { duration: 0.2, ease: "easeInOut" },
-              opacity: { duration: 0.1, delay: 0.2 },
-            }
-          : {
-              opacity: { duration: 0.1 },
-              translateY: { duration: 0.2, ease: "easeInOut", delay: 0.1 },
-            }
-      }
-      style={{ width: 20 }}
-    />
-  </div>
+            {/* Bottom line — geser ke tengah dulu, lalu hilang */}
+            <motion.span
+              className="absolute block h-[1.5px] bg-black rounded-full"
+              animate={
+                isOpen
+                  ? { translateY: 0, opacity: 0 }
+                  : { translateY: 6, opacity: 1 }
+              }
+              transition={
+                isOpen
+                  ? {
+                      translateY: { duration: 0.2, ease: "easeInOut" },
+                      opacity: { duration: 0.1, delay: 0.2 },
+                    }
+                  : {
+                      opacity: { duration: 0.1 },
+                      translateY: {
+                        duration: 0.2,
+                        ease: "easeInOut",
+                        delay: 0.1,
+                      },
+                    }
+              }
+              style={{ width: 20 }}
+            />
+          </div>
 
-  <h1 className="text-[16px] text-black font-roboto-mono font-medium">
-    Other Works
-  </h1>
+          <h1 className="text-[16px] text-black font-roboto-mono font-medium">
+            Other Works
+          </h1>
         </button>
         <div className="flex md:gap-18 lg:gap-24">
           {menuDesktop.map((item) => {
@@ -350,127 +206,167 @@ const navbarProductDetail = () => {
         </div>
       </div>
 
-     {/* Sidebar — Animasi Hordeng Horizontal */}
-    <AnimatePresence mode="wait">
-      {isOpen && (
-        <>
-          {/* Overlay backdrop */}
-          <motion.div
-            key="overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            onClick={() => setIsOpen(false)}
-            className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[2px]"
-          />
+      {/* Sidebar — Animasi Hordeng Horizontal */}
+      <AnimatePresence mode="wait">
+        {isOpen && (
+          <>
+            {/* Overlay backdrop */}
+            <motion.div
+              key="overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[2px]"
+            />
 
-          {/* Sidebar — geser kiri ke kanan */}
-          <motion.div
-            key="sidebar"
-            initial={{ x: "-100%" }}
-            animate={{ x: "0%" }}
-            exit={{ x: "-100%" }}
-            transition={{
-              duration: 0.55,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="fixed z-50 top-0 left-0 h-screen w-full md:w-auto
+            {/* Sidebar — geser kiri ke kanan */}
+            <motion.div
+              key="sidebar"
+              initial={{ x: "-100%" }}
+              animate={{ x: "0%" }}
+              exit={{ x: "-100%" }}
+              transition={{
+                duration: 0.55,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="fixed z-50 top-0 left-0 h-screen w-full md:w-auto
                       bg-white/90 backdrop-blur-[24px]
                       border-r border-[#C7C8C9] overflow-hidden"
-          >
-            {/* Inner scroll container */}
-            <div className="h-full overflow-y-auto no-scrollbar md:w-109 w-full">
+            >
+              {/* Inner scroll container */}
+              <div className="h-full overflow-y-auto no-scrollbar md:w-109 w-full">
+                {/* Close button */}
+                <motion.button
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -16 }}
+                  transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center md:justify-center gap-3 cursor-pointer h-16 w-full px-4 md:px-0 sticky top-0 bg-white/80 backdrop-blur-md border-b border-[#EFEFF0] z-10"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path
+                      d="M12.2664 0.183058C12.5105 -0.0610194 12.9061 -0.0610194 13.1502 0.183058C13.3943 0.427136 13.3943 0.82277 13.1502 1.06685L7.55041 6.66662L13.1502 12.2664C13.3943 12.5105 13.3943 12.9061 13.1502 13.1502C12.9061 13.3943 12.5105 13.3943 12.2664 13.1502L6.66662 7.55041L1.06685 13.1502C0.82277 13.3943 0.427136 13.3943 0.183058 13.1502C-0.0610194 12.9061 -0.0610194 12.5105 0.183058 12.2664L5.78283 6.66662L0.183058 1.06685C-0.0610194 0.82277 -0.0610194 0.427136 0.183058 0.183058C0.427136 -0.0610194 0.82277 -0.0610194 1.06685 0.183058L6.66662 5.78283L12.2664 0.183058Z"
+                      fill="black"
+                    />
+                  </svg>
+                  <h1 className="text-[16px] text-black font-roboto-mono font-medium">
+                    Close Sidebar
+                  </h1>
+                </motion.button>
 
-              {/* Close button */}
-              <motion.button
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center md:justify-center gap-3 cursor-pointer h-16 w-full px-4 md:px-0 sticky top-0 bg-white/80 backdrop-blur-md border-b border-[#EFEFF0] z-10"
-              >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <path
-                    d="M12.2664 0.183058C12.5105 -0.0610194 12.9061 -0.0610194 13.1502 0.183058C13.3943 0.427136 13.3943 0.82277 13.1502 1.06685L7.55041 6.66662L13.1502 12.2664C13.3943 12.5105 13.3943 12.9061 13.1502 13.1502C12.9061 13.3943 12.5105 13.3943 12.2664 13.1502L6.66662 7.55041L1.06685 13.1502C0.82277 13.3943 0.427136 13.3943 0.183058 13.1502C-0.0610194 12.9061 -0.0610194 12.5105 0.183058 12.2664L5.78283 6.66662L0.183058 1.06685C-0.0610194 0.82277 -0.0610194 0.427136 0.183058 0.183058C0.427136 -0.0610194 0.82277 -0.0610194 1.06685 0.183058L6.66662 5.78283L12.2664 0.183058Z"
-                    fill="black"
-                  />
-                </svg>
-                <h1 className="text-[16px] text-black font-roboto-mono font-medium">
-                  Close Sidebar
-                </h1>
-              </motion.button>
-
-              {/* Card list — stagger dari kiri */}
-              <motion.div
-                initial="hidden"
-                animate="show"
-                exit="hidden"
-                variants={{
-                  hidden: { opacity: 0 },
-                  show: {
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.07,
-                      delayChildren: 0.35,
-                    },
-                  },
-                }}
-                className="text-black w-full pt-4"
-              >
-                {dummyCard.map((item) => (
-                  <motion.div
-                    key={item.id}
-                    variants={{
-                      hidden: { opacity: 0, x: -20, filter: "blur(4px)" },
-                      show: {
-                        opacity: 1,
-                        x: 0,
-                        filter: "blur(0px)",
-                        transition: { duration: 0.35, ease: "easeOut" },
+                {/* Card list — stagger dari kiri */}
+                <motion.div
+                  initial="hidden"
+                  animate="show"
+                  exit="hidden"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.07,
+                        delayChildren: 0.35,
                       },
-                    }}
-                    className="p-4 w-full"
-                  >
-                    <div className="flex justify-between cursor-pointer group">
-                      <div className="flex flex-col gap-[4px]">
-                        <h1 className="font-jakarta font-semibold text-[20px] w-60 text-left truncate group-hover:underline">
-                          {item.title}
-                        </h1>
-                        <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[14px] group-hover:hidden">
-                          <div className="flex items-center gap-1.5">
-                            <>{item.desc.icon}</>
-                            <p>{item.desc.subtitle}</p>
+                    },
+                  }}
+                  className="text-black w-full pt-4"
+                >
+                  {portfolios.filter((p: any) => p.id !== currentId).map((item) => (
+                    <motion.div
+                      key={item.id}
+                      variants={{
+                        hidden: { opacity: 0, x: -20, filter: "blur(4px)" },
+                        show: {
+                          opacity: 1,
+                          x: 0,
+                          filter: "blur(0px)",
+                          transition: { duration: 0.35, ease: "easeOut" },
+                        },
+                      }}
+                      className="px-4 py-5 w-full"
+                      onMouseEnter={() => setHoveredId(item.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                    >
+                      <Link
+                        href={`/work-detail/${item.id}`}
+                        onClick={() => setIsOpen(false)}
+                        className="flex justify-between items-center w-full gap-[16px] cursor-pointer group"
+                      >
+                        <div className="flex flex-col md:max-w-[299px] w-[285px] h-full gap-[4px] min-w-0">
+                          <h1 className="font-jakarta font-semibold text-[20px] w-full text-left truncate underline decoration-transparent group-hover:decoration-inherit transition-colors duration-300 underline-offset-4">
+                            {item.title}
+                          </h1>
+                          <div className="flex items-center font-roboto-mono text-[14px]">
+                            <span
+                              className={`transition-all duration-300 flex items-center shrink-0 ${hoveredId === item.id ? "opacity-0 w-0 overflow-hidden" : "opacity-100 gap-1.5"}`}
+                            >
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <rect
+                                  width="16"
+                                  height="16"
+                                  rx="2"
+                                  fill="#E5E7EB"
+                                />
+                                <path d="M4 4h8v8H4V4z" fill="#9CA3AF" />
+                              </svg>
+                            </span>
+                            <h1
+                              className={`flex items-center gap-[2px] transition-colors duration-300 min-w-0 truncate ${hoveredId === item.id ? "text-black font-semibold" : "text-[#5B5E61]"}`}
+                            >
+                              <MorphText
+                                from={`${item.company || item.role} • ${item.year}`}
+                                to="Read More"
+                                trigger={hoveredId === item.id}
+                                tickMs={15}
+                                stagger={20}
+                                spinCount={4}
+                              />
+                              <span
+                                className={`transition-all duration-300 shrink-0 ${hoveredId === item.id ? "opacity-100 translate-x-0 ml-1" : "opacity-0 -translate-x-4 max-w-0 overflow-hidden"}`}
+                              >
+                                <svg
+                                  width="11"
+                                  height="11"
+                                  viewBox="0 0 11 11"
+                                  fill="none"
+                                  className="shrink-0"
+                                >
+                                  <path
+                                    d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
+                                    fill="currentColor"
+                                  />
+                                </svg>
+                              </span>
+                            </h1>
                           </div>
-                          <span>
-                            <svg width="4" height="4" viewBox="0 0 4 4" fill="none">
-                              <circle cx="2" cy="2" r="2" fill="#9C9EA1" />
-                            </svg>
-                          </span>
-                          <p>{item.desc.year}</p>
                         </div>
-                        <div className="hidden group-hover:flex items-center gap-[2px]">
-                          <p className="text-[14px] font-semibold">Read More</p>
-                          <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                            <path
-                              d="M0.146447 9.81404L8.9606 0.999893H3.33228C3.05614 0.999893 2.83234 0.776089 2.83234 0.499947C2.83234 0.223805 3.05614 2.95028e-07 3.33228 4.21469e-08L10.1676 0L10.2657 0.00966747C10.3618 0.028886 10.4509 0.0760812 10.5212 0.146393C10.615 0.240161 10.6676 0.367338 10.6676 0.499947V7.33531C10.6676 7.61145 10.4438 7.83526 10.1676 7.83526C9.89151 7.83526 9.6677 7.61145 9.6677 7.33531V1.707L0.853553 10.5211C0.658291 10.7164 0.341709 10.7164 0.146447 10.5211C-0.0488155 10.3259 -0.0488155 10.0093 0.146447 9.81404Z"
-                              fill="black"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                      <div className="w-22.5 h-15 rounded-[6px] bg-[#EFEFF0]" />
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+                        {item.images?.[0]?.url ? (
+                          <img
+                            src={item.images[0].url}
+                            alt={item.title}
+                            className="w-[90px] h-[60px] flex-shrink-0 object-cover rounded-[6px] bg-[#EFEFF0] border border-[#EFEFF0]"
+                          />
+                        ) : (
+                          <div className="w-[90px] h-[60px] flex-shrink-0 rounded-[6px] bg-[#EFEFF0]" />
+                        )}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Navbar sm */}
       <div className="md:hidden flex justify-between items-center w-full h-[56px] px-[16px]">
