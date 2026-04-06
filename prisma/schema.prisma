@@ -81,6 +81,7 @@ model PortfolioImage {
   url         String   // URL gambar di storage (R2/S3)
   altText     String?  // alt text untuk aksesibilitas
   order       Int      @default(0)  // urutan tampil gambar
+  isCover     Boolean  @default(false)  // gambar yang digunakan sebagai cover portfolio
   anchorContentId String?
   anchorPosition  ImageAnchorPosition?
   createdAt   DateTime @default(now())

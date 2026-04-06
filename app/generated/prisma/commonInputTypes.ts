@@ -137,11 +137,24 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type BoolFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
 export type EnumImageAnchorPositionNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.ImageAnchorPosition | Prisma.EnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
   in?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
   notIn?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
   not?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel> | $Enums.ImageAnchorPosition | null
+}
+
+export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
 export type EnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -152,19 +165,6 @@ export type EnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaModel = n
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
-}
-
-export type BoolFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
-}
-
-export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedBoolFilter<$PrismaModel>
-  _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
 export type NestedStringFilter<$PrismaModel = never> = {
@@ -303,11 +303,24 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
+export type NestedBoolFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
+}
+
 export type NestedEnumImageAnchorPositionNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.ImageAnchorPosition | Prisma.EnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
   in?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
   notIn?: $Enums.ImageAnchorPosition[] | Prisma.ListEnumImageAnchorPositionFieldRefInput<$PrismaModel> | null
   not?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel> | $Enums.ImageAnchorPosition | null
+}
+
+export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedBoolFilter<$PrismaModel>
+  _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
 export type NestedEnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -318,19 +331,6 @@ export type NestedEnumImageAnchorPositionNullableWithAggregatesFilter<$PrismaMod
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumImageAnchorPositionNullableFilter<$PrismaModel>
-}
-
-export type NestedBoolFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
-}
-
-export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedBoolFilter<$PrismaModel>
-  _max?: Prisma.NestedBoolFilter<$PrismaModel>
 }
 
 

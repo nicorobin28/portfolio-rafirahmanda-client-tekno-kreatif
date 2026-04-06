@@ -137,9 +137,11 @@ const Page = () => {
     title: c.title,
   }));
 
-  const unanchoredImages = portfolio.images.filter(
-    (img: any) => !img.anchorContentId,
-  );
+  // Cover image: explicitly marked isCover, fallback to first image
+  const coverImage =
+    portfolio.images.find((img: any) => img.isCover) ??
+    portfolio.images[0] ??
+    null;
 
   return (
     <section className="w-full bg-white px-6 md:px-[120px] lg:px-[120px] py-20">
@@ -157,10 +159,7 @@ const Page = () => {
           {INDEX_DATA.length > 0 && (
             <div className="relative z-50">
               {/* Sentinel element to track scroll position */}
-              <div
-                ref={sentinelRef}
-                className="absolute -top-[1px] w-full h-[1px]"
-              />
+              <div ref={sentinelRef} className="absolute -top-px w-full h-px" />
 
               {/* INVISIBLE PLACEHOLDER to prevent layout shift when fixed on mobile */}
               {isSticky && isMobile && (
@@ -192,9 +191,9 @@ const Page = () => {
 
               <motion.div
                 layout
-                className={`flex flex-col gap-4 border-[#C7C8C9] md:p-0 md:bg-transparent md:border-0 md:top-0 md:sticky md:block z-[100] ${
+                className={`flex flex-col gap-4 border-[#C7C8C9] md:p-0 md:bg-transparent md:border-0 md:top-0 md:sticky md:block z-100 ${
                   isSticky && isMobile
-                    ? "fixed top-0 left-0 right-0 overflow-y-auto max-h-[100vh]"
+                    ? "fixed top-0 left-0 right-0 overflow-y-auto max-h-screen"
                     : "relative border overflow-hidden"
                 }`}
                 initial={false}
@@ -336,24 +335,21 @@ const Page = () => {
         </div>
 
         <div className="flex flex-col gap-12">
-          {unanchoredImages.length > 0 && (
+          {/* {coverImage && (
             <div className="bg-[#F3F3F3] rounded-2xl p-8 md:p-12 flex flex-wrap justify-center items-center gap-10">
-              {unanchoredImages.map((img: any) => (
-                <div
-                  key={img.id}
-                  className="relative w-[140px] md:w-[180px] h-[280px] md:h-[360px] bg-black rounded-[32px] p-[6px] shadow-[0_20px_40px_rgba(0,0,0,0.15)]"
-                >
-                  <div className="w-full h-full bg-white rounded-[28px] overflow-hidden">
-                    <img
-                      src={img.url}
-                      alt={img.altText || "Portfolio Image"}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+              <div
+                className="relative w-[140px] md:w-[180px] h-[280px] md:h-[360px] bg-black rounded-[32px] p-[6px] shadow-[0_20px_40px_rgba(0,0,0,0.15)]"
+              >
+                <div className="w-full h-full bg-white rounded-[28px] overflow-hidden">
+                  <img
+                    src={coverImage.url}
+                    alt={coverImage.altText || "Portfolio Cover"}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              ))}
+              </div>
             </div>
-          )}
+          )} */}
 
           <div className="max-w-[640px] flex flex-col gap-12">
             {portfolio.contents.map((content: any) => {

@@ -40,6 +40,7 @@ export type PortfolioImageMinAggregateOutputType = {
   url: string | null
   altText: string | null
   order: number | null
+  isCover: boolean | null
   anchorContentId: string | null
   anchorPosition: $Enums.ImageAnchorPosition | null
   createdAt: Date | null
@@ -51,6 +52,7 @@ export type PortfolioImageMaxAggregateOutputType = {
   url: string | null
   altText: string | null
   order: number | null
+  isCover: boolean | null
   anchorContentId: string | null
   anchorPosition: $Enums.ImageAnchorPosition | null
   createdAt: Date | null
@@ -62,6 +64,7 @@ export type PortfolioImageCountAggregateOutputType = {
   url: number
   altText: number
   order: number
+  isCover: number
   anchorContentId: number
   anchorPosition: number
   createdAt: number
@@ -83,6 +86,7 @@ export type PortfolioImageMinAggregateInputType = {
   url?: true
   altText?: true
   order?: true
+  isCover?: true
   anchorContentId?: true
   anchorPosition?: true
   createdAt?: true
@@ -94,6 +98,7 @@ export type PortfolioImageMaxAggregateInputType = {
   url?: true
   altText?: true
   order?: true
+  isCover?: true
   anchorContentId?: true
   anchorPosition?: true
   createdAt?: true
@@ -105,6 +110,7 @@ export type PortfolioImageCountAggregateInputType = {
   url?: true
   altText?: true
   order?: true
+  isCover?: true
   anchorContentId?: true
   anchorPosition?: true
   createdAt?: true
@@ -203,6 +209,7 @@ export type PortfolioImageGroupByOutputType = {
   url: string
   altText: string | null
   order: number
+  isCover: boolean
   anchorContentId: string | null
   anchorPosition: $Enums.ImageAnchorPosition | null
   createdAt: Date
@@ -237,6 +244,7 @@ export type PortfolioImageWhereInput = {
   url?: Prisma.StringFilter<"PortfolioImage"> | string
   altText?: Prisma.StringNullableFilter<"PortfolioImage"> | string | null
   order?: Prisma.IntFilter<"PortfolioImage"> | number
+  isCover?: Prisma.BoolFilter<"PortfolioImage"> | boolean
   anchorContentId?: Prisma.StringNullableFilter<"PortfolioImage"> | string | null
   anchorPosition?: Prisma.EnumImageAnchorPositionNullableFilter<"PortfolioImage"> | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFilter<"PortfolioImage"> | Date | string
@@ -250,6 +258,7 @@ export type PortfolioImageOrderByWithRelationInput = {
   url?: Prisma.SortOrder
   altText?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
+  isCover?: Prisma.SortOrder
   anchorContentId?: Prisma.SortOrderInput | Prisma.SortOrder
   anchorPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -266,6 +275,7 @@ export type PortfolioImageWhereUniqueInput = Prisma.AtLeast<{
   url?: Prisma.StringFilter<"PortfolioImage"> | string
   altText?: Prisma.StringNullableFilter<"PortfolioImage"> | string | null
   order?: Prisma.IntFilter<"PortfolioImage"> | number
+  isCover?: Prisma.BoolFilter<"PortfolioImage"> | boolean
   anchorContentId?: Prisma.StringNullableFilter<"PortfolioImage"> | string | null
   anchorPosition?: Prisma.EnumImageAnchorPositionNullableFilter<"PortfolioImage"> | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFilter<"PortfolioImage"> | Date | string
@@ -279,6 +289,7 @@ export type PortfolioImageOrderByWithAggregationInput = {
   url?: Prisma.SortOrder
   altText?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
+  isCover?: Prisma.SortOrder
   anchorContentId?: Prisma.SortOrderInput | Prisma.SortOrder
   anchorPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -298,6 +309,7 @@ export type PortfolioImageScalarWhereWithAggregatesInput = {
   url?: Prisma.StringWithAggregatesFilter<"PortfolioImage"> | string
   altText?: Prisma.StringNullableWithAggregatesFilter<"PortfolioImage"> | string | null
   order?: Prisma.IntWithAggregatesFilter<"PortfolioImage"> | number
+  isCover?: Prisma.BoolWithAggregatesFilter<"PortfolioImage"> | boolean
   anchorContentId?: Prisma.StringNullableWithAggregatesFilter<"PortfolioImage"> | string | null
   anchorPosition?: Prisma.EnumImageAnchorPositionNullableWithAggregatesFilter<"PortfolioImage"> | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PortfolioImage"> | Date | string
@@ -308,6 +320,7 @@ export type PortfolioImageCreateInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
   portfolio: Prisma.PortfolioCreateNestedOneWithoutImagesInput
@@ -320,6 +333,7 @@ export type PortfolioImageUncheckedCreateInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorContentId?: string | null
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
@@ -330,6 +344,7 @@ export type PortfolioImageUpdateInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutImagesNestedInput
@@ -342,6 +357,7 @@ export type PortfolioImageUncheckedUpdateInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorContentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -353,6 +369,7 @@ export type PortfolioImageCreateManyInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorContentId?: string | null
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
@@ -363,6 +380,7 @@ export type PortfolioImageUpdateManyMutationInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -373,6 +391,7 @@ export type PortfolioImageUncheckedUpdateManyInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorContentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -394,6 +413,7 @@ export type PortfolioImageCountOrderByAggregateInput = {
   url?: Prisma.SortOrder
   altText?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  isCover?: Prisma.SortOrder
   anchorContentId?: Prisma.SortOrder
   anchorPosition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -409,6 +429,7 @@ export type PortfolioImageMaxOrderByAggregateInput = {
   url?: Prisma.SortOrder
   altText?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  isCover?: Prisma.SortOrder
   anchorContentId?: Prisma.SortOrder
   anchorPosition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -420,6 +441,7 @@ export type PortfolioImageMinOrderByAggregateInput = {
   url?: Prisma.SortOrder
   altText?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  isCover?: Prisma.SortOrder
   anchorContentId?: Prisma.SortOrder
   anchorPosition?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -469,6 +491,10 @@ export type PortfolioImageUncheckedUpdateManyWithoutPortfolioNestedInput = {
   update?: Prisma.PortfolioImageUpdateWithWhereUniqueWithoutPortfolioInput | Prisma.PortfolioImageUpdateWithWhereUniqueWithoutPortfolioInput[]
   updateMany?: Prisma.PortfolioImageUpdateManyWithWhereWithoutPortfolioInput | Prisma.PortfolioImageUpdateManyWithWhereWithoutPortfolioInput[]
   deleteMany?: Prisma.PortfolioImageScalarWhereInput | Prisma.PortfolioImageScalarWhereInput[]
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type NullableEnumImageAnchorPositionFieldUpdateOperationsInput = {
@@ -522,6 +548,7 @@ export type PortfolioImageCreateWithoutPortfolioInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
   anchorContent?: Prisma.PortfolioContentCreateNestedOneWithoutAnchoredImagesInput
@@ -532,6 +559,7 @@ export type PortfolioImageUncheckedCreateWithoutPortfolioInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorContentId?: string | null
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
@@ -572,6 +600,7 @@ export type PortfolioImageScalarWhereInput = {
   url?: Prisma.StringFilter<"PortfolioImage"> | string
   altText?: Prisma.StringNullableFilter<"PortfolioImage"> | string | null
   order?: Prisma.IntFilter<"PortfolioImage"> | number
+  isCover?: Prisma.BoolFilter<"PortfolioImage"> | boolean
   anchorContentId?: Prisma.StringNullableFilter<"PortfolioImage"> | string | null
   anchorPosition?: Prisma.EnumImageAnchorPositionNullableFilter<"PortfolioImage"> | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFilter<"PortfolioImage"> | Date | string
@@ -582,6 +611,7 @@ export type PortfolioImageCreateWithoutAnchorContentInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
   portfolio: Prisma.PortfolioCreateNestedOneWithoutImagesInput
@@ -593,6 +623,7 @@ export type PortfolioImageUncheckedCreateWithoutAnchorContentInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
 }
@@ -628,6 +659,7 @@ export type PortfolioImageCreateManyPortfolioInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorContentId?: string | null
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
@@ -638,6 +670,7 @@ export type PortfolioImageUpdateWithoutPortfolioInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   anchorContent?: Prisma.PortfolioContentUpdateOneWithoutAnchoredImagesNestedInput
@@ -648,6 +681,7 @@ export type PortfolioImageUncheckedUpdateWithoutPortfolioInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorContentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -658,6 +692,7 @@ export type PortfolioImageUncheckedUpdateManyWithoutPortfolioInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorContentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -669,6 +704,7 @@ export type PortfolioImageCreateManyAnchorContentInput = {
   url: string
   altText?: string | null
   order?: number
+  isCover?: boolean
   anchorPosition?: $Enums.ImageAnchorPosition | null
   createdAt?: Date | string
 }
@@ -678,6 +714,7 @@ export type PortfolioImageUpdateWithoutAnchorContentInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   portfolio?: Prisma.PortfolioUpdateOneRequiredWithoutImagesNestedInput
@@ -689,6 +726,7 @@ export type PortfolioImageUncheckedUpdateWithoutAnchorContentInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -699,6 +737,7 @@ export type PortfolioImageUncheckedUpdateManyWithoutAnchorContentInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   altText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
+  isCover?: Prisma.BoolFieldUpdateOperationsInput | boolean
   anchorPosition?: Prisma.NullableEnumImageAnchorPositionFieldUpdateOperationsInput | $Enums.ImageAnchorPosition | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -711,6 +750,7 @@ export type PortfolioImageSelect<ExtArgs extends runtime.Types.Extensions.Intern
   url?: boolean
   altText?: boolean
   order?: boolean
+  isCover?: boolean
   anchorContentId?: boolean
   anchorPosition?: boolean
   createdAt?: boolean
@@ -724,6 +764,7 @@ export type PortfolioImageSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   url?: boolean
   altText?: boolean
   order?: boolean
+  isCover?: boolean
   anchorContentId?: boolean
   anchorPosition?: boolean
   createdAt?: boolean
@@ -737,6 +778,7 @@ export type PortfolioImageSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   url?: boolean
   altText?: boolean
   order?: boolean
+  isCover?: boolean
   anchorContentId?: boolean
   anchorPosition?: boolean
   createdAt?: boolean
@@ -750,12 +792,13 @@ export type PortfolioImageSelectScalar = {
   url?: boolean
   altText?: boolean
   order?: boolean
+  isCover?: boolean
   anchorContentId?: boolean
   anchorPosition?: boolean
   createdAt?: boolean
 }
 
-export type PortfolioImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "portfolioId" | "url" | "altText" | "order" | "anchorContentId" | "anchorPosition" | "createdAt", ExtArgs["result"]["portfolioImage"]>
+export type PortfolioImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "portfolioId" | "url" | "altText" | "order" | "isCover" | "anchorContentId" | "anchorPosition" | "createdAt", ExtArgs["result"]["portfolioImage"]>
 export type PortfolioImageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   portfolio?: boolean | Prisma.PortfolioDefaultArgs<ExtArgs>
   anchorContent?: boolean | Prisma.PortfolioImage$anchorContentArgs<ExtArgs>
@@ -781,6 +824,7 @@ export type $PortfolioImagePayload<ExtArgs extends runtime.Types.Extensions.Inte
     url: string
     altText: string | null
     order: number
+    isCover: boolean
     anchorContentId: string | null
     anchorPosition: $Enums.ImageAnchorPosition | null
     createdAt: Date
@@ -1214,6 +1258,7 @@ export interface PortfolioImageFieldRefs {
   readonly url: Prisma.FieldRef<"PortfolioImage", 'String'>
   readonly altText: Prisma.FieldRef<"PortfolioImage", 'String'>
   readonly order: Prisma.FieldRef<"PortfolioImage", 'Int'>
+  readonly isCover: Prisma.FieldRef<"PortfolioImage", 'Boolean'>
   readonly anchorContentId: Prisma.FieldRef<"PortfolioImage", 'String'>
   readonly anchorPosition: Prisma.FieldRef<"PortfolioImage", 'ImageAnchorPosition'>
   readonly createdAt: Prisma.FieldRef<"PortfolioImage", 'DateTime'>

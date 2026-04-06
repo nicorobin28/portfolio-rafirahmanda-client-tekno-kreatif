@@ -513,10 +513,6 @@ export type ExperienceUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ExperienceScalarWhereInput | Prisma.ExperienceScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type ExperienceCreateWithoutUserInput = {
   id?: string
   company: string

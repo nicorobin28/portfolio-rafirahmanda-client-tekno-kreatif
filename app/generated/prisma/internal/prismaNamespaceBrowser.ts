@@ -128,6 +128,7 @@ export const PortfolioImageScalarFieldEnum = {
   url: 'url',
   altText: 'altText',
   order: 'order',
+  isCover: 'isCover',
   anchorContentId: 'anchorContentId',
   anchorPosition: 'anchorPosition',
   createdAt: 'createdAt'

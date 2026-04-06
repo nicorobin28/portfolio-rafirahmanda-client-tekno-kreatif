@@ -93,7 +93,7 @@ const InitialLoader = ({ isLoadingData, onComplete }: InitialLoaderProps) => {
           {/* Location — starts immediately with name */}
           <p className="text-[#171718] text-[12px] md:text-[16px] w-auto md:w-[270px] font-roboto">
             <MorphText
-              from="Portfolio"
+              from="Portfolio 2025"
               to="PHNOM PENH, KH"
               trigger={true}
               isLooping={!dataReady}
