@@ -239,7 +239,7 @@ const Page = () => {
                 >
                   <motion.h3
                     layout="position"
-                    className="text-[20px] font-semibold text-black mb-2"
+                    className="text-[20px] font-medium text-black mb-2"
                   >
                     Index
                   </motion.h3>
@@ -262,7 +262,7 @@ const Page = () => {
                           key={`mobile-${item.id}`}
                           className={`${isVisible ? "block" : "hidden"} cursor-pointer transition-colors duration-200 ${
                             isActive
-                              ? "text-black font-semibold"
+                              ? "text-black font-medium"
                               : "text-gray-500 hover:text-gray-800"
                           }`}
                           onClick={(e) => scrollToSection(item.id, e)}
@@ -368,7 +368,7 @@ const Page = () => {
                 <div
                   id={content.id}
                   key={content.id}
-                  className="flex flex-col gap-6 scroll-mt-32"
+                  className="flex flex-col gap-4 scroll-mt-32 mb-[80px] -mt-[50px]"
                 >
                   {beforeImages.length > 0 && (
                     <div className="flex flex-col gap-4">
@@ -383,7 +383,7 @@ const Page = () => {
                     </div>
                   )}
 
-                  <h2 className="text-[32px] font-semibold text-black">
+                  <h2 className="text-[26px] leading-[34px] font-medium text-black">
                     {content.title}
                   </h2>
 
