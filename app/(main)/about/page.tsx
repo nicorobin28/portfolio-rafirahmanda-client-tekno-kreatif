@@ -34,7 +34,7 @@ const about = () => {
   };
 
   return (
-    <div className="flex gap-[20px] md:px-[120px]">
+    <div className="flex gap-[20px] px-[16px] md:px-[120px]">
       <aside className="sticky top-0 z-0 bg-[#ffffff] w-full h-screen hidden md:flex flex-col justify-start items-center pt-8">
         <div className="bg-[#ffffff]  w-[550px] h-auto flex flex-col gap-[30px]">
           {/* gap48 */}
