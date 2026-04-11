@@ -1,17 +1,20 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import InitialLoader from "@/components/InitialLoader";
-import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 interface GlobalContextProps {
   portfolios: any[];
   isLoading: boolean;
+  isAppReady: boolean;
+  setIsAppReady: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GlobalContext = createContext<GlobalContextProps>({
   portfolios: [],
   isLoading: true,
+  isAppReady: false,
+  setIsAppReady: () => {},
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -19,8 +22,15 @@ export const useGlobalContext = () => useContext(GlobalContext);
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const [portfolios, setPortfolios] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showLoader, setShowLoader] = useState(true);   // controls AnimatePresence mount
-  const [loaderDone, setLoaderDone] = useState(false);  // controls content fade-in
+  const [isAppReady, setIsAppReady] = useState(false);
+  const pathname = usePathname();
+
+  // If loading finishes and we're not on the home page, immediately set app ready
+  useEffect(() => {
+    if (!isLoading && pathname !== "/") {
+      setIsAppReady(true);
+    }
+  }, [isLoading, pathname]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,38 +57,9 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
     fetchData();
   }, []);
 
-  /**
-   * Called by InitialLoader once all MorphText animations have completed.
-   * Step 1: trigger content fade-in immediately
-   * Step 2: unmount the loader from DOM after its exit animation (700ms) finishes
-   */
-  const handleLoaderComplete = () => {
-    setLoaderDone(true);      // start fading in content
-    setShowLoader(false);     // trigger AnimatePresence exit animation on loader
-    // Loader's exit animation is 0.7s; it will cleanly unmount via AnimatePresence
-  };
-
   return (
-    <GlobalContext.Provider value={{ portfolios, isLoading }}>
-      {/* Loader overlays everything — AnimatePresence handles its exit */}
-      <AnimatePresence>
-        {showLoader && (
-          <InitialLoader
-            key="initial-loader"
-            isLoadingData={isLoading}
-            onComplete={handleLoaderComplete}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Page content — fades in as loader exits */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: loaderDone ? 1 : 0 }}
-        transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-      >
-        {children}
-      </motion.div>
+    <GlobalContext.Provider value={{ portfolios, isLoading, isAppReady, setIsAppReady }}>
+      {children}
     </GlobalContext.Provider>
   );
 };

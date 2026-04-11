@@ -1,20 +1,22 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "next/navigation";
-import { ChevronDown, Loader2 } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import MorphText from "@/components/MorphText";
 import Headmeta from "@/app/component/headmeta";
 import Topic from "@/app/component/topic";
 import RichTextDisplay from "@/components/ui/RichTextDisplay";
+import { useGlobalContext } from "@/app/providers/GlobalProvider";
 
 const Page = () => {
   const params = useParams();
   const id = params?.id as string;
+  const router = useRouter();
 
+  const { portfolios, isAppReady } = useGlobalContext();
   const [portfolio, setPortfolio] = useState<any>(null);
   const [relatedTopics, setRelatedTopics] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const [openIndex, setOpenIndex] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -26,32 +28,32 @@ const Page = () => {
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!id) return;
-    const fetchPortfolio = async () => {
-      try {
-        const [res, relatedRes] = await Promise.all([
-          fetch(`/api/portfolios/${id}`),
-          fetch(`/api/portfolios/${id}/related`),
-        ]);
-        if (!res.ok) throw new Error("Failed to fetch portfolio");
-        const data = await res.json();
-        setPortfolio(data);
+    if (!id || portfolios.length === 0) return;
 
-        if (relatedRes.ok) {
-          const relatedData = await relatedRes.json();
-          setRelatedTopics(relatedData);
-        }
-        if (data?.contents?.length > 0) {
-          setActiveSection(data.contents[0].id);
+    const found = portfolios.find((p) => p.id === id);
+    if (found) {
+      setPortfolio(found);
+      if (found.contents?.length > 0) {
+        setActiveSection(found.contents[0].id);
+      }
+    } else if (isAppReady && portfolios.length > 0) {
+      // if app is ready and loaded but portfolio not found, redirect or something, or just leave as null
+    }
+
+    // load related quiet
+    const fetchRelated = async () => {
+      try {
+        const res = await fetch(`/api/portfolios/${id}/related`);
+        if (res.ok) {
+          const data = await res.json();
+          setRelatedTopics(data);
         }
       } catch (err) {
         console.error(err);
-      } finally {
-        setIsLoading(false);
       }
     };
-    fetchPortfolio();
-  }, [id]);
+    fetchRelated();
+  }, [id, portfolios, isAppReady]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -63,14 +65,16 @@ const Page = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (sentinelRef.current) {
+        // give it an offset equal to the sticky top
+        const offset = isMobile ? 56 : 24;
         const top = sentinelRef.current.getBoundingClientRect().top;
-        setIsSticky(top <= 0);
+        setIsSticky(top <= offset);
       }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     if (!portfolio?.contents) return;
@@ -102,7 +106,7 @@ const Page = () => {
     e.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
-      const offsetCount = isMobile ? window.innerHeight * 0.2 : 60;
+      const offsetCount = isMobile ? window.innerHeight * 0.2 : 120;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offsetCount;
 
@@ -116,37 +120,25 @@ const Page = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <Loader2 className="w-10 h-10 animate-spin text-gray-400" />
-      </div>
-    );
-  }
-
   if (!portfolio) {
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <p className="text-gray-500">Portfolio not found.</p>
-      </div>
-    );
+    return null;
   }
 
-  const INDEX_DATA = portfolio.contents.map((c: any) => ({
+  const INDEX_DATA = (portfolio.contents || []).map((c: any) => ({
     id: c.id,
     title: c.title,
   }));
 
   // Cover image: explicitly marked isCover, fallback to first image
   const coverImage =
-    portfolio.images.find((img: any) => img.isCover) ??
-    portfolio.images[0] ??
+    (portfolio.images || []).find((img: any) => img.isCover) ??
+    (portfolio.images || [])[0] ??
     null;
 
   return (
-    <section className="w-full bg-white px-6 md:px-[120px] lg:px-[120px] py-20">
+    <section className="w-full bg-white px-6 md:px-[120px] lg:px-[120px] py-10 md:py-20">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-16">
-        <div className="lg:sticky top-0 z-0 h-fit flex flex-col gap-12">
+        <div className="lg:sticky lg:top-[144px] z-0 h-fit flex flex-col gap-12">
           {/* TITLE */}
           <Headmeta
             title={portfolio.title}
@@ -191,9 +183,9 @@ const Page = () => {
 
               <motion.div
                 layout
-                className={`flex flex-col gap-4 border-[#C7C8C9] md:p-0 md:bg-transparent md:border-0 md:top-0 md:sticky md:block z-100 ${
+                className={`flex flex-col gap-4 border-[#C7C8C9] md:p-0 md:bg-transparent md:border-0 md:top-[144px] md:sticky md:block z-100 ${
                   isSticky && isMobile
-                    ? "fixed top-0 left-0 right-0 overflow-y-auto max-h-screen"
+                    ? "fixed top-[56px] left-0 right-0 overflow-y-auto max-h-[85vh]"
                     : "relative border overflow-hidden"
                 }`}
                 initial={false}
@@ -352,13 +344,13 @@ const Page = () => {
           )} */}
 
           <div className="max-w-[640px] flex flex-col gap-12">
-            {portfolio.contents.map((content: any) => {
-              const beforeImages = portfolio.images.filter(
+            {(portfolio.contents || []).map((content: any) => {
+              const beforeImages = (portfolio.images || []).filter(
                 (img: any) =>
                   img.anchorContentId === content.id &&
                   img.anchorPosition === "BEFORE",
               );
-              const afterImages = portfolio.images.filter(
+              const afterImages = (portfolio.images || []).filter(
                 (img: any) =>
                   img.anchorContentId === content.id &&
                   img.anchorPosition === "AFTER",
@@ -368,7 +360,7 @@ const Page = () => {
                 <div
                   id={content.id}
                   key={content.id}
-                  className="flex flex-col gap-4 scroll-mt-32 mb-[80px] -mt-[50px]"
+                  className="flex flex-col gap-4 scroll-mt-32 mb-[80px]"
                 >
                   {beforeImages.length > 0 && (
                     <div className="flex flex-col gap-4">

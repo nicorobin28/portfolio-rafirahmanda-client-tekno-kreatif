@@ -4,7 +4,7 @@ import DOMPurify from "isomorphic-dompurify";
 const DISPLAY_STYLES = `
   .rich-text-content {
     color: rgb(48, 48, 48);
-    font-size: 0.875rem;
+    font-size: 18px;
     line-height: 1.625;
   }
 
