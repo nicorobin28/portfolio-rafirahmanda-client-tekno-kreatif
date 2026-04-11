@@ -26,7 +26,6 @@ const itemVariants = {
   },
 };
 
-
 export default function Page() {
   const { portfolios, isLoading, isAppReady, setIsAppReady } =
     useGlobalContext();
@@ -42,36 +41,14 @@ export default function Page() {
   const [roleStarted, setRoleStarted] = useState(isAppReady ? true : false);
   const [roleSettled, setRoleSettled] = useState(isAppReady ? true : false);
 
-  // States for Typing "Welcome"
-  const [welcomeText, setWelcomeText] = useState("");
-  const [welcomeTypingDone, setWelcomeTypingDone] = useState(
-    isAppReady ? true : false,
-  );
-
-  // Typing effect
-  useEffect(() => {
-    if (isFirstLoad.current) {
-      const fullText = "Welcome";
-      let index = 0;
-      const interval = setInterval(() => {
-        index++;
-        setWelcomeText(fullText.slice(0, index));
-        if (index === fullText.length) {
-          clearInterval(interval);
-          setTimeout(() => setWelcomeTypingDone(true), 400); // 400ms pause after typing before decode
-        }
-      }, 50); // typing speed 100ms per character
-
-      return () => clearInterval(interval);
-    }
-  }, []);
+  const [welcomePhase, setWelcomePhase] = useState(isAppReady ? 1 : 0);
+  const [portfolioPhase, setPortfolioPhase] = useState(isAppReady ? 1 : 0);
 
   useEffect(() => {
     if (!isLoading) {
       setDataReady(true);
     }
   }, [isLoading]);
-
   useEffect(() => {
     if (isFirstLoad.current) {
       if (dataReady && nameSettled && locationSettled) {
@@ -97,10 +74,23 @@ export default function Page() {
         <div className="flex justify-between w-full items-start">
           <p className="text-[40px] md:text-[62px] font-medium font-jakarta text-[#171718]">
             {isFirstLoad.current ? (
-              !welcomeTypingDone ? (
-                <span className="inline-block min-h-[1em]">{welcomeText}</span>
+              welcomePhase === 0 ? (
+                <MorphText
+                  key="welcome-phase-0"
+                  from=""
+                  to="Welcome"
+                  trigger={true}
+                  animateInitial={true}
+                  onComplete={() => {
+                    setTimeout(() => setWelcomePhase(1), 400);
+                  }}
+                  tickMs={28}
+                  stagger={38}
+                  spinCount={8}
+                />
               ) : (
                 <MorphText
+                  key="welcome-phase-1"
                   from="Welcome"
                   to="Rafi Rahmanda"
                   trigger={true}
@@ -141,17 +131,34 @@ export default function Page() {
           </p>
           <p className="text-[#171718] text-[12px] md:text-[16px] w-auto md:w-[270px] font-roboto bg-transparent">
             {isFirstLoad.current ? (
-              <MorphText
-                from="Portfolio 2025"
-                to="PHNOM PENH, KH"
-                trigger={true}
-                animateInitial={true}
-                isLooping={!dataReady}
-                onComplete={() => setLocationSettled(true)}
-                tickMs={22}
-                stagger={30}
-                spinCount={6}
-              />
+              portfolioPhase === 0 ? (
+                <MorphText
+                  key="portfolio-phase-0"
+                  from=""
+                  to="Portfolio 2025"
+                  trigger={true}
+                  animateInitial={true}
+                  onComplete={() => {
+                    setTimeout(() => setPortfolioPhase(1), 400);
+                  }}
+                  tickMs={22}
+                  stagger={30}
+                  spinCount={6}
+                />
+              ) : (
+                <MorphText
+                  key="portfolio-phase-1"
+                  from="Portfolio 2025"
+                  to="PHNOM PENH, KH"
+                  trigger={true}
+                  animateInitial={true}
+                  isLooping={!dataReady}
+                  onComplete={() => setLocationSettled(true)}
+                  tickMs={22}
+                  stagger={30}
+                  spinCount={6}
+                />
+              )
             ) : (
               "PHNOM PENH, KH"
             )}
