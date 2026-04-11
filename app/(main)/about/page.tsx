@@ -87,7 +87,7 @@ const about = () => {
         </div>
         {show && handleCopy === "Email" && (
           <div
-            className={`bg-[#5B5E61] drop-shadow-xl drop-shadow-[#171718]/32 absolute z-10 bottom-[80px] right-5/8 translate-x-5/8 w-[343px] px-[16px] py-[13px] rounded-[8px] ${show ? "flex opacity-100" : "hidden opacity-0"}`}
+            className={`bg-[#5B5E61] drop-shadow-xl drop-shadow-[#171718]/32 absolute z-10 bottom-[80px] right-8/8 translate-x-8/8 w-[343px] px-[16px] py-[13px] rounded-[8px] ${show ? "flex opacity-100" : "hidden opacity-0"}`}
           >
             <p className="text-[#ffffff] text-[16px] font-jakarta">
               Copied to clipboard
