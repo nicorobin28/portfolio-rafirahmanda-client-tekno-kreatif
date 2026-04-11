@@ -122,7 +122,7 @@ const about = () => {
                     </p>
                     {nav.icon}
                   </div>
-                  <div className="relative text-[14px] text-[#5B5E61] font-jakarta">
+                  <div className="text-[14px] text-[#5B5E61] font-jakarta">
                     <p className="transition-opacity duration-200 group-hover:opacity-0">
                       {nav.desc}
                     </p>
