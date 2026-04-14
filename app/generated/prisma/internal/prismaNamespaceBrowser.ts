@@ -114,6 +114,7 @@ export const PortfolioScalarFieldEnum = {
   subTitle: 'subTitle',
   role: 'role',
   company: 'company',
+  companyLogoUrl: 'companyLogoUrl',
   year: 'year',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

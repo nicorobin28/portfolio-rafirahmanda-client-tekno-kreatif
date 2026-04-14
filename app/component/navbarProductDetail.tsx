@@ -106,54 +106,6 @@ const navbarProductDetail = () => {
                 Home
               </button>
             </Link>
-            <button className="flex justify-end w-auto md:w-[172px] text-[16px] cursor-pointer">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.7451 19.25C10.7451 19.6642 10.4093 20 9.99512 20C9.5809 20 9.24512 19.6642 9.24512 19.25V17.25C9.24512 16.8358 9.5809 16.5 9.99512 16.5C10.4093 16.5 10.7451 16.8358 10.7451 17.25V19.25Z"
-                  fill="black"
-                />
-                <path
-                  d="M5.40039 14.5928C5.69325 14.8856 5.69325 15.3605 5.40039 15.6533L3.98633 17.0674C3.69347 17.3602 3.21864 17.3602 2.92578 17.0674C2.63292 16.7745 2.63292 16.2997 2.92578 16.0068L4.33984 14.5928C4.63271 14.2999 5.10753 14.2999 5.40039 14.5928Z"
-                  fill="black"
-                />
-                <path
-                  d="M17.0746 16.0064C17.3677 16.2994 17.3676 16.7747 17.0744 17.0677C16.7814 17.3604 16.3066 17.3603 16.0137 17.0674L14.5997 15.6534C14.3068 15.3605 14.3068 14.8856 14.5997 14.5927C14.8925 14.2999 15.3673 14.2998 15.6602 14.5926L17.0746 16.0064Z"
-                  fill="black"
-                />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M9.99512 5C12.7565 5 14.9951 7.23858 14.9951 10C14.9951 12.7614 12.7565 15 9.99512 15C7.23369 15 4.99512 12.7614 4.99512 10C4.99512 7.23858 7.23369 5 9.99512 5ZM9.99512 6.5C8.06212 6.5 6.49512 8.067 6.49512 10C6.49512 11.933 8.06212 13.5 9.99512 13.5C11.9281 13.5 13.4951 11.933 13.4951 10C13.4951 8.067 11.9281 6.5 9.99512 6.5Z"
-                  fill="black"
-                />
-                <path
-                  d="M3.5 9.99512C3.5 10.4093 3.16421 10.7451 2.75 10.7451H0.75C0.335787 10.7451 0 10.4093 0 9.99512C0 9.5809 0.335786 9.24512 0.75 9.24512H2.75C3.16421 9.24512 3.5 9.5809 3.5 9.99512Z"
-                  fill="black"
-                />
-                <path
-                  d="M20 9.99512C20 10.4093 19.6642 10.7451 19.25 10.7451H17.25C16.8358 10.7451 16.5 10.4093 16.5 9.99512C16.5 9.5809 16.8358 9.24512 17.25 9.24512H19.25C19.6642 9.24512 20 9.5809 20 9.99512Z"
-                  fill="black"
-                />
-                <path
-                  d="M5.40723 4.33984C5.70009 4.63271 5.70009 5.10753 5.40723 5.40039C5.11436 5.69325 4.63954 5.69325 4.34668 5.40039L2.93262 3.98633C2.63976 3.69347 2.63976 3.21864 2.93262 2.92578C3.22548 2.63292 3.7003 2.63292 3.99316 2.92578L5.40723 4.33984Z"
-                  fill="black"
-                />
-                <path
-                  d="M17.0674 2.92578C17.3602 3.21864 17.3602 3.69347 17.0674 3.98633L15.6533 5.40039C15.3605 5.69325 14.8856 5.69325 14.5928 5.40039C14.2999 5.10753 14.2999 4.63271 14.5928 4.33984L16.0068 2.92578C16.2997 2.63292 16.7745 2.63292 17.0674 2.92578Z"
-                  fill="black"
-                />
-                <path
-                  d="M10.7451 2.75C10.7451 3.16421 10.4093 3.5 9.99512 3.5C9.5809 3.5 9.24512 3.16421 9.24512 2.75V0.75C9.24512 0.335787 9.5809 0 9.99512 0C10.4093 0 10.7451 0.335786 10.7451 0.75V2.75Z"
-                  fill="black"
-                />
-              </svg>
-            </button>
           </div>
         </div>
 
@@ -182,7 +134,7 @@ const navbarProductDetail = () => {
                       bg-white/24 backdrop-blur-xl
                       border-r border-[#C7C8C9] overflow-hidden"
               >
-                <div className="h-full overflow-y-auto no-scrollbar md:w-109 w-full pt-[56px] md:pt-[64px]">
+                <div className="h-full overflow-y-auto no-scrollbar md:w-[calc(33.333vw_+_24px)] w-full pt-[56px] md:pt-[64px]">
                   {/* Product List ... */}
 
                   {/* Card list — stagger dari kiri */}
@@ -223,31 +175,34 @@ const navbarProductDetail = () => {
                           <Link
                             href={`/work-detail/${item.id}`}
                             onClick={() => setIsOpen(false)}
-                            className="flex justify-between items-center w-full gap-[16px] cursor-pointer group"
+                            className="flex items-center w-full gap-[16px] cursor-pointer group"
                           >
-                            <div className="flex flex-col md:max-w-[299px] w-[285px] h-full gap-[4px] min-w-0">
+                            {item.images?.[0]?.url ? (
+                              <img
+                                src={item.images[0].url}
+                                alt={item.title}
+                                className="w-[90px] h-[60px] flex-shrink-0 object-cover rounded-[6px] bg-[#EFEFF0] border border-[#EFEFF0]"
+                              />
+                            ) : (
+                              <div className="w-[90px] h-[60px] flex-shrink-0 rounded-[6px] bg-[#EFEFF0]" />
+                            )}
+                            <div className="flex flex-col h-full gap-[4px] min-w-0">
                               <h1 className="font-jakarta font-semibold text-[20px] w-full text-left truncate underline decoration-transparent group-hover:decoration-inherit transition-colors duration-300 underline-offset-4">
                                 {item.title}
                               </h1>
-                              <div className="flex items-center font-roboto-mono text-[14px]">
+                              <div className="flex items-center font-roboto-mono text-[14px] gap-2">
                                 <span
                                   className={`transition-all duration-300 flex items-center shrink-0 ${hoveredId === item.id ? "opacity-0 w-0 overflow-hidden" : "opacity-100 gap-1.5"}`}
                                 >
-                                  <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 16 16"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <rect
-                                      width="16"
-                                      height="16"
-                                      rx="2"
-                                      fill="#E5E7EB"
+                                  {item.companyLogoUrl ? (
+                                    <img
+                                      src={item.companyLogoUrl}
+                                      alt={item.name}
+                                      className="w-[16px] h-[16px] object-contain rounded-sm"
                                     />
-                                    <path d="M4 4h8v8H4V4z" fill="#9CA3AF" />
-                                  </svg>
+                                  ) : (
+                                    item.icon
+                                  )}
                                 </span>
                                 <h1
                                   className={`flex items-center gap-[2px] transition-colors duration-300 min-w-0 truncate ${hoveredId === item.id ? "text-black font-semibold" : "text-[#5B5E61]"}`}
@@ -279,15 +234,6 @@ const navbarProductDetail = () => {
                                 </h1>
                               </div>
                             </div>
-                            {item.images?.[0]?.url ? (
-                              <img
-                                src={item.images[0].url}
-                                alt={item.title}
-                                className="w-[90px] h-[60px] flex-shrink-0 object-cover rounded-[6px] bg-[#EFEFF0] border border-[#EFEFF0]"
-                              />
-                            ) : (
-                              <div className="w-[90px] h-[60px] flex-shrink-0 rounded-[6px] bg-[#EFEFF0]" />
-                            )}
                           </Link>
                         </motion.div>
                       ))}

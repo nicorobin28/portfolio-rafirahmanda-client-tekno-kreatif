@@ -21,6 +21,8 @@ export async function PUT(req: Request, routeParams: { params: Promise<{ id: str
     
     const tagsData = formData.get("tags") as string
     const tags = tagsData ? JSON.parse(tagsData) : []
+    const companyLogoUrl = (formData.get("companyLogoUrl") as string) || null
+
 
     // Accept multiple image files
     const files = formData.getAll("images") as File[]
@@ -56,7 +58,7 @@ export async function PUT(req: Request, routeParams: { params: Promise<{ id: str
     const updated = await prisma.portfolio.update({
       where: { id: params.id },
       data: {
-        title, subTitle, role, company, year,
+        title, subTitle, role, company, companyLogoUrl, year,
         ...(imageUrls.length > 0 ? {
             // Hapus gambar lama (bisa ditaruh logic unlink file lama jika perlu)
             images: { deleteMany: {}, create: imageUrls }

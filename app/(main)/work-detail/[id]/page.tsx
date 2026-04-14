@@ -137,8 +137,8 @@ const Page = () => {
 
   return (
     <section className="w-full bg-white px-6 md:px-[120px] lg:px-[120px] py-10 md:py-20">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-16">
-        <div className="lg:sticky lg:top-[144px] z-0 h-fit flex flex-col gap-12">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="lg:sticky lg:top-[144px] z-0 h-fit flex flex-col gap-12 lg:col-span-4">
           {/* TITLE */}
           <Headmeta
             title={portfolio.title}
@@ -197,7 +197,6 @@ const Page = () => {
                         borderBottomWidth: "1px",
                         borderColor: "#E5E7EB",
                         padding: "16px 24px",
-                        boxShadow: "0px 10px 40px rgba(0,0,0,0.08)",
                         backgroundColor: "rgba(255, 255, 255, 0.95)",
                         backdropFilter: "blur(12px)",
                       }
@@ -326,7 +325,7 @@ const Page = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-12 lg:col-span-8">
           {/* {coverImage && (
             <div className="bg-[#F3F3F3] rounded-2xl p-8 md:p-12 flex flex-wrap justify-center items-center gap-10">
               <div

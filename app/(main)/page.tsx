@@ -198,6 +198,13 @@ export default function Page() {
                     }}
                     title={portfolio.title}
                     subtitle={portfolio.subTitle}
+                    companyLogoUrl={portfolio.companyLogoUrl || null}
+                    isFeatured={portfolio.tags?.some(
+                      (t: any) =>
+                        t.tag?.label === "Featured" ||
+                        t.label === "Featured" ||
+                        t.name === "Featured",
+                    )}
                   />
                 </Link>
               </motion.div>

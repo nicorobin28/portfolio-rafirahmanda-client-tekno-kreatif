@@ -56,15 +56,16 @@ model Profile {
 // ─────────────────────────────────────────────
 
 model Portfolio {
-  id        String   @id @default(cuid())
-  userId    String
-  title     String
-  subTitle  String   @default("")
-  role      String   // peran saat mengerjakan, contoh: "UI/UX Designer"
-  company   String
-  year      Int      // contoh: 2024
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String   @id @default(cuid())
+  userId         String
+  title          String
+  subTitle       String   @default("")
+  role           String   // peran saat mengerjakan, contoh: "UI/UX Designer"
+  company        String
+  companyLogoUrl String?  // URL logo perusahaan dari /uploads/icons-company/
+  year           Int      // contoh: 2024
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   // Relasi
   user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)

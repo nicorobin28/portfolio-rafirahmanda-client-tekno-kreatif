@@ -54,18 +54,18 @@ const Experiences = () => {
               <h1 className="text-[#171718] text-[18px] md:text-[20px] font-medium font-jakarta">
                 {item.company}
               </h1>
-              <div className="flex items-center gap-[6px]">
-                <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
+              <div className="flex flex-wrap items-center gap-[6px]">
+                <p className="text-[#171718] text-[14px] md:text-[16px] font-roboto">
                   {dateStartFormatted}
                 </p>
-                <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
+                <p className="text-[#171718] text-[14px] md:text-[16px] font-roboto">
                   -
                 </p>
-                <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
+                <p className="text-[#171718] text-[14px] md:text-[16px] font-roboto">
                   {dateEndFormatted}
                 </p>
                 <div className="h-[4px] w-[4px] bg-[#9C9EA1] rounded-[999px]"></div>
-                <p className="text-[#171718] text-[12px] md:text-[16px] font-roboto">
+                <p className="text-[#171718] text-[14px] md:text-[16px] font-roboto">
                   {item.position}
                 </p>
               </div>
