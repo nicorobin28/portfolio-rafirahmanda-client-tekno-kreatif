@@ -182,7 +182,7 @@ const navbarProductDetail = () => {
                       bg-white/24 backdrop-blur-xl
                       border-r border-[#C7C8C9] overflow-hidden"
               >
-                <div className="h-full overflow-y-auto no-scrollbar md:w-109 w-full pt-[56px] md:pt-[64px]">
+                <div className="h-full overflow-y-auto no-scrollbar md:w-[504px] w-full pt-[56px] md:pt-[64px]">
                   {/* Product List ... */}
 
                   {/* Card list — stagger dari kiri */}

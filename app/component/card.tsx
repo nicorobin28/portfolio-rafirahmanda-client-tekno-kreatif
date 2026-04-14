@@ -63,9 +63,9 @@ const Card: React.FC<CardProps> = ({ img, desc, title, subtitle }) => {
               from={subtitle}
               to="Read More"
               trigger={isHovered}
-              tickMs={15}
-              stagger={20}
-              spinCount={4}
+              tickMs={1}
+              stagger={1}
+              spinCount={1}
               animateInitial={false}
             />
             <span

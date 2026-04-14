@@ -194,10 +194,8 @@ const Page = () => {
                     ? {
                         borderRadius: "0px",
                         borderWidth: "0px",
-                        borderBottomWidth: "1px",
-                        borderColor: "#E5E7EB",
+                        borderBottomWidth: "0px",
                         padding: "16px 24px",
-                        boxShadow: "0px 10px 40px rgba(0,0,0,0.08)",
                         backgroundColor: "rgba(255, 255, 255, 0.95)",
                         backdropFilter: "blur(12px)",
                       }
@@ -284,12 +282,12 @@ const Page = () => {
                               from={item.title}
                               to="Jump to section"
                               trigger={isHovered}
-                              tickMs={28}
-                              stagger={35}
-                              spinCount={5}
+                              tickMs={1}
+                              stagger={2}
+                              spinCount={3}
                               className={
                                 isHovered
-                                  ? "font-roboto-mono text-[14px] font-medium underline"
+                                  ? "font-roboto text-[14px] font-medium underline"
                                   : ""
                               }
                             />
@@ -360,7 +358,7 @@ const Page = () => {
                 <div
                   id={content.id}
                   key={content.id}
-                  className="flex flex-col gap-4 scroll-mt-32 mb-[80px]"
+                  className="flex flex-col gap-4 scroll-mt-32 mb-[80px] -mt-[50px]"
                 >
                   {beforeImages.length > 0 && (
                     <div className="flex flex-col gap-4">

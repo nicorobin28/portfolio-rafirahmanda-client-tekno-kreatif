@@ -108,7 +108,7 @@ const Navbar = () => {
       {/* Navbar sm */}
       <div
         className="md:hidden flex fixed justify-between items-center w-full 
-      h-[56px] px-4 bg-white/75 backdrop-blur-2xl"
+      h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl"
       >
         <Link href="/">
           <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
