@@ -12,9 +12,18 @@ interface CardProps {
   };
   title: string;
   subtitle: string;
+  isFeatured?: boolean;
+  companyLogoUrl?: string | null;
 }
 
-const Card: React.FC<CardProps> = ({ img, desc, title, subtitle }) => {
+const Card: React.FC<CardProps> = ({
+  img,
+  desc,
+  title,
+  subtitle,
+  isFeatured,
+  companyLogoUrl,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -28,7 +37,17 @@ const Card: React.FC<CardProps> = ({ img, desc, title, subtitle }) => {
         {/* Desc */}
         <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[12px] px-[4px]">
           <div className="flex items-center gap-1.5 overflow-hidden">
-            <div className="flex items-center shrink-0">{desc.icon}</div>
+            <div className="flex items-center shrink-0">
+              {companyLogoUrl ? (
+                <img
+                  src={companyLogoUrl}
+                  alt={desc.name}
+                  className="w-[16px] h-[16px] object-contain rounded-sm"
+                />
+              ) : (
+                desc.icon
+              )}
+            </div>
             <p className="truncate">{desc.name}</p>
           </div>
           <span className="shrink-0">
@@ -90,7 +109,27 @@ const Card: React.FC<CardProps> = ({ img, desc, title, subtitle }) => {
       </div>
 
       {/* Image */}
-      <div className="order-2 md:order-1 shrink-0">
+      <div className="order-2 md:order-1 shrink-0 relative z-0">
+        {isFeatured && (
+          <div className="absolute top-1 md:top-2 right-1 md:right-2 bg-[#0052FF] text-white rounded-[100px] px-1.5 py-[2px] md:px-2 md:py-1 flex items-center gap-[2px] md:gap-[4px] text-[12px] md:text-[12px] font-medium font-jakarta shadow-sm">
+            <svg
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-[14px] h-[14px]"
+            >
+              <path
+                d="M9.16562 5.01074C9.18912 5.06319 9.24123 5.09694 9.2987 5.09694H12.2492C12.7814 5.09694 13.0354 5.75143 12.6424 6.11035L10.3763 8.45888C10.3342 8.49734 10.3184 8.55681 10.3358 8.61111L11.2996 12.0703C11.4613 12.5745 10.9211 13.0158 10.4592 12.7568L7.0714 11.0033C7.0271 10.9784 6.97306 10.9784 6.92876 11.0033L3.541 12.7568C3.07903 13.0158 2.53886 12.5745 2.70061 12.0703L3.66434 8.61111C3.68176 8.55681 3.66593 8.49734 3.62382 8.45888L1.35776 6.11035C0.964757 5.75143 1.21872 5.09694 1.75099 5.09694H4.70091C4.75837 5.09694 4.81048 5.06319 4.83398 5.01075L6.46793 1.51119C6.67386 1.05175 7.32623 1.05178 7.53212 1.51124L9.16562 5.01074ZM5.43917 5.79902C5.39216 5.9039 5.28795 5.9714 5.17301 5.9714H2.68279C2.61889 5.9714 2.5884 6.04998 2.63558 6.09308L4.5586 8.12876C4.6428 8.20567 4.67445 8.32461 4.63961 8.4332L3.81397 11.4615C3.79455 11.5221 3.85938 11.5751 3.91484 11.544L6.85747 10.0406C6.94606 9.991 7.0541 9.991 7.14268 10.0407L10.24 11.631L9.36052 8.43318C9.3257 8.3246 9.35735 8.20568 9.44154 8.12878L11.3646 6.09308C11.4118 6.04998 11.3813 5.9714 11.3174 5.9714H8.82715C8.71222 5.9714 8.608 5.9039 8.561 5.79902L7.06396 2.60478C7.03924 2.54962 6.96093 2.54962 6.9362 2.60478L5.43917 5.79902Z"
+                fill="#F1F1F2"
+              />
+              <path
+                d="M5.17301 5.9714H2.68279C2.61889 5.9714 2.5884 6.04998 2.63558 6.09308L4.5586 8.12876C4.6428 8.20567 4.67445 8.32461 4.63961 8.4332L3.81397 11.4615C3.79455 11.5221 3.85938 11.5751 3.91484 11.544L6.85747 10.0406C6.94606 9.991 7.0541 9.991 7.14268 10.0407L10.24 11.631L9.36052 8.43318C9.3257 8.3246 9.35735 8.20568 9.44154 8.12878L11.3646 6.09308C11.4118 6.04998 11.3813 5.9714 11.3174 5.9714H8.82715C8.71222 5.9714 8.608 5.9039 8.561 5.79902L7.06396 2.60478C7.03924 2.54962 6.96093 2.54962 6.9362 2.60478L5.43917 5.79902C5.39216 5.9039 5.28795 5.9714 5.17301 5.9714Z"
+                fill="#F1F1F2"
+              />
+            </svg>
+            Featured
+          </div>
+        )}
         {/* Desktop Image */}
         <div className="hidden md:block w-full h-[162px] rounded-[8px] bg-[#F1F1F2] overflow-hidden">
           <Image

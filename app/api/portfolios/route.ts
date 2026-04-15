@@ -45,6 +45,8 @@ export async function POST(req: Request) {
     
     const tagsData = formData.get("tags") as string
     const tags = tagsData ? JSON.parse(tagsData) : []
+    const companyLogoUrl = (formData.get("companyLogoUrl") as string) || null
+
 
     // Accept multiple image files
     const files = formData.getAll("images") as File[]
@@ -83,6 +85,7 @@ export async function POST(req: Request) {
         subTitle,
         role,
         company,
+        companyLogoUrl,
         year,
         images: {
           create: imageUrls

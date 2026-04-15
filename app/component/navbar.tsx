@@ -107,16 +107,16 @@ const Navbar = () => {
 
       {/* Navbar sm */}
       <div
-        className="md:hidden flex fixed justify-between items-center w-full 
-      h-[56px] px-[16px] bg-white/75 backdrop-blur-2xl"
+        className="md:hidden flex fixed z-50 justify-between items-center w-full 
+      h-[56px] px-4 bg-white/75 backdrop-blur-2xl"
       >
         <Link href="/">
-          <Image src={LOGO} alt="LOGO" className="w-[40px] h-[40px]" />
+          <Image src={LOGO} alt="LOGO" className="w-[32px] h-[32px]" />
         </Link>
         <div className="flex items-center gap-6 ">
-          <Link href="/about">
+          <Link href={pathname === "/about" ? "/" : "/about"}>
             <button className="text-[16px] text-black font-roboto cursor-pointer">
-              About
+              {pathname === "/about" ? "Home" : "About"}
             </button>
           </Link>
           {/* <button className="flex justify-end text-[16px]">

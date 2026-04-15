@@ -90,6 +90,10 @@ export default function PortfoliosPage() {
   const [availableTags, setAvailableTags] = useState<any[]>([])
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
 
+  // Company logo handling
+  const [availableLogos, setAvailableLogos] = useState<{ filename: string; url: string }[]>([])
+  const [selectedLogoUrl, setSelectedLogoUrl] = useState<string | null>(null)
+
   const [contentFormData, setContentFormData] = useState({
     title: "", body: ""
   })
@@ -97,7 +101,17 @@ export default function PortfoliosPage() {
   useEffect(() => {
     fetchPortfolios()
     fetchTags()
+    fetchLogos()
   }, [])
+
+  const fetchLogos = async () => {
+    try {
+      const { data } = await axios.get("/api/company-logos")
+      setAvailableLogos(data)
+    } catch {
+      console.error("Failed to fetch company logos")
+    }
+  }
 
   const fetchTags = async () => {
     try {
@@ -138,6 +152,7 @@ export default function PortfoliosPage() {
       payload.append("company", formData.company)
       payload.append("year", formData.year)
       payload.append("tags", JSON.stringify(selectedTagIds))
+      if (selectedLogoUrl) payload.append("companyLogoUrl", selectedLogoUrl)
 
       // Optimize & append multi images
       for (const file of selectedFiles) {
@@ -260,6 +275,7 @@ export default function PortfoliosPage() {
     setExistingImages([])
     setCoverImageId(null)
     setSelectedTagIds([])
+    setSelectedLogoUrl(null)
     setIsPortfolioModalOpen(true)
   }
 
@@ -272,6 +288,7 @@ export default function PortfoliosPage() {
     setExistingImages(p.images || [])
     setCoverImageId(p.images?.find((i: any) => i.isCover)?.id || p.images?.[0]?.id || null)
     setSelectedTagIds(p.tags?.map((t: any) => t.tag.id) || [])
+    setSelectedLogoUrl(p.companyLogoUrl || null)
     setIsPortfolioModalOpen(true)
   }
 
@@ -433,6 +450,48 @@ export default function PortfoliosPage() {
                 {availableTags.length === 0 && <span className="text-xs text-slate-400">No tags available. Create some in the Tags section first.</span>}
              </div>
           </div>
+
+          {/* ── Company Logo Section ── */}
+          {availableLogos.length > 0 && (
+            <div className="space-y-2 pt-2 border-t border-slate-100">
+              <label className="text-sm font-medium text-slate-800">Company Logo</label>
+              <p className="text-xs text-slate-500">Pilih logo perusahaan yang akan ditampilkan pada card portfolio</p>
+              <div className="flex flex-wrap gap-3">
+                {/* Option: no logo */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedLogoUrl(null)}
+                  className={`w-14 h-14 rounded-xl border-2 flex items-center justify-center text-xs text-slate-400 transition-all ${
+                    selectedLogoUrl === null
+                      ? "border-slate-900 bg-slate-50 shadow-sm"
+                      : "border-slate-200 hover:border-slate-300"
+                  }`}
+                >
+                  None
+                </button>
+                {availableLogos.map((logo) => (
+                  <button
+                    key={logo.url}
+                    type="button"
+                    onClick={() => setSelectedLogoUrl(logo.url)}
+                    className={`w-14 h-14 rounded-xl border-2 overflow-hidden transition-all p-1 bg-white ${
+                      selectedLogoUrl === logo.url
+                        ? "border-slate-900 shadow-md"
+                        : "border-slate-200 hover:border-slate-400"
+                    }`}
+                    title={logo.filename}
+                  >
+                    <img src={logo.url} alt={logo.filename} className="w-full h-full object-contain" />
+                  </button>
+                ))}
+              </div>
+              {selectedLogoUrl && (
+                <p className="text-xs text-slate-500 flex items-center gap-1">
+                  <span className="font-medium text-slate-700">Selected:</span> {selectedLogoUrl.split("/").pop()}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* ── Images Section ── */}
           <div className="pt-4 border-t border-slate-100">

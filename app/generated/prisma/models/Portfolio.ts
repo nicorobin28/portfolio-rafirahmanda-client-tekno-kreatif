@@ -41,6 +41,7 @@ export type PortfolioMinAggregateOutputType = {
   subTitle: string | null
   role: string | null
   company: string | null
+  companyLogoUrl: string | null
   year: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -53,6 +54,7 @@ export type PortfolioMaxAggregateOutputType = {
   subTitle: string | null
   role: string | null
   company: string | null
+  companyLogoUrl: string | null
   year: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -65,6 +67,7 @@ export type PortfolioCountAggregateOutputType = {
   subTitle: number
   role: number
   company: number
+  companyLogoUrl: number
   year: number
   createdAt: number
   updatedAt: number
@@ -87,6 +90,7 @@ export type PortfolioMinAggregateInputType = {
   subTitle?: true
   role?: true
   company?: true
+  companyLogoUrl?: true
   year?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +103,7 @@ export type PortfolioMaxAggregateInputType = {
   subTitle?: true
   role?: true
   company?: true
+  companyLogoUrl?: true
   year?: true
   createdAt?: true
   updatedAt?: true
@@ -111,6 +116,7 @@ export type PortfolioCountAggregateInputType = {
   subTitle?: true
   role?: true
   company?: true
+  companyLogoUrl?: true
   year?: true
   createdAt?: true
   updatedAt?: true
@@ -210,6 +216,7 @@ export type PortfolioGroupByOutputType = {
   subTitle: string
   role: string
   company: string
+  companyLogoUrl: string | null
   year: number
   createdAt: Date
   updatedAt: Date
@@ -245,6 +252,7 @@ export type PortfolioWhereInput = {
   subTitle?: Prisma.StringFilter<"Portfolio"> | string
   role?: Prisma.StringFilter<"Portfolio"> | string
   company?: Prisma.StringFilter<"Portfolio"> | string
+  companyLogoUrl?: Prisma.StringNullableFilter<"Portfolio"> | string | null
   year?: Prisma.IntFilter<"Portfolio"> | number
   createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
@@ -261,6 +269,7 @@ export type PortfolioOrderByWithRelationInput = {
   subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -280,6 +289,7 @@ export type PortfolioWhereUniqueInput = Prisma.AtLeast<{
   subTitle?: Prisma.StringFilter<"Portfolio"> | string
   role?: Prisma.StringFilter<"Portfolio"> | string
   company?: Prisma.StringFilter<"Portfolio"> | string
+  companyLogoUrl?: Prisma.StringNullableFilter<"Portfolio"> | string | null
   year?: Prisma.IntFilter<"Portfolio"> | number
   createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
@@ -296,6 +306,7 @@ export type PortfolioOrderByWithAggregationInput = {
   subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   year?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -316,6 +327,7 @@ export type PortfolioScalarWhereWithAggregatesInput = {
   subTitle?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   role?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
   company?: Prisma.StringWithAggregatesFilter<"Portfolio"> | string
+  companyLogoUrl?: Prisma.StringNullableWithAggregatesFilter<"Portfolio"> | string | null
   year?: Prisma.IntWithAggregatesFilter<"Portfolio"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Portfolio"> | Date | string
@@ -327,6 +339,7 @@ export type PortfolioCreateInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -343,6 +356,7 @@ export type PortfolioUncheckedCreateInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -357,6 +371,7 @@ export type PortfolioUpdateInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -373,6 +388,7 @@ export type PortfolioUncheckedUpdateInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -388,6 +404,7 @@ export type PortfolioCreateManyInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -399,6 +416,7 @@ export type PortfolioUpdateManyMutationInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -411,6 +429,7 @@ export type PortfolioUncheckedUpdateManyInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -433,6 +452,7 @@ export type PortfolioCountOrderByAggregateInput = {
   subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrder
   year?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -449,6 +469,7 @@ export type PortfolioMaxOrderByAggregateInput = {
   subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrder
   year?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -461,6 +482,7 @@ export type PortfolioMinOrderByAggregateInput = {
   subTitle?: Prisma.SortOrder
   role?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrder
   year?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -573,6 +595,7 @@ export type PortfolioCreateWithoutUserInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -587,6 +610,7 @@ export type PortfolioUncheckedCreateWithoutUserInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -631,6 +655,7 @@ export type PortfolioScalarWhereInput = {
   subTitle?: Prisma.StringFilter<"Portfolio"> | string
   role?: Prisma.StringFilter<"Portfolio"> | string
   company?: Prisma.StringFilter<"Portfolio"> | string
+  companyLogoUrl?: Prisma.StringNullableFilter<"Portfolio"> | string | null
   year?: Prisma.IntFilter<"Portfolio"> | number
   createdAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Portfolio"> | Date | string
@@ -642,6 +667,7 @@ export type PortfolioCreateWithoutImagesInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -657,6 +683,7 @@ export type PortfolioUncheckedCreateWithoutImagesInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -686,6 +713,7 @@ export type PortfolioUpdateWithoutImagesInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -701,6 +729,7 @@ export type PortfolioUncheckedUpdateWithoutImagesInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,6 +743,7 @@ export type PortfolioCreateWithoutContentsInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -729,6 +759,7 @@ export type PortfolioUncheckedCreateWithoutContentsInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -758,6 +789,7 @@ export type PortfolioUpdateWithoutContentsInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -773,6 +805,7 @@ export type PortfolioUncheckedUpdateWithoutContentsInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -786,6 +819,7 @@ export type PortfolioCreateWithoutTagsInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -801,6 +835,7 @@ export type PortfolioUncheckedCreateWithoutTagsInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -830,6 +865,7 @@ export type PortfolioUpdateWithoutTagsInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -845,6 +881,7 @@ export type PortfolioUncheckedUpdateWithoutTagsInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -858,6 +895,7 @@ export type PortfolioCreateManyUserInput = {
   subTitle?: string
   role: string
   company: string
+  companyLogoUrl?: string | null
   year: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -869,6 +907,7 @@ export type PortfolioUpdateWithoutUserInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -883,6 +922,7 @@ export type PortfolioUncheckedUpdateWithoutUserInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -897,6 +937,7 @@ export type PortfolioUncheckedUpdateManyWithoutUserInput = {
   subTitle?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   year?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -958,6 +999,7 @@ export type PortfolioSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   subTitle?: boolean
   role?: boolean
   company?: boolean
+  companyLogoUrl?: boolean
   year?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -975,6 +1017,7 @@ export type PortfolioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   subTitle?: boolean
   role?: boolean
   company?: boolean
+  companyLogoUrl?: boolean
   year?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -988,6 +1031,7 @@ export type PortfolioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   subTitle?: boolean
   role?: boolean
   company?: boolean
+  companyLogoUrl?: boolean
   year?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1001,12 +1045,13 @@ export type PortfolioSelectScalar = {
   subTitle?: boolean
   role?: boolean
   company?: boolean
+  companyLogoUrl?: boolean
   year?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PortfolioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "subTitle" | "role" | "company" | "year" | "createdAt" | "updatedAt", ExtArgs["result"]["portfolio"]>
+export type PortfolioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "subTitle" | "role" | "company" | "companyLogoUrl" | "year" | "createdAt" | "updatedAt", ExtArgs["result"]["portfolio"]>
 export type PortfolioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Portfolio$imagesArgs<ExtArgs>
@@ -1036,6 +1081,7 @@ export type $PortfolioPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     subTitle: string
     role: string
     company: string
+    companyLogoUrl: string | null
     year: number
     createdAt: Date
     updatedAt: Date
@@ -1472,6 +1518,7 @@ export interface PortfolioFieldRefs {
   readonly subTitle: Prisma.FieldRef<"Portfolio", 'String'>
   readonly role: Prisma.FieldRef<"Portfolio", 'String'>
   readonly company: Prisma.FieldRef<"Portfolio", 'String'>
+  readonly companyLogoUrl: Prisma.FieldRef<"Portfolio", 'String'>
   readonly year: Prisma.FieldRef<"Portfolio", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Portfolio", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Portfolio", 'DateTime'>
