@@ -132,21 +132,21 @@ const Card: React.FC<CardProps> = ({
         )}
         {/* Desktop Image */}
         <div className="hidden md:block w-full h-[162px] rounded-[8px] bg-[#F1F1F2] overflow-hidden">
-          <Image
+          <img
             src={img}
             alt={title}
-            width={236}
-            height={162}
+            width="236"
+            height="162"
             className="w-full h-full object-cover"
           />
         </div>
         {/* Mobile Image */}
         <div className="block md:hidden w-[108px] h-[72px] rounded-[6px] bg-[#F1F1F2] overflow-hidden">
-          <Image
+          <img
             src={img}
             alt={title}
-            width={108}
-            height={72}
+            width="236"
+            height="162"
             className="w-full h-full object-cover"
           />
         </div>
