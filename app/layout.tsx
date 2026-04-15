@@ -28,8 +28,40 @@ const RobotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rafi Rahmanda | Portfolio",
-  description: "Senior Fullstack Web Developer Portfolio",
+  title: {
+    default: "Rafi Rahmanda | Senior UI/UX Designer & Fullstack Developer",
+    template: "%s | Rafi Rahmanda"
+  },
+  description: "Portfolio of Rafi Rahmanda, a Senior UI/UX Designer and Fullstack Web Developer based in Phnom Penh, Cambodia. Specializing in scalable digital products and design systems.",
+  keywords: ["UI/UX Designer", "Fullstack Developer", "Rafi Rahmanda", "Portfolio", "Web Development", "Design Systems"],
+  authors: [{ name: "Rafi Rahmanda" }],
+  creator: "Rafi Rahmanda",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://rafirahmanda.com",
+    siteName: "Rafi Rahmanda Portfolio",
+    title: "Rafi Rahmanda | Senior UI/UX Designer & Fullstack Developer",
+    description: "I design complex digital products, from scalable design systems to end-to-end user journeys.",
+    images: [
+      {
+        url: "/assets/profil.png",
+        width: 800,
+        height: 800,
+        alt: "Rafi Rahmanda",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rafi Rahmanda | Senior UI/UX Designer & Fullstack Developer",
+    description: "I design complex digital products, from scalable design systems to end-to-end user journeys.",
+    images: ["/assets/profil.png"],
+  },
 };
 
 export default function RootLayout({

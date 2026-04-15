@@ -49,14 +49,22 @@ export default function Page() {
       setDataReady(true);
     }
   }, [isLoading]);
+  // Mulai animasi Role bersamaan ketika decode "Rafi Rahmanda" mulai berjalan (welcomePhase === 1)
+  useEffect(() => {
+    if (isFirstLoad.current && welcomePhase === 1) {
+      const t = setTimeout(() => setRoleStarted(true), 200);
+      return () => clearTimeout(t);
+    }
+  }, [welcomePhase]);
+
+  // Setelah nameSettled + locationSettled, tandai role bisa lanjut settle (jika belum)
   useEffect(() => {
     if (isFirstLoad.current) {
-      if (dataReady && nameSettled && locationSettled) {
-        const t = setTimeout(() => setRoleStarted(true), 200);
-        return () => clearTimeout(t);
+      if (dataReady && nameSettled && locationSettled && !roleStarted) {
+        setRoleStarted(true);
       }
     }
-  }, [dataReady, nameSettled, locationSettled]);
+  }, [dataReady, nameSettled, locationSettled, roleStarted]);
 
   useEffect(() => {
     if (isFirstLoad.current) {
@@ -72,7 +80,7 @@ export default function Page() {
       {/* HEADER SECTION (Tampil tanpa delay, menjalankan animasi MorphText jika isFirstLoad) */}
       <div className="w-full flex flex-col md:flex-row pt-[64px] pb-[64px] px-[20px] md:px-[120px] gap-[24px]">
         <div className="flex justify-between w-full items-start">
-          <p className="text-[40px] md:text-[62px] font-medium font-jakarta text-[#171718]">
+          <h1 className="text-[40px] md:text-[62px] font-medium font-jakarta text-[#171718]">
             {isFirstLoad.current ? (
               welcomePhase === 0 ? (
                 <MorphText
@@ -105,7 +113,7 @@ export default function Page() {
             ) : (
               "Rafi Rahmanda"
             )}
-          </p>
+          </h1>
         </div>
 
         <div className="flex justify-between items-end h-auto md:h-[77px] font-roboto">

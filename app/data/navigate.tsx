@@ -26,7 +26,7 @@ export const navigate = [
     isHovered: "Copy Email Address",
     action: async () => {
       try {
-        await navigator.clipboard.writeText("dwikudwimu@gmail.com");
+        await navigator.clipboard.writeText("rafirahmanda19@gmail.com");
       } catch (error) {
         console.log(error);
       }
@@ -50,7 +50,10 @@ export const navigate = [
     desc: "/in/rafi-rahmanda",
     isHovered: "Visit Profile",
     action: () => {
-      window.open("https://www.linkedin.com/", "_blank");
+      window.open(
+        "https://www.linkedin.com/in/rafi-rahmanda-88672b1b8",
+        "_blank",
+      );
     },
   },
   {
@@ -72,8 +75,8 @@ export const navigate = [
     isHovered: "Download PDF",
     action: () => {
       const link = document.createElement("a");
-      link.href = "/spd.pdf";
-      link.download = "Portofolio.pdf";
+      link.href = "/Portfolio-M-Rafi-Rahmanda-2025.pdf";
+      link.download = "Portfolio-M-Rafi-Rahmanda-2025.pdf";
       link.click();
     },
   },
@@ -96,8 +99,8 @@ export const navigate = [
     isHovered: "Download PDF",
     action: () => {
       const link = document.createElement("a");
-      link.href = "/spd.pdf";
-      link.download = "Resume.pdf";
+      link.href = "/Portfolio-M-Rafi-Rahmanda-2025.pdf";
+      link.download = "Portfolio-M-Rafi-Rahmanda-2025.pdf";
       link.click();
     },
   },

@@ -45,7 +45,7 @@ const about = () => {
           <Image
             className="dark:invert rounded-[908px]"
             src="/assets/profil.png"
-            alt="Next.js logo"
+            alt="Rafi Rahmanda - Senior UI/UX Designer Profile"
             width={180} //232
             height={180}
             priority
@@ -99,13 +99,13 @@ const about = () => {
       <main className="w-full flex justify-center items-center py-20 md:py-15 ">
         <div className="w-auto md:w-[550px] h-auto flex flex-col gap-[64px]">
           <div className=" w-auto h-auto flex md:hidden flex-col gap-[24px]">
-            <h1 className="text-[40px] text-[#171718] font-medium font-jakarta">
+            <h2 className="text-[40px] text-[#171718] font-medium font-jakarta">
               Rafi Rahmanda
-            </h1>
+            </h2>
             <Image
               className="dark:invert rounded-[908px]"
               src="/assets/profil.png"
-              alt="Next.js logo"
+              alt="Rafi Rahmanda Portrait"
               width={120}
               height={120}
               priority
@@ -164,17 +164,17 @@ const about = () => {
             </p>
           </div>
           <div className="flex flex-col gap-[24px]">
-            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-medium font-jakarta">
+            <h2 className="text-[#171718] text-[24px] md:text-[32px] font-medium font-jakarta">
               Area of Focus
-            </h1>
+            </h2>
             <div>
               <AofButton />
             </div>
           </div>
           <div className="flex flex-col gap-[24px]">
-            <h1 className="text-[#171718] text-[24px] md:text-[32px] font-medium font-jakarta">
+            <h2 className="text-[#171718] text-[24px] md:text-[32px] font-medium font-jakarta">
               Experience
-            </h1>
+            </h2>
             <div>
               <Experiences />
             </div>
