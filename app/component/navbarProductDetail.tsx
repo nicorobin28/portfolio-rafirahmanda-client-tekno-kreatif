@@ -187,10 +187,10 @@ const navbarProductDetail = () => {
                               <div className="w-[90px] h-[60px] flex-shrink-0 rounded-[6px] bg-[#EFEFF0]" />
                             )}
                             <div className="flex flex-col h-full gap-[4px] min-w-0">
-                              <h1 className="font-jakarta font-semibold text-[20px] w-full text-left truncate underline decoration-transparent group-hover:decoration-inherit transition-colors duration-300 underline-offset-4">
+                              <h1 className="font-jakarta font-semibold text-[16px] leading-[24px] w-full text-left truncate underline decoration-transparent group-hover:decoration-inherit transition-colors duration-300 underline-offset-4">
                                 {item.title}
                               </h1>
-                              <div className="flex items-center font-roboto-mono text-[14px] gap-2">
+                              <div className="flex items-center font-roboto leading-[20px] text-[12px] gap-2">
                                 <span
                                   className={`transition-all duration-300 flex items-center shrink-0 ${hoveredId === item.id ? "opacity-0 w-0 overflow-hidden" : "opacity-100 gap-1.5"}`}
                                 >

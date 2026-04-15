@@ -194,7 +194,9 @@ const Page = () => {
                     ? {
                         borderRadius: "0px",
                         borderWidth: "0px",
-                        borderBottomWidth: "0px",
+                        borderBottomWidth: "1px",
+                        borderTopWidth: "1px",
+                        borderColor: "E3E3E4",
                         padding: "16px 24px",
                         backgroundColor: "rgba(255, 255, 255, 0.95)",
                         backdropFilter: "blur(12px)",
@@ -341,7 +343,7 @@ const Page = () => {
             </div>
           )} */}
 
-          <div className="max-w-[640px] flex flex-col gap-12">
+          <div className="max-w-[640px] flex flex-col gap-12 mt-[40px] md:mt-0">
             {(portfolio.contents || []).map((content: any) => {
               const beforeImages = (portfolio.images || []).filter(
                 (img: any) =>
