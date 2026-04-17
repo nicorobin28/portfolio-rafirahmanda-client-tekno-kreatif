@@ -35,7 +35,7 @@ const Card: React.FC<CardProps> = ({
       {/* Content wrapper */}
       <div className="flex flex-col gap-2 w-full order-1 md:order-2">
         {/* Desc */}
-        <div className="flex items-center font-roboto-mono gap-2 text-[#5B5E61] text-[12px] px-[4px]">
+        <div className="flex items-center font-roboto gap-2 text-[#5B5E61] text-[12px] px-[4px]">
           <div className="flex items-center gap-1.5 overflow-hidden">
             <div className="flex items-center shrink-0">
               {companyLogoUrl ? (
@@ -66,7 +66,7 @@ const Card: React.FC<CardProps> = ({
 
         {/* Title */}
         <div className="text-[#171718] font-jakarta px-[4px]">
-          <h1 className="font-medium text-[20px] md:text-[26px] line-clamp-2 underline decoration-transparent group-hover:decoration-inherit transition-colors duration-300 underline-offset-4">
+          <h1 className="font-semibold text-[20px] md:text-[26px] line-clamp-2 underline decoration-transparent group-hover:decoration-inherit transition-colors duration-300 underline-offset-4">
             {title}
           </h1>
         </div>
@@ -131,14 +131,8 @@ const Card: React.FC<CardProps> = ({
           </div>
         )}
         {/* Desktop Image */}
-        <div className="hidden md:block w-full h-[162px] rounded-[8px] bg-[#F1F1F2] overflow-hidden">
-          <img
-            src={img}
-            alt={title}
-            width="236"
-            height="162"
-            className="w-full h-full object-cover"
-          />
+        <div className="hidden md:block w-full aspect-video rounded-[8px] bg-[#F1F1F2] overflow-hidden">
+          <img src={img} alt={title} className="w-full h-full object-cover" />
         </div>
         {/* Mobile Image */}
         <div className="block md:hidden w-[108px] h-[72px] rounded-[6px] bg-[#F1F1F2] overflow-hidden">

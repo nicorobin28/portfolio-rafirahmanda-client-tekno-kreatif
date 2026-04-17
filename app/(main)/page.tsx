@@ -75,12 +75,16 @@ export default function Page() {
     }
   }, [roleSettled, isAppReady, setIsAppReady]);
 
+  if (!dataReady) {
+    return <div className="min-h-screen" />;
+  }
+
   return (
     <div className="pb-10">
       {/* HEADER SECTION (Tampil tanpa delay, menjalankan animasi MorphText jika isFirstLoad) */}
       <div className="w-full flex flex-col md:flex-row pt-[64px] pb-[64px] px-[20px] md:px-[120px] gap-[24px]">
         <div className="flex justify-between w-full items-start">
-          <h1 className="text-[40px] md:text-[62px] font-medium font-jakarta text-[#171718]">
+          <h1 className="text-[40px] md:text-[62px] font-semibold font-jakarta text-[#171718]">
             {isFirstLoad.current ? (
               welcomePhase === 0 ? (
                 <MorphText
@@ -103,7 +107,6 @@ export default function Page() {
                   to="Rafi Rahmanda"
                   trigger={true}
                   animateInitial={true}
-                  isLooping={!dataReady}
                   onComplete={() => setNameSettled(true)}
                   tickMs={28}
                   stagger={38}
@@ -116,8 +119,8 @@ export default function Page() {
           </h1>
         </div>
 
-        <div className="flex justify-between items-end h-auto md:h-[77px] font-roboto">
-          <p className="text-[#171718] text-[12px] md:text-[16px] w-auto md:w-[270px] md:pl-9 font-roboto">
+        <div className="flex justify-between items-end h-auto md:h-[77px] font-roboto md:gap-[24px]">
+          <p className="text-[#171718] text-[12px] md:text-[16px] w-auto md:w-[270px] font-roboto">
             {isFirstLoad.current ? (
               roleStarted ? (
                 <MorphText
@@ -160,7 +163,6 @@ export default function Page() {
                   to="PHNOM PENH, KH"
                   trigger={true}
                   animateInitial={true}
-                  isLooping={!dataReady}
                   onComplete={() => setLocationSettled(true)}
                   tickMs={22}
                   stagger={30}
