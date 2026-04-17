@@ -15,9 +15,9 @@ const Headmeta: React.FC<HeadmetaProps> = ({ title, role, company, year }) => {
         dangerouslySetInnerHTML={{ __html: title.replace(/\\n/g, "<br />") }}
       ></h1>
 
-      <div className="flex flex-col gap-5 text-[14px] mt-10 ">
-        <div className="flex gap-12">
-          <span className="w-[100px] font-roboto-mono text-[14px] leading-[22px] text-[#8E9184]">
+      <div className="flex flex-col gap-0 text-[14px] mt-10 ">
+        <div className="flex gap-0 h-[40px] items-center">
+          <span className="w-[100px] font-roboto text-[14px] leading-[22px] text-[#8E9184]">
             Role
           </span>
           <span className="font-jakarta font-medium text-[14px] leading-[24px] text-black">
@@ -25,8 +25,8 @@ const Headmeta: React.FC<HeadmetaProps> = ({ title, role, company, year }) => {
           </span>
         </div>
 
-        <div className="flex gap-12">
-          <span className="w-[100px] font-roboto-mono text-[14px] leading-[22px] text-[#8E9184]">
+        <div className="flex gap-0 h-[40px] items-center">
+          <span className="w-[100px] font-roboto text-[14px] leading-[22px] text-[#8E9184]">
             Company
           </span>
           <span className="font-jakarta font-medium text-[14px] leading-[24px] text-black">
@@ -34,8 +34,8 @@ const Headmeta: React.FC<HeadmetaProps> = ({ title, role, company, year }) => {
           </span>
         </div>
 
-        <div className="flex gap-12">
-          <span className="w-[100px] font-roboto-mono text-[14px] leading-[22px] text-[#8E9184]">
+        <div className="flex gap-0 h-[40px] items-center">
+          <span className="w-[100px] font-roboto text-[14px] leading-[22px] text-[#8E9184]">
             Year
           </span>
           <span className="font-jakarta font-medium text-[14px] leading-[24px] text-black">

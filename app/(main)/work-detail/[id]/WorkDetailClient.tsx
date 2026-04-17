@@ -266,13 +266,13 @@ const WorkDetailClient = () => {
                 </motion.div>
 
                 <div className="hidden md:block">
-                  <ul className="flex flex-col gap-4 text-[14px]">
+                  <ul className="flex flex-col gap-0 text-[14px]">
                     {INDEX_DATA.map((item: any, index: number) => {
                       const isHovered = hoveredDesktopItem === item.id;
                       return (
                         <li
                           key={`desktop-${item.id}`}
-                          className="ml-1 mt-2 cursor-pointer text-gray-500 hover:text-gray-900 transition-colors duration-200"
+                          className="ml-1 h-[40px] gap-0 flex items-center cursor-pointer text-gray-500 hover:text-gray-900 transition-colors duration-200"
                           onClick={(e) => scrollToSection(item.id, e)}
                           onMouseEnter={() => setHoveredDesktopItem(item.id)}
                           onMouseLeave={() => setHoveredDesktopItem(null)}
@@ -326,7 +326,7 @@ const WorkDetailClient = () => {
         </div>
 
         <div className="flex flex-col gap-12 lg:col-span-8">
-          <div className="max-w-[640px] flex flex-col gap-12">
+          <div className="max-w-[640px] flex flex-col -mt-[50px]">
             {(portfolio.contents || []).map((content: any) => {
               const beforeImages = (portfolio.images || []).filter(
                 (img: any) =>
@@ -343,7 +343,7 @@ const WorkDetailClient = () => {
                 <div
                   id={content.id}
                   key={content.id}
-                  className="flex flex-col gap-4 scroll-mt-32 mb-[80px]"
+                  className="flex flex-col scroll-mt-32 mb-[80px]"
                 >
                   {beforeImages.length > 0 && (
                     <div className="flex flex-col gap-4">
@@ -358,7 +358,11 @@ const WorkDetailClient = () => {
                     </div>
                   )}
 
-                  <h2 className="text-[26px] leading-[34px] font-medium text-black">
+                  <h2
+                    className={`text-[26px] leading-[34px] font-medium text-black mb-4 ${
+                      beforeImages.length > 0 ? "mt-10" : "mt-0"
+                    }`}
+                  >
                     {content.title}
                   </h2>
 
