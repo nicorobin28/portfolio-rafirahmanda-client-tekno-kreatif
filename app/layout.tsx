@@ -29,11 +29,18 @@ const RobotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Rafi Rahmanda | Senior UI/UX Designer & Fullstack Developer",
-    template: "%s | Rafi Rahmanda"
+    default: "Rafi Rahmanda | UI/UX Designer",
+    template: "%s | Rafi Rahmanda",
   },
-  description: "Portfolio of Rafi Rahmanda, a Senior UI/UX Designer and Fullstack Web Developer based in Phnom Penh, Cambodia. Specializing in scalable digital products and design systems.",
-  keywords: ["UI/UX Designer", "Fullstack Developer", "Rafi Rahmanda", "Portfolio", "Web Development", "Design Systems"],
+  description:
+    "Portfolio of Rafi Rahmanda, a UI/UX Designer based in Phnom Penh, Cambodia. Specializing in scalable digital products and design systems.",
+  keywords: [
+    "UI/UX Designer",
+    "Rafi Rahmanda",
+    "Portfolio",
+    "Web Development",
+    "Design Systems",
+  ],
   authors: [{ name: "Rafi Rahmanda" }],
   creator: "Rafi Rahmanda",
   icons: {
@@ -45,8 +52,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://rafirahmanda.com",
     siteName: "Rafi Rahmanda Portfolio",
-    title: "Rafi Rahmanda | Senior UI/UX Designer & Fullstack Developer",
-    description: "I design complex digital products, from scalable design systems to end-to-end user journeys.",
+    title: "Rafi Rahmanda | UI/UX Designer",
+    description:
+      "I design complex digital products, from scalable design systems to end-to-end user journeys.",
     images: [
       {
         url: "/assets/profil.png",
@@ -58,8 +66,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rafi Rahmanda | Senior UI/UX Designer & Fullstack Developer",
-    description: "I design complex digital products, from scalable design systems to end-to-end user journeys.",
+    title: "Rafi Rahmanda | UI/UX Designer",
+    description:
+      "I design complex digital products, from scalable design systems to end-to-end user journeys.",
     images: ["/assets/profil.png"],
   },
 };

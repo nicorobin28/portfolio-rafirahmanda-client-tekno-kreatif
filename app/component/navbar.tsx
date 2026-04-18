@@ -40,15 +40,19 @@ const Navbar = () => {
                 <button
                   className={`flex justify-end w-[172px] text-[16px] font-medium text-black`}
                 >
-                  {isActive ? (
-                    <span className="flex gap-[8px]">
-                      <span className="text-blue-500 pr">[</span>
-                      {item.name}
-                      <span className="text-blue-500">]</span>
+                  <span className="flex gap-[8px] justify-center items-center">
+                    <span
+                      className={`text-blue-500 transition-opacity ${isActive ? "opacity-100" : "opacity-0"}`}
+                    >
+                      [
                     </span>
-                  ) : (
                     <h1 className="cursor-pointer">{item.name}</h1>
-                  )}
+                    <span
+                      className={`text-blue-500 transition-opacity ${isActive ? "opacity-100" : "opacity-0"}`}
+                    >
+                      ]
+                    </span>
+                  </span>
                 </button>
               </Link>
             );

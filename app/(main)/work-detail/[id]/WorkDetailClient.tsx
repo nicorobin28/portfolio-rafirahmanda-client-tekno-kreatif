@@ -352,7 +352,7 @@ const WorkDetailClient = () => {
                           key={img.id}
                           src={img.url}
                           alt={img.altText || "Before Image"}
-                          className="w-full rounded-2xl object-cover"
+                          className="w-full rounded-[8px] object-cover"
                         />
                       ))}
                     </div>
@@ -375,7 +375,7 @@ const WorkDetailClient = () => {
                           key={img.id}
                           src={img.url}
                           alt={img.altText || "After Image"}
-                          className="w-full rounded-2xl object-cover"
+                          className="w-full rounded-[8px] object-cover"
                         />
                       ))}
                     </div>

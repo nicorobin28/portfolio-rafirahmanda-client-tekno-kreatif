@@ -189,7 +189,11 @@ export default function Page() {
               <motion.div key={portfolio.id} variants={itemVariants}>
                 <Link href={`/work-detail/${portfolio.id}`}>
                   <Card
-                    img={portfolio.images?.[0]?.url || "/home1.png"}
+                    img={
+                      portfolio.images?.find((img: any) => img.isCover)?.url ||
+                      portfolio.images?.[0]?.url ||
+                      "/home1.png"
+                    }
                     desc={{
                       icon: (
                         <svg
